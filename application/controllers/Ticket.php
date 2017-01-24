@@ -10,6 +10,17 @@ class Ticket extends CI_Controller {
 
     public function create()
     {
+    	if($_SERVER['REQUEST_METHOD'] == 'POST')
+    	{
+    		$form = $_POST;
+    		$data = array(
+    			'title'			=> $form['title'],
+    			'description'	=> $form['description'],
+    			'author'		=> 'Anonymous',
+    			'category'		=> 1
+    		);
+    		$this->db->insert('tickets', $data);
+    	}
         $this->load->view('ticket/create');
     }
 }
