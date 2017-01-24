@@ -1,0 +1,12 @@
+CREATE TABLE `statuses` (
+	`sid` INT(11) NOT NULL AUTO_INCREMENT,
+	`label` VARCHAR(50) NOT NULL,
+	`description` TEXT NULL,
+	`creator` INT(11) NULL DEFAULT NULL,
+	`created` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (`sid`)
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+AUTO_INCREMENT=6
+;
