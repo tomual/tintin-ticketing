@@ -17,7 +17,7 @@
 			<?php foreach( $tickets as $ticket ): ?>
 				<tr>
 					<td><?php echo $ticket->tid ?></td>
-					<td><a href="/index.php/ticket/view/<?php echo $ticket->tid ?>"><?php echo $ticket->title ?></a></td>
+					<td><a href="/ticket/view/<?php echo $ticket->tid ?>"><?php echo $ticket->title ?></a></td>
 					<td><?php echo $ticket->label ?></td>
 					<td><?php echo $ticket->name ?></td>
 					<td><?php echo date('d/m/Y', strtotime($ticket->created)) ?></td>
