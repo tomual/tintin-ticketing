@@ -21,10 +21,11 @@ class Tickets_model extends CI_Model {
 
     public function get_ticket( $tid )
     {
-        $this->db->select('tid, title, tickets.created, users.name as author, tickets.description, label as status, category, sid');
+        $this->db->select('tid, title, tickets.created, users.name as author, tickets.description, label as status, categories.name as category, sid, cid');
         $this->db->where('tid', $tid);
         $this->db->join('users', 'author=uid', 'left');
         $this->db->join('statuses', 'status=sid', 'left');
+        $this->db->join('categories', 'category=cid', 'left');
         $query = $this->db->get('tickets', 1);
         return $query->row();
     }
@@ -48,6 +49,7 @@ class Tickets_model extends CI_Model {
                 $data[$key] = $value;
             }
         }
+        $this->db->where('tid', $form['tid']);
         $this->db->update('tickets', $data);
     }
 

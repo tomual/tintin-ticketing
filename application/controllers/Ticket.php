@@ -8,6 +8,7 @@ class Ticket extends CI_Controller {
         parent::__construct();
         $this->load->model('tickets_model');
         $this->load->model('statuses_model');
+        $this->load->model('categories_model');
     }
 
     public function all()
@@ -24,8 +25,22 @@ class Ticket extends CI_Controller {
             $this->tickets_model->set_ticket($form);
         }
         $statuses = $this->statuses_model->get_statuses();
+        $categories = $this->categories_model->get_categories();
         $ticket = $this->tickets_model->get_ticket($tid);
-        $this->load->view('ticket/view', compact('ticket', 'statuses'));
+        $this->load->view('ticket/view', compact('ticket', 'statuses', 'categories'));
+    }
+
+    public function edit($tid)
+    {
+        if($_SERVER['REQUEST_METHOD'] == 'POST')
+        {
+            $form = $_POST;
+            $this->tickets_model->set_ticket($form);
+        }
+        $statuses = $this->statuses_model->get_statuses();
+        $categories = $this->categories_model->get_categories();
+        $ticket = $this->tickets_model->get_ticket($tid);
+        $this->load->view('ticket/edit', compact('ticket', 'statuses', 'categories'));
     }
 
     public function create()
