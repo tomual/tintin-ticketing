@@ -21,7 +21,7 @@ class Tickets_model extends CI_Model {
 
     public function get_ticket( $tid )
     {
-        $this->db->select('tid, title, tickets.created, users.name, tickets.description, label');
+        $this->db->select('tid, title, tickets.created, users.name as author, tickets.description, label as status, category, sid');
         $this->db->where('tid', $tid);
         $this->db->join('users', 'author=uid', 'left');
         $this->db->join('statuses', 'status=sid', 'left');
@@ -40,11 +40,15 @@ class Tickets_model extends CI_Model {
 
     public function set_ticket( $form )
     {
-        $this->title    = $_POST['title'];
-        $this->content  = $_POST['content'];
-        $this->date     = time();
-
-        $this->db->update('tickets', $this, array('id' => $_POST['id']));
+        $data = array();
+        foreach($form as $key=>$value)
+        {
+            if(property_exists('Tickets_model', $key))
+            {
+                $data[$key] = $value;
+            }
+        }
+        $this->db->update('tickets', $data);
     }
 
 }

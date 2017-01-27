@@ -7,6 +7,7 @@ class Ticket extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('tickets_model');
+        $this->load->model('statuses_model');
     }
 
     public function all()
@@ -17,8 +18,14 @@ class Ticket extends CI_Controller {
 
     public function view($tid)
     {
+        if($_SERVER['REQUEST_METHOD'] == 'POST')
+        {
+            $form = $_POST;
+            $this->tickets_model->set_ticket($form);
+        }
+        $statuses = $this->statuses_model->get_statuses();
         $ticket = $this->tickets_model->get_ticket($tid);
-        $this->load->view('ticket/view', compact('ticket'));
+        $this->load->view('ticket/view', compact('ticket', 'statuses'));
     }
 
     public function create()
