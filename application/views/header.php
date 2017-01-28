@@ -37,7 +37,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <a class="nav-link disabled" href="#">Disabled</a>
                 </li>
                 <li class="nav-item" style="float: right;">
-                    <a class="nav-link" href="#">Log In</a>
+                    <?php if($this->session->has_userdata('username')): ?>
+                        <a class="nav-link" href="#"><?php echo $this->session->userdata('username') ?></a>
+                    <?php else: ?>
+                        <a class="nav-link" href="#">Log In</a>
+                    <?php endif ?>
                 </li>
             </ul>
         </div>
