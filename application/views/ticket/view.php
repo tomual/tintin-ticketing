@@ -26,10 +26,6 @@
 			<td><?php echo $ticket->status ?></td>
 		</tr>
 		<tr>
-			<th>Author</th>
-			<td><?php echo $ticket->author ?></td>
-		</tr>
-		<tr>
 			<td colspan="2"><?php echo $ticket->description ?></td>
 		</tr>
 	</table>
@@ -46,8 +42,8 @@
 	        </select>
 	    </div>
 	    <div class="form-group">
-	        <label for="">Ticket Description</label>
-	        <textarea class="form-control" id="description" name="description" rows="3"></textarea>
+	        <label for="">Comments</label>
+	        <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
 	    </div>
 	    <button type="submit" class="btn btn-primary">Update</button>
 	</form>
