@@ -9,6 +9,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/style.css">
+    <style type="text/css">
+        <?php echo $this->css ?>
+    </style>
 
 </head>
 <body>
@@ -38,6 +41,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <a class="dropdown-item" href="/category/all">Categories</a>
                         <a class="dropdown-item" href="/user/all">Users</a>
                         <a class="dropdown-item" href="/role/all">Roles</a>
+                        <a class="dropdown-item" href="/settings/">System</a>
                     </div>
                 </li>
                 <li class="nav-item">

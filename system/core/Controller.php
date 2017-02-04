@@ -78,6 +78,8 @@ class CI_Controller {
 		$this->load =& load_class('Loader', 'core');
 		$this->load->initialize();
 		log_message('info', 'Controller Class Initialized');
+
+		$this->css = $this->settings_model->get_settings()->css;
 	}
 
 	// --------------------------------------------------------------------
