@@ -10,7 +10,7 @@
 	        <input type="text" class="form-control" id="name" name="name" placeholder="category name" value="<?php echo $category->name ?>">
 	    </div>
 	    <button type="submit" class="btn btn-primary">Edit</button>
-	    <a href="/category/view/<?php echo $category->cid ?>" class="btn btn-default">Cancel</a>
+	    <a href="/category/all/" class="btn btn-default">Back</a>
 	</form>
 </div>
 

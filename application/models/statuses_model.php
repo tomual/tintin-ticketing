@@ -4,13 +4,12 @@ class Statuses_model extends CI_Model {
 
     public $label;
     public $description;
-    public $creator;
 
-    public function add_status( $form )
+    public function add_status($form)
     {
         $this->label = $form['label'];
         $this->description = $form['description'];
-        $this->creator = 'Anonymous';
+        $this->place = $form['place'];
 
         $this->db->insert('statuses', $this);
     }
@@ -22,13 +21,25 @@ class Statuses_model extends CI_Model {
         return $query->result();
     }
 
-    public function set_status( $form )
+    public function get_status($sid)
     {
-        $this->label    = $_POST['label'];
-        $this->content  = $_POST['content'];
-        $this->date     = time();
+        $this->db->where('sid', $sid);
+        $query = $this->db->get('statuses', 1);
+        return $query->row();
+    }
 
-        $this->db->update('statuses', $this, array('id' => $_POST['id']));
+    public function set_status($form)
+    {
+        $this->label = $form['label'];
+        $this->description = $form['description'];
+        $this->place = $form['place'];
+        $this->db->update('statuses', $this, array('sid' => $_POST['sid']));
+    }
+
+    public function delete_status($sid)
+    {
+        $this->db->where('sid', $sid);
+        $this->db->delete('statuses'); 
     }
 
 }

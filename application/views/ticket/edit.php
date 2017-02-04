@@ -30,7 +30,7 @@
 	        </select>
 	    </div>
 	    <button type="submit" class="btn btn-primary">Edit</button>
-	    <a href="/ticket/view/<?php echo $ticket->tid ?>" class="btn btn-default">Cancel</a>
+	    <a href="/ticket/view/<?php echo $ticket->tid ?>" class="btn btn-default">Back</a>
 	</form>
 </div>
 
