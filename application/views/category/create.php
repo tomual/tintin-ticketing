@@ -9,6 +9,7 @@
 	        <input type="text" class="form-control" id="name" name="name" placeholder="Category name">
 	    </div>
 	    <button type="submit" class="btn btn-primary">Create</button>
+		<a href="/category/all/"><button type="button" class="btn btn-default">Back</button></a>
 	</form>
 </div>
 

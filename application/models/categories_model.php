@@ -4,7 +4,7 @@ class Categories_model extends CI_Model {
 
     public $name;
 
-    public function add_category( $form )
+    public function add_category($form)
     {
         $this->name = $form['name'];
 
@@ -18,13 +18,23 @@ class Categories_model extends CI_Model {
         return $query->result();
     }
 
-    public function set_category( $form )
+    public function get_category($cid)
     {
-        $this->label    = $_POST['label'];
-        $this->content  = $_POST['content'];
-        $this->date     = time();
+        $this->db->where('cid', $cid);
+        $query = $this->db->get('categories', 1);
+        return $query->row();
+    }
 
-        $this->db->update('categories', $this, array('id' => $_POST['id']));
+    public function set_category($form)
+    {
+        $this->name = $_POST['name'];
+        $this->db->update('categories', $this, array('cid' => $_POST['cid']));
+    }
+
+    public function delete_category($cid)
+    {
+        $this->db->where('cid', $cid);
+        $this->db->delete('categories'); 
     }
 
 }

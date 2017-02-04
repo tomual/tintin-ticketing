@@ -27,9 +27,19 @@ class Category extends CI_Controller {
         {
             $form = $_POST;
             $this->categories_model->set_category($form);
+            redirect(site_url('category/all'));
         }
-        $category = $this->categories_model->get_category();
+        $category = $this->categories_model->get_category($cid);
         $this->load->view('category/edit', compact('category'));
+    }
+
+    public function remove($cid)
+    {
+        if($_SERVER['REQUEST_METHOD'] == 'POST')
+        {
+            $this->categories_model->delete_category($cid);
+        }
+        redirect(site_url('category/all'));
     }
 
     public function all()
