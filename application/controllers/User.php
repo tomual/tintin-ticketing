@@ -29,6 +29,7 @@ class User extends CI_Controller {
             if($login = $this->users_model->login($username, $password))
             {
                 $data = array(
+                    'uid'       => $login->uid,
                     'username'  => $login->username,
                     'email'     => $login->email,
                     'group'     => $login->group,

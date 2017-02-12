@@ -9,6 +9,7 @@ class Ticket extends CI_Controller {
         $this->load->model('tickets_model');
         $this->load->model('statuses_model');
         $this->load->model('categories_model');
+        $this->load->model('versions_model');
     }
 
     public function all()
@@ -19,28 +20,45 @@ class Ticket extends CI_Controller {
 
     public function view($tid)
     {
-        if($_SERVER['REQUEST_METHOD'] == 'POST')
-        {
-            $form = $_POST;
-            $this->tickets_model->set_ticket($form);
-        }
         $statuses = $this->statuses_model->get_statuses();
         $categories = $this->categories_model->get_categories();
         $ticket = $this->tickets_model->get_ticket($tid);
-        $this->load->view('ticket/view', compact('ticket', 'statuses', 'categories'));
+        $versions = $this->versions_model->get_versions($tid);
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST')
+        {
+            $form = $_POST;
+            echo "<pre>";
+            print_r($form);
+            echo "</pre>";
+            $before = $ticket;
+            $this->tickets_model->set_ticket($form);
+            $after = $this->tickets_model->get_ticket($tid);
+            $this->versions_model->add_version($tid, $form['comment'], $before, $after);
+            $ticket = $after;
+
+            redirect("/ticket/view/$tid");
+        }
+        $this->load->view('ticket/view', compact('ticket', 'versions', 'statuses', 'categories'));
     }
 
     public function edit($tid)
     {
-        if($_SERVER['REQUEST_METHOD'] == 'POST')
-        {
-            $form = $_POST;
-            $this->tickets_model->set_ticket($form);
-        }
         $statuses = $this->statuses_model->get_statuses();
         $categories = $this->categories_model->get_categories();
         $ticket = $this->tickets_model->get_ticket($tid);
-        $this->load->view('ticket/edit', compact('ticket', 'statuses', 'categories'));
+        $versions = $this->versions_model->get_versions($tid);
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST')
+        {
+            $form = $_POST;
+            $before = $ticket;
+            $this->tickets_model->set_ticket($form);
+            $after = $this->tickets_model->get_ticket($tid);
+            $this->versions_model->add_version($tid, $form['comment'], $before, $after);
+            $ticket = $after;
+        }
+        $this->load->view('ticket/edit', compact('ticket', 'versions', 'statuses', 'categories'));
     }
 
     public function create()

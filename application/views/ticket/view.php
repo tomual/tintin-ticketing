@@ -30,6 +30,24 @@
 		</tr>
 	</table>
 
+	<h2>Changes</h2>
+	<table class="table">
+		<?php foreach($versions as $version): ?>
+				<tr>
+					<td>
+						<?php echo date('d/m/y h:mA', strtotime($version->created)) ?> by <?php echo $version->username ?><br />
+						<?php foreach(json_decode($version->difference) as $key=>$value): ?>
+							<b><?php echo $key ?></b> changed from <?php echo $value->before?> to <?php echo $value->after ?><br />
+						<?php endforeach ?>
+						<br />
+						<?php echo !empty($version->comment) ? $version->comment : "<i>No Comment</i>" ?>
+						<br />
+						<br />
+					</td>
+				</tr>
+		<?php endforeach ?>
+	</table>
+
 	<h2>Update</h2>
 	<form method="post">
 		<input type="hidden" name="tid" value="<?php echo $ticket->tid ?>">
