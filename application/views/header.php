@@ -47,13 +47,19 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <li class="nav-item">
                     <a class="nav-link disabled" href="#">Disabled</a>
                 </li>
-                <li class="nav-item" style="float: right;">
                     <?php if($this->session->has_userdata('username')): ?>
-                        <a class="nav-link" href="#"><?php echo $this->session->userdata('username') ?></a>
-                    <?php else: ?>
-                        <a class="nav-link" href="#">Log In</a>
+                    <li class="nav-item dropdown" style="float: right;">
+                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $this->session->userdata('username') ?></a>
+                        <div class="dropdown-menu user-nav">
+                            <a class="dropdown-item" href="/tickets/me">My Tickets</a>
+                            <a class="dropdown-item" href="/settings/me">Account</a>
+                            <a class="dropdown-item" href="/logout/">Log Out</a>
+                        </div>
+                    <?php else: ?>                                
+                        <li class="nav-item" style="float: right;">
+                                <a class="nav-link" href="/login"0/>Log In</a>
+                        </li>
                     <?php endif ?>
-                </li>
             </ul>
         </div>
     </div>

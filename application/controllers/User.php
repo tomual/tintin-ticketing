@@ -32,18 +32,20 @@ class User extends CI_Controller {
                     'uid'       => $login->uid,
                     'username'  => $login->username,
                     'email'     => $login->email,
-                    'group'     => $login->group,
+                    'role'     => $login->role,
                     'authenticated' => TRUE
                 );
 
                 $this->session->set_userdata($data);
+                redirect($_SERVER['HTTP_REFERRER']);
             }
         }
         $this->load->view('user/login');
     }
 
-    public function logout($username, $password)
+    public function logout()
     {
         session_destroy();
+        redirect($_SERVER['HTTP_REFERRER']);
     }
 }

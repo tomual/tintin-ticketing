@@ -9,3 +9,8 @@ nav {
 h1 {
 	margin-bottom: 30px;
 }
+
+.dropdown-menu.user-nav {
+	left: auto;
+	right: 0;
+}

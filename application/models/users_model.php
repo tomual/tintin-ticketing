@@ -5,11 +5,11 @@ class Users_model extends CI_Model {
     public $username;
     public $password;
     public $email;
-    public $group;
+    public $role;
 
     public function login($username, $password)
     {
-        $this->db->select('uid, username, password, group, email');
+        $this->db->select('uid, username, password, role, email');
         $this->db->from('users');
         $this->db->where('username', $username);
         $this->db->limit(1);
