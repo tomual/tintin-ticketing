@@ -15,12 +15,14 @@
 			<?php foreach( $categories as $category ): ?>
 				<tr>
 					<td><?php echo $category->cid ?></td>
-					<td><?php echo $category->name ?></td>
+					<td><?php echo $category->name ?></td>					
 					<td>
-						<form method="post" action="/category/remove/<?php echo $category->cid ?>">
-							<a href="/category/edit/<?php echo $category->cid ?>"><button type="button" class="btn btn-link"><i class="fa fa-pencil" aria-hidden="true"></i></button></a>
-							<button type="submit" class="btn btn-link"><i class="fa fa-times" aria-hidden="true"></i></button>
-						</form>
+						<?php if($this->roles_model->has_permission('category', 2)): ?>
+							<form method="post" action="/category/remove/<?php echo $category->cid ?>">
+								<a href="/category/edit/<?php echo $category->cid ?>"><button type="button" class="btn btn-link"><i class="fa fa-pencil" aria-hidden="true"></i></button></a>
+								<button type="submit" class="btn btn-link"><i class="fa fa-times" aria-hidden="true"></i></button>
+							</form>
+						<?php endif ?>
 					</td>
 				</tr>
 			<?php endforeach ?>

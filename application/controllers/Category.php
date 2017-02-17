@@ -11,6 +11,7 @@ class Category extends CI_Controller {
 
     public function create()
     {
+        $this->roles_model->check_permission('category', 2);
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
             $form = $_POST;
@@ -23,6 +24,7 @@ class Category extends CI_Controller {
 
     public function edit($cid)
     {
+        $this->roles_model->check_permission('category', 2);
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
             $form = $_POST;
@@ -35,6 +37,7 @@ class Category extends CI_Controller {
 
     public function remove($cid)
     {
+        $this->roles_model->check_permission('category', 2);
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
             $this->categories_model->delete_category($cid);

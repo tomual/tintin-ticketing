@@ -1,7 +1,6 @@
 <?php $this->load->view('header') ?>
-
 <div class="col-sm-12 ticket">
-	<h2>Ticket ID: <?php echo $ticket->tid ?></h2>
+	<h2>Ticket ID: <?php echo $ticket->tid ?></h2><a href="/ticket/edit/<?php echo $ticket->tid ?>" class="btn btn-default pull-right">Edit</a>
 	<h1><?php echo $ticket->title ?></h1>
 
 	<table class="table">
@@ -29,25 +28,7 @@
 			<td colspan="2"><?php echo $ticket->description ?></td>
 		</tr>
 	</table>
-
-	<h2>Changes</h2>
-	<table class="table">
-		<?php foreach($versions as $version): ?>
-				<tr>
-					<td>
-						<?php echo date('d/m/y h:mA', strtotime($version->created)) ?> by <?php echo $version->username ?><br />
-						<?php foreach(json_decode($version->difference) as $key=>$value): ?>
-							<b><?php echo $key ?></b> changed from <?php echo $value->before?> to <?php echo $value->after ?><br />
-						<?php endforeach ?>
-						<br />
-						<?php echo !empty($version->comment) ? $version->comment : "<i>No Comment</i>" ?>
-						<br />
-						<br />
-					</td>
-				</tr>
-		<?php endforeach ?>
-	</table>
-
+	<br />
 	<h2>Update</h2>
 	<form method="post">
 		<input type="hidden" name="tid" value="<?php echo $ticket->tid ?>">
@@ -65,6 +46,27 @@
 	    </div>
 	    <button type="submit" class="btn btn-primary">Update</button>
 	</form>
+	<br /><br />
+	<h2>Changes</h2>
+	<table class="table">
+		<?php foreach($versions as $version): ?>
+				<tr>
+					<td>
+						<?php echo date('d/m/y h:mA', strtotime($version->created)) ?> by <?php echo $version->username ?><br />
+						<?php foreach(json_decode($version->difference) as $key=>$value): ?>
+							<b><?php echo ucfirst($key) ?></b> <i class="text-muted">changed from</i> <?php echo $value->before?> <i class="text-muted">to</i> <?php echo $value->after ?><br />
+						<?php endforeach ?>
+						<br />
+						<?php if(!empty($version->comment)): ?>
+							<?php echo $version->comment ?>
+						<br />
+						<br />
+						<?php endif ?>
+					</td>
+				</tr>
+		<?php endforeach ?>
+	</table>
+
 </div>
 
 <?php $this->load->view('footer') ?>

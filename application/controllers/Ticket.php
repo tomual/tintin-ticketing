@@ -27,6 +27,7 @@ class Ticket extends CI_Controller {
 
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
+            $this->roles_model->check_permission('ticket', 2);
             $form = $_POST;
             echo "<pre>";
             print_r($form);
@@ -49,20 +50,32 @@ class Ticket extends CI_Controller {
         $ticket = $this->tickets_model->get_ticket($tid);
         $versions = $this->versions_model->get_versions($tid);
 
+        if($ticket->author == $this->session->userdata('uid'))
+        {
+            $this->roles_model->check_permission('ticket', 3);
+        }
+        else
+        {
+            $this->roles_model->check_permission('ticket', 4);
+        }
+
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
             $form = $_POST;
             $before = $ticket;
             $this->tickets_model->set_ticket($form);
             $after = $this->tickets_model->get_ticket($tid);
-            $this->versions_model->add_version($tid, $form['comment'], $before, $after);
+            $this->versions_model->add_version($tid, '', $before, $after);
             $ticket = $after;
+
+            redirect("/ticket/view/$tid");
         }
         $this->load->view('ticket/edit', compact('ticket', 'versions', 'statuses', 'categories'));
     }
 
     public function create()
     {
+        $this->roles_model->check_permission('ticket', 3);
     	if($_SERVER['REQUEST_METHOD'] == 'POST')
     	{
     		$form = $_POST;

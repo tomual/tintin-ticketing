@@ -23,6 +23,7 @@ class Status extends CI_Controller {
 
     public function edit($cid)
     {
+        $this->roles_model->check_permission('status', 2);
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
             $form = $_POST;
@@ -35,6 +36,7 @@ class Status extends CI_Controller {
 
     public function remove($cid)
     {
+        $this->roles_model->check_permission('status', 2);
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
             $this->statuses_model->delete_status($cid);

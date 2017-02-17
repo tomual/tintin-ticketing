@@ -19,10 +19,12 @@
 					<td><?php echo $status->label ?></td>
 					<td><?php echo $status->description ?></td>
 					<td>
-						<form method="post" action="/status/remove/<?php echo $status->sid ?>">
-							<a href="/status/edit/<?php echo $status->sid ?>"><button type="button" class="btn btn-link"><i class="fa fa-pencil" aria-hidden="true"></i></button></a>
-							<button type="submit" class="btn btn-link"><i class="fa fa-times" aria-hidden="true"></i></button>
-						</form>
+						<?php if($this->roles_model->has_permission('status', 2)): ?>
+							<form method="post" action="/status/remove/<?php echo $status->sid ?>">
+								<a href="/status/edit/<?php echo $status->sid ?>"><button type="button" class="btn btn-link"><i class="fa fa-pencil" aria-hidden="true"></i></button></a>
+								<button type="submit" class="btn btn-link"><i class="fa fa-times" aria-hidden="true"></i></button>
+							</form>
+						<?php endif ?>
 					</td>
 				</tr>
 			<?php endforeach ?>

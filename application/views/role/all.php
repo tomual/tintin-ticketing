@@ -14,12 +14,15 @@
 			<?php foreach( $roles as $role ): ?>
 				<tr>
 					<td><?php echo $role->label ?></td>
+
+					<?php if($this->roles_model->has_permission('role', 2)): ?>
 					<td>
 						<form method="post" action="/role/remove/<?php echo $role->rid ?>">
 							<a href="/role/edit/<?php echo $role->rid ?>"><button type="button" class="btn btn-link"><i class="fa fa-pencil" aria-hidden="true"></i></button></a>
 							<button type="submit" class="btn btn-link"><i class="fa fa-times" aria-hidden="true"></i></button>
 						</form>
 					</td>
+					<?php endif ?>
 				</tr>
 			<?php endforeach ?>
 		</tbody>

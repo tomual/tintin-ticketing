@@ -53,4 +53,46 @@ class Roles_model extends CI_Model {
         $this->db->delete('roles'); 
     }
 
+    public function check_permission($topic, $action)
+    {
+        $role = $this->session->userdata('role');
+        if(!empty($role))
+        {
+            $col = 'permission_' . $topic;
+            $this->db->select($col);
+            $this->db->where('rid', $role);
+            $query = $this->db->get('roles', 1);
+            $permission = $query->first_row();
+            if($permission->{$col} >= $action)
+            {
+                return $permission->{$col};
+            }
+        }
+        else
+        {
+            redirect('/login');
+        }
+    }
+
+    public function has_permission($topic, $action)
+    {
+        $role = $this->session->userdata('role');
+        if(!empty($role))
+        {
+            $col = 'permission_' . $topic;
+            $this->db->select($col);
+            $this->db->where('rid', $role);
+            $query = $this->db->get('roles', 1);
+            $permission = $query->first_row();
+            if($permission->{$col} >= $action)
+            {
+                return $permission->{$col};
+            }
+        }
+        else
+        {
+            return false;
+        }
+    }
+
 }
