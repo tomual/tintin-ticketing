@@ -54,4 +54,18 @@ class User extends CI_Controller {
         session_destroy();
         redirect($_SERVER['HTTP_REFERRER']);
     }
+
+    public function edit($uid)
+    {
+        $this->roles_model->check_permission('user', 2);
+        if($_SERVER['REQUEST_METHOD'] == 'POST')
+        {
+            $form = $_POST;
+            $this->users_model->set_user($form);
+            redirect(site_url('user/all'));
+        }
+        $user = $this->users_model->get_user($uid);
+        $roles = $this->roles_model->get_roles();
+        $this->load->view('user/edit', compact('user', 'roles'));
+    }
 }

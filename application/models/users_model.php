@@ -43,4 +43,28 @@ class Users_model extends CI_Model {
         $query = $this->db->get('users');
         return $query->result();
     }
+
+    public function get_user($uid)
+    {
+        $this->db->where('uid', $uid);
+        $query = $this->db->get('users', 1);
+        $row = $query->row();
+
+        $this->username = $row->username;
+        $this->password = $row->password;
+        $this->email = $row->email;
+        $this->role = $row->role;
+
+        return $row;
+    }
+
+    public function set_user($form)
+    {
+        $this->get_user($form['uid']);
+        $this->username = $form['username'];
+        $this->email = $form['email'];
+        $this->role = $form['role'];
+
+        $this->db->update('users', $this, array('uid' => $form['uid']));
+    }
 }
