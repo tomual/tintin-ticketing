@@ -8,6 +8,12 @@ class User extends CI_Controller {
         parent::__construct();
     }
 
+    public function all()
+    {
+        $users = $this->users_model->get_users();
+        $this->load->view('user/all', compact('users'));
+    }
+
     public function create()
     {
         if($_SERVER['REQUEST_METHOD'] == 'POST')
