@@ -6,6 +6,8 @@ class Users_model extends CI_Model {
     public $password;
     public $email;
     public $role;
+    public $reset_token;
+    public $reset_token_expire;
 
     public function login($username, $password)
     {
@@ -61,10 +63,29 @@ class Users_model extends CI_Model {
     public function set_user($form)
     {
         $this->get_user($form['uid']);
-        $this->username = $form['username'];
-        $this->email = $form['email'];
-        $this->role = $form['role'];
+        foreach ($form as $key => $value) {
+            if(property_exists($this, $key))
+            {
+                $this->{$key} = $value;
+            }
+        }
 
         $this->db->update('users', $this, array('uid' => $form['uid']));
+    }
+
+    public function get_uid_by_email($email)
+    {
+        $this->db->where('email', $email);
+        $query = $this->db->get('users', 1);
+        $row = $query->row();
+        return $row->uid;
+    }
+
+    public function get_user_by_token($token)
+    {
+        $this->db->where('reset_token', $token);
+        $query = $this->db->get('users', 1);
+        $row = $query->row();
+        return $row;
     }
 }

@@ -68,4 +68,40 @@ class User extends CI_Controller {
         $roles = $this->roles_model->get_roles();
         $this->load->view('user/edit', compact('user', 'roles'));
     }
+
+    public function forgot_password()
+    {
+        if($_SERVER['REQUEST_METHOD'] == 'POST')
+        {
+            $data = array(
+                'uid' => $this->users_model->get_uid_by_email($this->input->post('email')),
+                'reset_token' => uniqid(),
+                'reset_token_expire' => date('y-m-d h:i:a', strtotime('+6 hours'))
+            );
+            $this->users_model->set_user($data);
+            $this->load->view('user/forgot_sent');
+            return;
+        }
+        $this->load->view('user/forgot');
+    }
+
+    public function reset_password($token)
+    {
+        $user = $this->users_model->get_user_by_token($token);
+        if(!empty($user) && (strtotime('now') < strtotime($user->reset_token_expire)))
+        {
+            if($_SERVER['REQUEST_METHOD'] == 'POST')
+            {
+                $data = array(
+                    'uid' => $user->uid,
+                    'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
+                );
+                $this->users_model->set_user($data);
+                redirect('/login');
+            }
+            $this->load->view('user/forgot_reset', array('email' => $user->email));
+            return;
+        }
+        $this->load->view('user/forgot_expired');
+    }
 }
