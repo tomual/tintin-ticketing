@@ -66,6 +66,10 @@ class Users_model extends CI_Model {
         foreach ($form as $key => $value) {
             if(property_exists($this, $key))
             {
+                if($key == 'password')
+                {
+                    $value = password_hash($value, PASSWORD_DEFAULT);
+                }
                 $this->{$key} = $value;
             }
         }

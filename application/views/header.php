@@ -52,7 +52,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $this->session->userdata('username') ?></a>
                         <div class="dropdown-menu user-nav">
                             <a class="dropdown-item" href="/tickets/me">My Tickets</a>
-                            <a class="dropdown-item" href="/settings/me">Account</a>
+                            <a class="dropdown-item" href="/user/edit">Account</a>
                             <a class="dropdown-item" href="/logout/">Log Out</a>
                         </div>
                     <?php else: ?>                                

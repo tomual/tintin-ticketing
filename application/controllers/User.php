@@ -55,9 +55,21 @@ class User extends CI_Controller {
         redirect($_SERVER['HTTP_REFERRER']);
     }
 
-    public function edit($uid)
+    public function edit($uid = NULL)
     {
-        $this->roles_model->check_permission('user', 2);
+        if(empty($uid) && $this->session->userdata('uid'))
+        {
+            $uid = $this->session->userdata('uid');
+        }
+        elseif(empty($uid))
+        {
+            show_404();
+        }
+        else
+        {
+            $this->roles_model->check_permission('user', 2);
+        }
+
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
             $form = $_POST;

@@ -14,8 +14,12 @@
 	    </div>
 	    <div class="form-group">
 	        <label for="">Password</label><br />
-	        <a href="/user/password/<?php echo $user->uid ?>" class="">Change Password</a>
+	        <div class="row">
+		        <div class="col-xs-6"><input type="password" class="form-control" name="password"></div>
+		        <div class="col-xs-6"><input type="password" class="form-control" name="password2"></div>
+	        </div>
 	    </div>
+	    <?php if($this->roles_model->has_permission('user', 2)): ?>
 	    <div class="form-group">
 	        <label for="">Role</label>
 	        <select class="form-control" name="role">
@@ -24,6 +28,7 @@
 	        	<?php endforeach ?>
 	        </select>
 	    </div>
+		<?php endif ?>
 	    <div class="form-group">
 		    <button type="submit" class="btn btn-primary">Edit</button>
 		    <a href="/user/all/" class="btn btn-default">Back</a>
