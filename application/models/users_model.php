@@ -40,7 +40,7 @@ class Users_model extends CI_Model {
 
     public function get_users()
     {        
-        $this->db->order_by('created', 'asc');
+        $this->db->order_by('username', 'asc');
         $this->db->join('roles', 'roles.rid=users.role');
         $query = $this->db->get('users');
         return $query->result();

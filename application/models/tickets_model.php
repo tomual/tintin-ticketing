@@ -8,7 +8,7 @@ class Tickets_model extends CI_Model {
     public $category;
     public $author;
 
-    public function add_ticket( $form )
+    public function add_ticket($form)
     {
         $this->title = $form['title'];
         $this->description = $form['description'];
@@ -19,7 +19,7 @@ class Tickets_model extends CI_Model {
         $this->db->insert('tickets', $this);
     }
 
-    public function get_ticket( $tid )
+    public function get_ticket($tid)
     {
         $this->db->select('tid, title, tickets.created, username as author, tickets.description, label as status, categories.name as category, sid, cid');
         $this->db->where('tid', $tid);
@@ -39,7 +39,7 @@ class Tickets_model extends CI_Model {
         return $query->result();
     }
 
-    public function set_ticket( $form )
+    public function set_ticket($form)
     {
         $data = array();
         foreach($form as $key=>$value)
@@ -53,4 +53,33 @@ class Tickets_model extends CI_Model {
         $this->db->update('tickets', $data);
     }
 
+    public function get_by_status($sid = NULL)
+    {
+        if($sid)
+        {
+            $this->db->where('sid', $sid);
+        }
+        $this->db->order_by('sid', 'asc');
+        return $this->get_tickets();
+    }
+
+    public function get_by_user($uid = NULL)
+    {
+        if($uid)
+        {
+            $this->db->where('author', $uid);
+        }
+        $this->db->order_by('author', 'asc');
+        return $this->get_tickets();
+    }
+
+    public function get_by_category($cid = NULL)
+    {
+        if($cid)
+        {
+            $this->db->where('category', $cid);
+        }
+        $this->db->order_by('category', 'asc');
+        return $this->get_tickets();
+    }
 }
