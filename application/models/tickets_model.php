@@ -14,9 +14,10 @@ class Tickets_model extends CI_Model {
         $this->description = $form['description'];
         $this->status = 4;
         $this->category = $form['category'];
-        $this->author = 'Anonymous';
+        $this->author = $form['author'];
 
         $this->db->insert('tickets', $this);
+        return $this->db->insert_id();
     }
 
     public function get_ticket($tid)

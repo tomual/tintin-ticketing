@@ -15,9 +15,9 @@
 	    <div class="form-group">
 	        <label for="category">Category</label>
 	        <select class="form-control" id="category" name="category">
-	            <option>Maintenance</option>
-	            <option>Bug Fix</option>
-	            <option>New Feature</option>
+	        <?php foreach($categories as $category): ?>
+	            <option value="<?php echo $category->cid ?>"><?php echo $category->name ?></option>
+	        <?php endforeach ?>
 	        </select>
 	    </div>
 	    <button type="submit" class="btn btn-primary">Submit</button>

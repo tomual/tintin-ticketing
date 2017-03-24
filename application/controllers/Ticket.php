@@ -76,11 +76,14 @@ class Ticket extends CI_Controller {
     public function create()
     {
         $this->roles_model->check_permission('ticket', 3);
+        $categories = $this->categories_model->get_categories();
     	if($_SERVER['REQUEST_METHOD'] == 'POST')
     	{
     		$form = $_POST;
-            $this->tickets_model->add_ticket($form);
+            $form['author'] = $this->session->userdata('uid');
+            $tid = $this->tickets_model->add_ticket($form);
+            redirect("/ticket/view/$tid");
     	}
-        $this->load->view('ticket/create');
+        $this->load->view('ticket/create', compact('categories'));
     }
 }
