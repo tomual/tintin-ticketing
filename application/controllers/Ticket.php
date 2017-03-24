@@ -18,6 +18,39 @@ class Ticket extends CI_Controller {
         $this->load->view('ticket/all', compact('tickets'));
     }
 
+    public function advanced()
+    {
+        $author = '';
+        $status = '';
+        $category = '';
+
+        $users = $this->users_model->get_users();        
+        $statuses = $this->statuses_model->get_statuses();
+        $categories = $this->categories_model->get_categories();
+        $tickets = $this->tickets_model->get_tickets();
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST')
+        {
+            if($author = $this->input->post('author'))
+            {
+                $this->db->where('author', $author);
+            }
+
+            if($status = $this->input->post('status'))
+            {
+                $this->db->where('status', $status);
+            }
+
+            if($category = $this->input->post('category'))
+            {
+                $this->db->where('category', $category);
+            }
+
+            $tickets = $this->tickets_model->get_tickets();
+        }
+        $this->load->view('ticket/advanced', compact('tickets', 'users', 'statuses', 'categories', 'status', 'author', 'category'));
+    }
+
     public function view($tid)
     {
         $statuses = $this->statuses_model->get_statuses();
