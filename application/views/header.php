@@ -9,6 +9,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/css/bootstrap.min.css" integrity="sha384-AysaV+vQoT3kOAXZkl02PThvDr8HYKPZhNT5h/CXfBThSRXQ6jW5DO2ekP5ViFdi" crossorigin="anonymous">
     <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/datepicker.css">
     <style type="text/css">
         <?php echo $this->css ?>
     </style>
@@ -27,11 +28,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Tickets</a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="/ticket/all">All tickets</a>
-                        <a class="dropdown-item" href="/report/status">By Status</a>
-                        <a class="dropdown-item" href="/report/user">By User</a>
-                        <a class="dropdown-item" href="/report/category">By Category</a>
+                        <a class="dropdown-item" href="/ticket/status">By Status</a>
+                        <a class="dropdown-item" href="/ticket/user">By User</a>
+                        <a class="dropdown-item" href="/ticket/category">By Category</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Custom Report</a>
+                        <a class="dropdown-item" href="/ticket/advanced">Custom Report</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">

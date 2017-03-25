@@ -27,28 +27,38 @@ class Ticket extends CI_Controller {
         $users = $this->users_model->get_users();        
         $statuses = $this->statuses_model->get_statuses();
         $categories = $this->categories_model->get_categories();
-        $tickets = $this->tickets_model->get_tickets();
 
-        if($_SERVER['REQUEST_METHOD'] == 'POST')
+        if($author = $this->input->get('author'))
         {
-            if($author = $this->input->post('author'))
-            {
-                $this->db->where('author', $author);
-            }
-
-            if($status = $this->input->post('status'))
-            {
-                $this->db->where('status', $status);
-            }
-
-            if($category = $this->input->post('category'))
-            {
-                $this->db->where('category', $category);
-            }
-
-            $tickets = $this->tickets_model->get_tickets();
+            $this->db->where('author', $author);
         }
-        $this->load->view('ticket/advanced', compact('tickets', 'users', 'statuses', 'categories', 'status', 'author', 'category'));
+
+        if($status = $this->input->get('status'))
+        {
+            $this->db->where('status', $status);
+        }
+
+        if($category = $this->input->get('category'))
+        {
+            $this->db->where('category', $category);
+        }
+
+        if($created_from = $this->input->get('created_from'))
+        {
+            $created_from = date('Y-m-d', strtotime($created_from));
+            if($created_to = $this->input->get('created_to'))
+            {
+                $created_to = date('Y-m-d', strtotime($created_to));
+                $this->db->where("tickets.created BETWEEN '$created_from' AND '$created_to'");
+            }
+            else
+            {
+                $this->db->where('tickets.created', $category);
+            }
+        }
+        $tickets = $this->tickets_model->get_tickets();
+        // echo $this->db->last_query();
+        $this->load->view('ticket/advanced', compact('tickets', 'users', 'statuses', 'categories'));
     }
 
     public function view($tid)
@@ -118,5 +128,52 @@ class Ticket extends CI_Controller {
             redirect("/ticket/view/$tid");
     	}
         $this->load->view('ticket/create', compact('categories'));
+    }
+
+    public function status()
+    {
+        $statuses = $this->statuses_model->get_statuses();
+        if($this->input->get('status'))
+        {
+            $status = $this->input->get('status');
+            $tickets = $this->tickets_model->get_by_status($status);
+        }
+        else
+        {
+            $tickets = $this->tickets_model->get_by_status();
+        }
+
+        $this->load->view('report/status', compact('tickets', 'statuses'));
+    }
+
+    public function user()
+    {
+        $users = $this->users_model->get_users();
+
+        if($this->input->get('user'))
+        {
+            $user = $this->input->get('user');
+            $tickets = $this->tickets_model->get_by_user($user);
+        }
+        else
+        {
+            $tickets = $this->tickets_model->get_by_user();
+        }
+        $this->load->view('report/user', compact('tickets', 'users'));
+    }
+
+    public function category()
+    {
+        $categories = $this->categories_model->get_categories();
+        if($this->input->get('category'))
+        {
+            $category = $this->input->get('category');
+            $tickets = $this->tickets_model->get_by_category($category);
+        }
+        else
+        {
+            $tickets = $this->tickets_model->get_by_category();
+        }
+        $this->load->view('report/category', compact('tickets', 'categories'));
     }
 }

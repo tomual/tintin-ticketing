@@ -33,9 +33,10 @@ class Tickets_model extends CI_Model {
 
     public function get_tickets()
     {
+        $this->db->select('tickets.tid, tickets.title, tickets.status, tickets.category, statuses.label, username, tickets.created, sid');
         $this->db->join('users', 'author=uid', 'left');
         $this->db->join('statuses', 'status=sid', 'left');
-        $this->db->order_by('tid', 'desc');
+        $this->db->order_by('tickets.created', 'desc');
         $query = $this->db->get('tickets');
         return $query->result();
     }
