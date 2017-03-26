@@ -32,7 +32,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <a class="dropdown-item" href="/ticket/user">By User</a>
                         <a class="dropdown-item" href="/ticket/category">By Category</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="/ticket/advanced">Custom Report</a>
+                        <a class="dropdown-item" href="/ticket/advanced">Advanced Search</a>
                     </div>
                 </li>
                 <li class="nav-item dropdown">

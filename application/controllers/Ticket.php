@@ -53,9 +53,26 @@ class Ticket extends CI_Controller {
             }
             else
             {
-                $this->db->where('tickets.created', $category);
+                $created_to = date('Y-m-d', strtotime($created_from . '+1 day'));
+                $this->db->where("created BETWEEN '$created_from' AND '$created_to'");
             }
         }
+
+        if($modified_from = $this->input->get('modified_from'))
+        {
+            $modified_from = date('Y-m-d', strtotime($modified_from));
+            if($modified_to = $this->input->get('modified_to'))
+            {
+                $modified_to = date('Y-m-d', strtotime($modified_to));
+                $this->db->where("modified BETWEEN '$modified_from' AND '$modified_to'");
+            }
+            else
+            {
+                $modified_to = date('Y-m-d', strtotime($modified_from . '+1 day'));
+                $this->db->where("modified BETWEEN '$modified_from' AND '$modified_to'");
+            }
+        }
+
         $tickets = $this->tickets_model->get_tickets();
         // echo $this->db->last_query();
         $this->load->view('ticket/advanced', compact('tickets', 'users', 'statuses', 'categories'));

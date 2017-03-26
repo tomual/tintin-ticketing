@@ -1,4 +1,4 @@
-    </div>
+        </div>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>
@@ -9,24 +9,47 @@
 
 
 <script type="text/javascript">
-	var nowTemp = new Date();
-	var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
-	 
-	var created_from = $('#created_from').datepicker().on('changeDate', function(ev) {
-	  if (ev.date.valueOf() > created_to.date.valueOf()) {
-	    var newDate = new Date(ev.date)
-	    newDate.setDate(newDate.getDate() + 1);
-	    created_to.setValue(newDate);
-	  }
-	  created_from.hide();
-	  $('#created_to')[0].focus();
-	}).data('datepicker');
-	var created_to = $('#created_to').datepicker().on('changeDate', function(ev) {
-	  created_to.hide();
-	}).data('datepicker');
+    var nowTemp = new Date();
+    var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+     
+    var created_from = $('#created_from').datepicker().on('changeDate', function(ev) {
+        if (ev.date.valueOf() > created_to.date.valueOf()) {
+            var newDate = new Date(ev.date)
+            newDate.setDate(newDate.getDate() + 1);
+            created_to.setValue(newDate);
+        }
+        created_from.hide();
+        $('#created_to')[0].focus();
+    }).data('datepicker');
+    var created_to = $('#created_to').datepicker().on('changeDate', function(ev) {
+        created_to.hide();
+    }).data('datepicker');
 
-	created_from.setValue('<?php echo $this->input->get('created_from') ?>');
-	created_to.setValue('<?php echo $this->input->get('created_to') ?>');
+    var modified_from = $('#modified_from').datepicker().on('changeDate', function(ev) {
+        if (ev.date.valueOf() > modified_to.date.valueOf()) {
+            var newDate = new Date(ev.date)
+            newDate.setDate(newDate.getDate() + 1);
+            modified_to.setValue(newDate);
+        }
+        modified_from.hide();
+        $('#modified_to')[0].focus();
+    }).data('datepicker');
+    var modified_to = $('#modified_to').datepicker().on('changeDate', function(ev) {
+        modified_to.hide();
+    }).data('datepicker');
+
+    <?php if($this->input->get('created_from')): ?>
+    created_from.setValue('<?php echo $this->input->get('created_from') ?>');
+    <?php endif ?>
+    <?php if($this->input->get('created_to')): ?>
+    created_to.setValue('<?php echo $this->input->get('created_to') ?>');
+    <?php endif ?>
+    <?php if($this->input->get('modified_from')): ?>
+    modified_from.setValue('<?php echo $this->input->get('modified_from') ?>');
+    <?php endif ?>
+    <?php if($this->input->get('modified_to')): ?>
+    modified_to.setValue('<?php echo $this->input->get('modified_to') ?>');
+    <?php endif ?>
 </script>
 
 </body>

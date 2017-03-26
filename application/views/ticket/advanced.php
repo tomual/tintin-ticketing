@@ -23,6 +23,23 @@
 			<form class="form-horizontal" method="get">
 
 				<div class="form-group row">
+					<label for="category" class="col-md-2 col-form-label"><i class="fa fa-times" aria-hidden="true"></i> Last Modified</label>
+					<div class="col-md-1 text-center">
+						<label for="category" class="col-form-label">between</label>
+					</div>
+					<div class="col-md-2">
+						<input type="text" name="modified_from" id="modified_from" class="form-control" placeholder="dd/mm/yyyy">
+					</div>
+
+					<div class="col-md-1">
+						<label for="category" class="col-form-label">and</label>
+					</div>
+					<div class="col-md-2">
+						<input type="text" name="modified_to" id="modified_to" class="form-control" placeholder="dd/mm/yyyy">
+					</div>
+				</div>
+
+				<div class="form-group row">
 					<label for="category" class="col-md-2 col-form-label"><i class="fa fa-times" aria-hidden="true"></i> Created</label>
 					<div class="col-md-1 text-center">
 						<label for="category" class="col-form-label">between</label>

@@ -47,7 +47,7 @@ class Versions_model extends CI_Model {
         $this->db->select('versions.*, username');
         $this->db->join('users', 'user=uid', 'left');
         $this->db->where('tid', $tid);
-        $this->db->order_by('created', 'asc');
+        $this->db->order_by('created', 'desc');
         $query = $this->db->get('versions');
         return $query->result();
     }
