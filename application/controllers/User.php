@@ -27,23 +27,34 @@ class User extends CI_Controller {
 
     public function login()
     {
+        $this->load->library('form_validation');
+
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
-            $form = $_POST;
-            $username = $form['username'];
-            $password = $form['password'];
-            if($login = $this->users_model->login($username, $password))
-            {
-                $data = array(
-                    'uid'       => $login->uid,
-                    'username'  => $login->username,
-                    'email'     => $login->email,
-                    'role'     => $login->role,
-                    'authenticated' => TRUE
-                );
+            $this->form_validation->set_rules('username', 'Username', 'required');
+            $this->form_validation->set_rules('password', 'Password', 'required');
 
-                $this->session->set_userdata($data);
-                redirect($_SERVER['HTTP_REFERRER']);
+            $username = $this->input->post('username');
+            $password = $this->input->post('password');
+            if($this->form_validation->run() != FALSE)
+            {
+                if($login = $this->users_model->login($username, $password))
+                {
+                    $data = array(
+                        'uid'       => $login->uid,
+                        'username'  => $login->username,
+                        'email'     => $login->email,
+                        'role'     => $login->role,
+                        'authenticated' => TRUE
+                    );
+
+                    $this->session->set_userdata($data);
+                    redirect($_SERVER['HTTP_REFERRER']);
+                }
+                else
+                {
+                    $this->session->set_flashdata('error', 'Invalid login.');
+                }
             }
         }
         $this->load->view('user/login');

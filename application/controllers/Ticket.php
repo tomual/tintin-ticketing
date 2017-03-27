@@ -105,6 +105,8 @@ class Ticket extends CI_Controller {
 
     public function edit($tid)
     {
+        $this->load->library('form_validation');
+
         $statuses = $this->statuses_model->get_statuses();
         $categories = $this->categories_model->get_categories();
         $ticket = $this->tickets_model->get_ticket($tid);
@@ -121,28 +123,52 @@ class Ticket extends CI_Controller {
 
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
-            $form = $_POST;
-            $before = $ticket;
-            $this->tickets_model->set_ticket($form);
-            $after = $this->tickets_model->get_ticket($tid);
-            $this->versions_model->add_version($tid, '', $before, $after);
-            $ticket = $after;
+            $this->form_validation->set_rules('title', 'Ticket title', 'required');
+            $this->form_validation->set_rules('description', 'Ticket description', 'required');
+            $this->form_validation->set_rules('category', 'Ticket category', 'required');
 
-            redirect("/ticket/view/$tid");
+            if($this->form_validation->run() != FALSE)
+            {
+                $form = $_POST;
+                $before = $ticket;
+                $this->tickets_model->set_ticket($form);
+                $after = $this->tickets_model->get_ticket($tid);
+                $this->versions_model->add_version($tid, '', $before, $after);
+                $ticket = $after;
+
+                redirect("/ticket/view/$tid");
+            }
+            else
+            {
+                $this->session->set_flashdata('error', 'There are errors in the ticket.');
+            }
         }
         $this->load->view('ticket/edit', compact('ticket', 'versions', 'statuses', 'categories'));
     }
 
     public function create()
     {
+        $this->load->library('form_validation');
+
         $this->roles_model->check_permission('ticket', 3);
         $categories = $this->categories_model->get_categories();
     	if($_SERVER['REQUEST_METHOD'] == 'POST')
     	{
-    		$form = $_POST;
-            $form['author'] = $this->session->userdata('uid');
-            $tid = $this->tickets_model->add_ticket($form);
-            redirect("/ticket/view/$tid");
+            $this->form_validation->set_rules('title', 'Ticket title', 'required');
+            $this->form_validation->set_rules('description', 'Ticket description', 'required');
+            $this->form_validation->set_rules('category', 'Ticket category', 'required');
+
+            if($this->form_validation->run() != FALSE)
+            {
+        		$form = $_POST;
+                $form['author'] = $this->session->userdata('uid');
+                $tid = $this->tickets_model->add_ticket($form);
+                redirect("/ticket/view/$tid");
+            }
+            else
+            {
+                $this->session->set_flashdata('error', 'There are errors in the ticket.');
+            }
     	}
         $this->load->view('ticket/create', compact('categories'));
     }
