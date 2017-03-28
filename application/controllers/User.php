@@ -16,13 +16,29 @@ class User extends CI_Controller {
 
     public function create()
     {
+        $this->load->library('form_validation');
+        $roles = $this->roles_model->get_roles();
+
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
-            $form = $_POST;
-            $this->users_model->add_user($form);
-            redirect(base_url());
+            $this->form_validation->set_rules('username', 'Username', 'required|is_unique[users.username]');
+            $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
+            $this->form_validation->set_rules('password', 'Password', 'required|min_length[6]');
+            $this->form_validation->set_rules('password2', 'Password Confirmation', 'required|min_length[6]|matches[password]');
+            $this->form_validation->set_rules('role', 'Role', 'required|numeric');
+
+            if($this->form_validation->run() != FALSE)
+            {
+                $form = $_POST;
+                $this->users_model->add_user($form);
+                $this->all();
+            }
+            else
+            {
+                $this->session->set_flashdata('error', 'There are errors in the user.');
+            }
         }
-        $this->load->view('user/create');
+        $this->load->view('user/create', compact('roles'));
     }
 
     public function login()

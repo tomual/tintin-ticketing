@@ -12,20 +12,20 @@
 	<form method="post">
 	    <div class="form-group <?php if(form_error('title')) echo 'has-danger' ?>">
 	        <label for="">Ticket Title</label>
-	        <input type="text" class="form-control" id="title" name="title" placeholder="Ticket title">
+	        <input type="text" class="form-control" id="title" name="title" placeholder="Ticket title" value="<?php echo set_value('title') ?>">
 	        <?php echo form_error('title') ?>
 	    </div>
 	    <div class="form-group <?php if(form_error('description')) echo 'has-danger' ?>">
 	        <label for="">Ticket Description</label>
-	        <textarea class="form-control" id="description" name="description" rows="3"></textarea>
-		        <?php echo form_error('description') ?>
+	        <textarea class="form-control" id="description" name="description" rows="3"><?php echo set_value('description') ?></textarea>
+		    <?php echo form_error('description') ?>
 	    </div>
 	    <div class="form-group <?php if(form_error('category')) echo 'has-danger' ?>">
 	        <label for="category">Category</label>
 	        <select class="form-control" id="category" name="category">
 	        	<option value="">Select Category ...</option>
 	        <?php foreach($categories as $category): ?>
-	            <option value="<?php echo $category->cid ?>"><?php echo $category->name ?></option>
+	            <option value="<?php echo $category->cid ?>" <?php echo set_select('category', $category->cid) ?>><?php echo $category->name ?></option>
 	        <?php endforeach ?>
 	        </select>
 	        <?php echo form_error('category') ?>

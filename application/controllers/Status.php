@@ -11,6 +11,9 @@ class Status extends CI_Controller {
 
     public function create()
     {
+        $this->load->library('form_validation');
+
+        
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
             $form = $_POST;

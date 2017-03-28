@@ -11,13 +11,25 @@ class Category extends CI_Controller {
 
     public function create()
     {
+        $this->load->library('form_validation');
+
         $this->roles_model->check_permission('category', 2);
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
+            $this->form_validation->set_rules('title', 'Ticket title', 'required');
+            $this->form_validation->set_rules('description', 'Ticket description', 'required');
+            $this->form_validation->set_rules('category', 'Ticket category', 'required');
+
+            if($this->form_validation->run() != FALSE)
+            {
             $form = $_POST;
             $this->categories_model->add_category($form);
             echo site_url('category/all');
             redirect(site_url('category/all'));
+            else
+            {
+                $this->session->set_flashdata('error', 'There are errors in the category.');
+            }
         }
         $this->load->view('category/create');
     }

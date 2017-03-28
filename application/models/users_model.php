@@ -33,7 +33,7 @@ class Users_model extends CI_Model {
         $this->username = $form['username'];
         $this->password = password_hash($form['password'], PASSWORD_DEFAULT);
         $this->email = $form['email'];
-        $this->group = 1;
+        $this->role = $form['role'];
 
         $this->db->insert('users', $this);
     }
