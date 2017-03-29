@@ -13,13 +13,23 @@ class Status extends CI_Controller {
     {
         $this->load->library('form_validation');
 
-        
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
-            $form = $_POST;
-            $this->statuses_model->add_status($form);
-            echo site_url('status/all');
-            redirect(site_url('status/all'));
+            $this->form_validation->set_rules('label', 'Status name', 'required');
+            $this->form_validation->set_rules('description', 'Status description', 'required');
+            $this->form_validation->set_rules('place', 'Status place', 'required|numeric');
+
+            if($this->form_validation->run() != FALSE)
+            {
+                $form = $_POST;
+                $this->statuses_model->add_status($form);
+                echo site_url('status/all');
+                redirect(site_url('status/all'));
+            }
+            else
+            {
+                $this->session->set_flashdata('error', 'There are errors in the ticket.');
+            }
         }
         $this->load->view('status/create');
     }
@@ -42,7 +52,7 @@ class Status extends CI_Controller {
         $this->roles_model->check_permission('status', 2);
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
-            $this->statuses_model->delete_status($cid);
+            $this->statuses_model->remove_status($cid);
         }
         redirect(site_url('status/all'));
     }

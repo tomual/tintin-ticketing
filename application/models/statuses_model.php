@@ -17,6 +17,7 @@ class Statuses_model extends CI_Model {
     public function get_statuses()
     {
         $this->db->order_by('place', 'asc');
+        $this->db->where('removed', 'N');
         $query = $this->db->get('statuses');
         return $query->result();
     }
@@ -36,10 +37,11 @@ class Statuses_model extends CI_Model {
         $this->db->update('statuses', $this, array('sid' => $_POST['sid']));
     }
 
-    public function delete_status($sid)
+    public function remove_status($sid)
     {
         $this->db->where('sid', $sid);
-        $this->db->delete('statuses'); 
+        $this->db->set('removed', 'Y');
+        $this->db->update('statuses'); 
     }
 
 }
