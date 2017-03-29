@@ -14,6 +14,7 @@ class Categories_model extends CI_Model {
     public function get_categories()
     {
         $this->db->order_by('name', 'asc');
+        $this->db->where('removed', 'N');
         $query = $this->db->get('categories');
         return $query->result();
     }
@@ -31,10 +32,11 @@ class Categories_model extends CI_Model {
         $this->db->update('categories', $this, array('cid' => $_POST['cid']));
     }
 
-    public function delete_category($cid)
+    public function remove_category($cid)
     {
         $this->db->where('cid', $cid);
-        $this->db->delete('categories'); 
+        $this->db->set('removed', 'Y');
+        $this->db->update('categories'); 
     }
 
 }

@@ -10,7 +10,7 @@
 	<?php endif ?>
 
 	<form method="post">
-	    <div class="form-group <?php if(form_error('title')) echo 'has-danger' ?>">
+	    <div class="form-group <?php if(form_error('name')) echo 'has-danger' ?>">
 	        <label for="">Category Name</label>
 	        <input type="text" class="form-control" id="name" name="name" placeholder="Category name">
 	        <?php echo form_error('name') ?>
