@@ -34,6 +34,7 @@ class Tickets_model extends CI_Model {
     public function get_tickets()
     {
         $this->db->select('tickets.tid, tickets.title, tickets.status, tickets.category, statuses.label, username, tickets.created, sid, versions.modified');
+        $this->db->where('status != 5');
         $this->db->join('users', 'author=uid', 'left');
         $this->db->join('statuses', 'status=sid', 'left');
         $this->db->join('(select tid, created as modified from versions order by created desc limit 1) versions', 'tickets.tid=versions.tid', 'left');

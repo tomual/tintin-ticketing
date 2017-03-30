@@ -5,7 +5,7 @@ class Settings_model extends CI_Model {
     public $group_name;
     public $owner;
     public $start_status;
-    public $end_status;
+    public $closed_status;
     public $css;
     public $register_open;
 
@@ -21,7 +21,7 @@ class Settings_model extends CI_Model {
         $this->group_name = $form['group_name'];
         $this->owner = $form['owner'];
         $this->start_status = $form['start_status'];
-        $this->end_status = $form['end_status'];
+        $this->closed_status = $form['closed_status'];
         $this->css = $form['css'];
         $this->register_open = $form['register_open'];
 

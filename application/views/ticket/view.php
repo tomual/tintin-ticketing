@@ -10,7 +10,11 @@
 		</tr>
 		<tr>
 			<th width="100">Modified</th>
-			<td><?php echo date('d/m/Y h:mA', strtotime($versions[0]->created)) ?></td>
+			<?php if(isset($versions[0])): ?>
+				<td><?php echo date('d/m/Y h:mA', strtotime($versions[0]->created)) ?></td>
+			<?php else: ?>
+				<td><?php echo date('d/m/Y h:mA', strtotime($ticket->created)) ?></td>
+			<?php endif ?>
 		</tr>
 		<tr>
 			<th>Author</th>

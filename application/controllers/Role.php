@@ -22,10 +22,11 @@ class Role extends CI_Controller {
 
             if($this->form_validation->run() != FALSE)
             {
-            $form = $_POST;
-            $this->roles_model->add_role($form);
-            echo site_url('role/all');
-            redirect(site_url('role/all'));
+                $form = $_POST;
+                $this->roles_model->add_role($form);
+                echo site_url('role/all');
+                redirect(site_url('role/all'));
+            }
             else
             {
                 $this->session->set_flashdata('error', 'There are errors in the role.');
