@@ -23,7 +23,11 @@
 	    </div>
 	    <div class="form-group <?php if(form_error('place')) echo 'has-danger' ?>">
 	        <label for="">Place</label>
-	        <input type="text" class="form-control" id="place" name="place" value="<?php echo $status->place ?>">
+	        <select name="place" class="form-control">
+	        <?php for($i = 1; $i <= $count; $i++): ?>
+	        	<option value="<?php echo $i ?>" <?php echo $status->place == $i ? 'selected' : ''?>><?php echo $i ?></option>
+	        <?php endfor ?>
+	        </select>
 	    	<?php echo form_error('place') ?>
 	    </div>
 	    <button type="submit" class="btn btn-primary">Edit</button>

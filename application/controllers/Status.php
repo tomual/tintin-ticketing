@@ -30,7 +30,9 @@ class Status extends CI_Controller {
                 $this->session->set_flashdata('error', 'There are errors in the ticket.');
             }
         }
-        $this->load->view('status/create');
+
+        $count = count($this->statuses_model->get_statuses());
+        $this->load->view('status/create', compact('count'));
     }
 
     public function edit($cid)
@@ -54,7 +56,8 @@ class Status extends CI_Controller {
             }
         }
         $status = $this->statuses_model->get_status($cid);
-        $this->load->view('status/edit', compact('status'));
+        $count = count($this->statuses_model->get_statuses());
+        $this->load->view('status/edit', compact('status', 'count'));
     }
 
     public function remove($cid)
