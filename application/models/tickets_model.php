@@ -10,9 +10,10 @@ class Tickets_model extends CI_Model {
 
     public function add_ticket($form)
     {
+        $this->load->model('settings_model');
         $this->title = $form['title'];
         $this->description = $form['description'];
-        $this->status = 4;
+        $this->status = $this->settings_model->get_setting('start_status');
         $this->category = $form['category'];
         $this->author = $form['author'];
 
