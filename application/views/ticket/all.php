@@ -1,6 +1,6 @@
 <?php $this->load->view('header') ?>
 
-<div class="col-sm-12">
+<div class="col-sm-12 content">
 	<h1>All Tickets</h1>
 
 	<table class="table">
