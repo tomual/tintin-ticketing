@@ -7,23 +7,24 @@ $grey:  #979C9C;
 $white: #F2EBC7;
 $blue:  #348899;
 
+html {
+    height: 100%;
+}
+
 body {
     background: #FFFFFF;
     font-family: $font-stack;
-    color: #26393D;
+    color: $black;
+    height: 100%;
+    width: 100%;
 }
 
 p {
     line-height: 2.0em;
 }
 
-nav {
-    background: $black;
-}
-
 h1 {
-    margin-bottom: 30px;
-    font-size: 20px;
+    margin-bottom: 40px;
 }
 
 .dropdown-menu.user-nav {
@@ -31,17 +32,14 @@ h1 {
     right: 0;
 }
 
-.content {
-    background: #FFF;
-    padding: 50px 65px;
-    border-radius: 3px;
-}
-
 a {
     color: $blue;
 }
  
 nav {
+
+    margin-bottom: 80px;
+    background: $black;
 
     a {
         color: #FFF;
@@ -77,4 +75,68 @@ nav {
     .dropdown-menu {
         border-radius: 0;
     }
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(52, 54, 66,.05);
+}
+
+.ticket
+{
+    h1 {
+        margin: 40px 0px;
+        margin-bottom: 30px;
+    }
+
+    h2 {
+        opacity: 0.5;
+        font-size: 1.5rem;
+    }
+
+    .btn.edit {
+        margin-top: 45px;
+    }
+
+    .update, .changes {
+        padding: 30px 40px;
+        border: 1px solid #DDD;
+        padding: 30px 40px;
+        box-shadow: 0 0 15px #EEE;
+        margin-bottom: 40px;
+    }
+
+    .description {
+        padding: 20px 50px;
+
+        h2 {                    
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+    }
+}
+
+.btn {
+    border-radius: 0;
+}
+
+.btn-link {
+    color: $blue;
+}
+
+.btn-primary {
+    background-color: $blue;
+    border-color: $blue;
+}
+
+form {
+    .form-control {
+        border-radius: 0;
+        border-color: #CCC !important;
+    }
+}
+
+footer {
+    width: 100%;
+    padding: 30px;
 }

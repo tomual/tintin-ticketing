@@ -92,7 +92,7 @@
 					</div>
 				</div>
 
-				<input type="submit" class="btn btn-secondary">
+				<input type="submit" class="btn btn-primary">
 
 			</form>
 		</div>

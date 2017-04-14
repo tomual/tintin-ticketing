@@ -1,50 +1,91 @@
 @import url("https://fonts.googleapis.com/css?family=Lato:400,700");
+html {
+  height: 100%; }
+
 body {
   background: #FFFFFF;
   font-family: "Lato", sans-serif;
-  color: #26393D; }
+  color: #343642;
+  height: 100%;
+  width: 100%; }
 
 p {
   line-height: 2.0em; }
 
-nav {
-  background: #343642; }
-
 h1 {
-  margin-bottom: 30px;
-  font-size: 20px; }
+  margin-bottom: 40px; }
 
 .dropdown-menu.user-nav {
   left: auto;
   right: 0; }
 
-.content {
-  background: #FFF;
-  padding: 50px 65px;
-  border-radius: 3px; }
-
 a {
   color: #348899; }
 
-nav a {
-  color: #FFF; }
-nav a:hover {
-  color: #F2EBC7; }
-nav a.logo {
-  background: #962D3E;
-  color: #FFF;
-  padding: .5em 1em;
-  font-weight: 600;
-  letter-spacing: 1px;
-  word-spacing: 5px;
-  margin-right: 10px; }
-nav .nav-pills .nav-link {
-  padding: 15px 25px; }
-nav .nav-pills .nav-item.open .nav-link, nav .nav-pills .nav-item.open .nav-link:focus, nav .nav-pills .nav-item.open .nav-link:hover, nav .nav-pills .nav-link.active, nav .nav-pills .nav-link.active:focus, nav .nav-pills .nav-link.active:hover {
-  background-color: #348899; }
-nav .dropdown-item {
-  padding: 10px 1.5rem; }
-nav .dropdown-menu {
+nav {
+  margin-bottom: 80px;
+  background: #343642; }
+  nav a {
+    color: #FFF; }
+  nav a:hover {
+    color: #F2EBC7; }
+  nav a.logo {
+    background: #962D3E;
+    color: #FFF;
+    padding: .5em 1em;
+    font-weight: 600;
+    letter-spacing: 1px;
+    word-spacing: 5px;
+    margin-right: 10px; }
+  nav .nav-pills .nav-link {
+    padding: 15px 25px; }
+  nav .nav-pills .nav-item.open .nav-link, nav .nav-pills .nav-item.open .nav-link:focus, nav .nav-pills .nav-item.open .nav-link:hover, nav .nav-pills .nav-link.active, nav .nav-pills .nav-link.active:focus, nav .nav-pills .nav-link.active:hover {
+    background-color: #348899; }
+  nav .dropdown-item {
+    padding: 10px 1.5rem; }
+  nav .dropdown-menu {
+    border-radius: 0; }
+
+.table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(52, 54, 66, 0.05); }
+
+.ticket h1 {
+  margin: 40px 0px;
+  margin-bottom: 30px; }
+.ticket h2 {
+  opacity: 0.5;
+  font-size: 1.5rem; }
+.ticket .btn.edit {
+  margin-top: 45px; }
+.ticket .update, .ticket .changes {
+  padding: 30px 40px;
+  border: 1px solid #DDD;
+  padding: 30px 40px;
+  box-shadow: 0 0 15px #EEE;
+  margin-bottom: 40px; }
+.ticket .description {
+  padding: 20px 50px; }
+  .ticket .description h2 {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 20px; }
+
+.btn {
   border-radius: 0; }
+
+.btn-link {
+  color: #348899; }
+
+.btn-primary {
+  background-color: #348899;
+  border-color: #348899; }
+
+form .form-control {
+  border-radius: 0;
+  border-color: #CCC !important; }
+
+footer {
+  width: 100%;
+  padding: 30px; }
 
 /*# sourceMappingURL=style.css.map */

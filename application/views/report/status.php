@@ -10,7 +10,7 @@
 					<option value="<?php echo $status->sid ?>" <?php if($this->input->get('status') == $status->sid) echo 'selected' ?>><?php echo $status->label ?></option>
 				<?php endforeach ?>
 			</select>
-			<input type="submit" value="Refine" class="form-control">
+			<input type="submit" value="Refine" class="form-control btn btn-primary">
 		</div>
 	</form>
 	<br>

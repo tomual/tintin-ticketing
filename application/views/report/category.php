@@ -10,7 +10,7 @@
 					<option value="<?php echo $category->cid ?>" <?php if($this->input->get('category') == $category->cid) echo 'selected' ?>><?php echo $category->name ?></option>
 				<?php endforeach ?>
 			</select>
-			<input type="submit" value="Refine" class="form-control">
+			<input type="submit" value="Refine" class="form-control btn btn-primary">
 		</div>
 	</form>
 	<br>

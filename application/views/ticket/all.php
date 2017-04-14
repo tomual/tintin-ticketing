@@ -3,7 +3,7 @@
 <div class="col-sm-12 content">
 	<h1>All Tickets</h1>
 
-	<table class="table">
+	<table class="table table-striped">
 		<thead>
 			<tr>
 				<th>ID</th>

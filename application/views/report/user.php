@@ -10,7 +10,7 @@
 					<option value="<?php echo $user->uid ?>" <?php if($this->input->get('user') == $user->uid) echo 'selected' ?>><?php echo $user->username ?></option>
 				<?php endforeach ?>
 			</select>
-			<input type="submit" value="Refine" class="form-control">
+			<input type="submit" value="Refine" class="form-control btn btn-primary">
 		</div>
 	</form>
 	<br>
