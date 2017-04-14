@@ -17,12 +17,13 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </head>
 <body>
 
-<nav class="container">
+<nav>
+<div class="container">
     <div class="row">
         <div class="col-sm-12">
             <ul class="nav nav-pills">
                 <li class="nav-item">
-                    <a class="nav-link active" href="/ticket/create">New Ticket</a>
+                    <a href="/" class="nav-link logo"><i class="fa fa-hand-o-right" aria-hidden="true"></i> Tintin</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Tickets</a>
@@ -56,6 +57,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                             <a class="dropdown-item" href="/user/edit">Account</a>
                             <a class="dropdown-item" href="/logout/">Log Out</a>
                         </div>
+                    </li>
                     <?php else: ?>                                
                         <li class="nav-item" style="float: right;">
                                 <a class="nav-link" href="/login"0/>Log In</a>
@@ -64,6 +66,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             </ul>
         </div>
     </div>
+    </div>   
 </nav>
 
 <div class="container">

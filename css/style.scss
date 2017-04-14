@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700');
+
+$font-stack:    'Lato', sans-serif;
+$red:   #962D3E;
+$black: #343642;
+$grey:  #979C9C;
+$white: #F2EBC7;
+$blue:  #348899;
+
+body {
+    background: #FFFFFF;
+    font-family: $font-stack;
+    color: #26393D;
+}
+
+p {
+    line-height: 2.0em;
+}
+
+nav {
+    background: $black;
+}
+
+h1 {
+    margin-bottom: 30px;
+    font-size: 20px;
+}
+
+.dropdown-menu.user-nav {
+    left: auto;
+    right: 0;
+}
+
+.content {
+    background: #FFF;
+    padding: 50px 65px;
+    border-radius: 3px;
+}
+
+a {
+    color: $blue;
+}
+ 
+nav {
+
+    a {
+        color: #FFF;
+    }
+
+    a:hover {
+        color: $white;
+    }
+
+    a.logo {
+        background: $red;
+        color: #FFF;
+        padding: .5em 1em;
+        font-weight: 600;
+        letter-spacing: 1px;
+        word-spacing: 5px;
+        margin-right: 10px;
+    }
+
+    .nav-pills .nav-link {
+        padding: 15px 25px;
+    }
+
+    .nav-pills .nav-item.open .nav-link, .nav-pills .nav-item.open .nav-link:focus, .nav-pills .nav-item.open .nav-link:hover, .nav-pills .nav-link.active, .nav-pills .nav-link.active:focus, .nav-pills .nav-link.active:hover {
+
+        background-color: $blue;
+    }
+
+    .dropdown-item {
+        padding: 10px 1.5rem;
+    }
+
+    .dropdown-menu {
+        border-radius: 0;
+    }
+}
