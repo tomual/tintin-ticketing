@@ -51,4 +51,21 @@ class Versions_model extends CI_Model {
         $query = $this->db->get('versions');
         return $query->result();
     }
+
+    public function get_last_status($tid)
+    {
+        $this->load->model('statuses_model');
+
+        $this->db->where('tid', $tid);
+        $this->db->like('difference', '"status":');
+        $query = $this->db->get('versions', 1);
+        if($query)
+        {
+            $version = json_decode($query->row()->difference);
+            $status = $this->statuses_model->get_status_by_label($version->status->before);
+
+            return $status;
+        }
+        return false;
+    }
 }

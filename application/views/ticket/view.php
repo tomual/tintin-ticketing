@@ -42,12 +42,18 @@
         <form method="post">
             <input type="hidden" name="tid" value="<?php echo $ticket->tid ?>">
             <div class="form-group">
-                <label for="status">Status</label>
-                <select class="form-control" id="status" name="status">
-                    <?php foreach($statuses as $status): ?>
-                        <option value="<?php echo $status->sid ?>" <?php if($ticket->sid == $status->sid) echo 'selected' ?>><?php echo $status->label ?></option>
-                    <?php endforeach ?>
-                </select>
+                <label><input type="radio" name="status" value="<?php echo $ticket->sid ?>" checked> Leave as <?php echo $ticket->status ?></label><br />
+
+                <?php if($ticket->sid != 5): ?>
+                    <?php if($next_status): ?>
+                        <label><input type="radio" name="status" value="<?php echo $next_status->sid ?>"> Move to <?php echo $next_status->label ?></label><br />
+                    <?php endif ?>
+                    <label><input type="radio" name="status" value="5"> Close ticket</label><br />
+                <?php else: ?>
+                    <?php if($last_status): ?>
+                        <label><input type="radio" name="status" value="<?php echo $last_status->sid ?>"> Move back to <?php echo $last_status->label ?></label><br />
+                    <?php endif ?>
+                <?php endif ?>
             </div>
             <div class="form-group">
                 <label for="">Comments</label>

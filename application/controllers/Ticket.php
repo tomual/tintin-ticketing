@@ -84,6 +84,12 @@ class Ticket extends CI_Controller {
         $categories = $this->categories_model->get_categories();
         $ticket = $this->tickets_model->get_ticket($tid);
         $versions = $this->versions_model->get_versions($tid);
+        $next_status = $this->statuses_model->get_next($ticket->sid);
+
+        if($ticket->sid == 5)
+        {
+            $last_status = $this->versions_model->get_last_status($tid);
+        }
 
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
@@ -100,7 +106,7 @@ class Ticket extends CI_Controller {
 
             redirect("/ticket/view/$tid");
         }
-        $this->load->view('ticket/view', compact('ticket', 'versions', 'statuses', 'categories'));
+        $this->load->view('ticket/view', compact('ticket', 'versions', 'statuses', 'categories', 'next_status', 'last_status'));
     }
 
     public function edit($tid)

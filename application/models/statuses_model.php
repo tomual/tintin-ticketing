@@ -29,6 +29,13 @@ class Statuses_model extends CI_Model {
         return $query->row();
     }
 
+    public function get_status_by_label($label)
+    {
+        $this->db->where('label', $label);
+        $query = $this->db->get('statuses', 1);
+        return $query->row();
+    }
+
     public function set_status($form)
     {
         $this->label = $form['label'];
@@ -42,6 +49,17 @@ class Statuses_model extends CI_Model {
         $this->db->where('sid', $sid);
         $this->db->set('removed', 'Y');
         $this->db->update('statuses'); 
+    }
+
+    public function get_next($sid)
+    {
+        $status = $this->get_status($sid);
+        $current_place = $status->place;
+        $this->db->where('removed', 'N');
+        $this->db->where('place > ' . $current_place);
+        $this->db->order_by('place', 'asc');
+        $query = $this->db->get('statuses', 1);
+        return $query->row();
     }
 
 }
