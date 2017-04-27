@@ -86,7 +86,7 @@ class Ticket extends CI_Controller {
         $versions = $this->versions_model->get_versions($tid);
         $next_status = $this->statuses_model->get_next($ticket->sid);
 
-        if($ticket->sid == 5)
+        if($ticket->sid == 0)
         {
             $last_status = $this->versions_model->get_last_status($tid);
         }

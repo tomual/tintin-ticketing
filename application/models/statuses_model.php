@@ -17,7 +17,7 @@ class Statuses_model extends CI_Model {
     public function get_statuses()
     {
         $this->db->order_by('place', 'asc');
-        $this->db->where('removed', 'N');
+        $this->db->where('active', 'Y');
         $query = $this->db->get('statuses');
         return $query->result();
     }
@@ -47,7 +47,7 @@ class Statuses_model extends CI_Model {
     public function remove_status($sid)
     {
         $this->db->where('sid', $sid);
-        $this->db->set('removed', 'Y');
+        $this->db->set('active', 'Y');
         $this->db->update('statuses'); 
     }
 
@@ -55,7 +55,7 @@ class Statuses_model extends CI_Model {
     {
         $status = $this->get_status($sid);
         $current_place = $status->place;
-        $this->db->where('removed', 'N');
+        $this->db->where('active', 'Y');
         $this->db->where('place > ' . $current_place);
         $this->db->order_by('place', 'asc');
         $query = $this->db->get('statuses', 1);

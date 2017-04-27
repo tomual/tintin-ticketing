@@ -28,6 +28,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Tickets</a>
                     <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/ticket/create">New ticket</a>
                         <a class="dropdown-item" href="/ticket/all">All tickets</a>
                         <a class="dropdown-item" href="/ticket/status">By Status</a>
                         <a class="dropdown-item" href="/ticket/user">By User</a>

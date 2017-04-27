@@ -63,12 +63,25 @@ nav {
   padding: 30px 40px;
   box-shadow: 0 0 15px #EEE;
   margin-bottom: 40px; }
+  .ticket .update .form-check-label, .ticket .changes .form-check-label {
+    line-height: 40px; }
+  .ticket .update .form-check-input:only-child, .ticket .changes .form-check-input:only-child {
+    position: static;
+    margin-right: 5px; }
+  .ticket .update .form-check, .ticket .changes .form-check {
+    position: relative;
+    display: block;
+    margin-bottom: .75rem;
+    margin: 20px 0; }
 .ticket .description {
   padding: 20px 50px; }
   .ticket .description h2 {
     font-size: 18px;
     font-weight: 600;
     margin-bottom: 20px; }
+
+.advanced-search {
+  margin: 40px 0; }
 
 .btn {
   border-radius: 0; }

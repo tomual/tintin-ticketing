@@ -5,25 +5,10 @@
 
 	<div class="container advanced-search">
 		<div class="form-group row">
-
-			<div class="form-group row">
-				<div class="col-md-5">
-					<label for="category" class="col-form-label">Add Search Criteria ...</label>
-					<select class="form-control">
-						<option value="">Select criteria ...</option>
-						<option value="status">Status</option>
-						<option value="category">Category</option>
-						<option value="user">User</option>
-						<option value="created">Created</option>
-					</select>
-				</div>
-			</div>
-
-			<br>
 			<form class="form-horizontal" method="get">
 
 				<div class="form-group row">
-					<label for="category" class="col-md-2 col-form-label"><i class="fa fa-times" aria-hidden="true"></i> Last Modified</label>
+					<label for="category" class="col-md-2 col-form-label">Last Modified</label>
 					<div class="col-md-1 text-center">
 						<label for="category" class="col-form-label">between</label>
 					</div>
@@ -40,7 +25,7 @@
 				</div>
 
 				<div class="form-group row">
-					<label for="category" class="col-md-2 col-form-label"><i class="fa fa-times" aria-hidden="true"></i> Created</label>
+					<label for="category" class="col-md-2 col-form-label">Created</label>
 					<div class="col-md-1 text-center">
 						<label for="category" class="col-form-label">between</label>
 					</div>
@@ -57,7 +42,7 @@
 				</div>
 
 				<div class="form-group row">
-					<label for="category" class="col-md-2 col-form-label"><i class="fa fa-times" aria-hidden="true"></i> Category</label>
+					<label for="category" class="col-md-2 col-form-label">Category</label>
 					<div class="col-md-4">
 						<select name="category" class="form-control">
 							<option value="">Select ...</option>
@@ -69,7 +54,7 @@
 				</div>
 
 				<div class="form-group row">
-					<label for="author" class="col-md-2 col-form-label"><i class="fa fa-times" aria-hidden="true"></i> Users</label>
+					<label for="author" class="col-md-2 col-form-label">Author</label>
 					<div class="col-md-4">
 						<select name="author" class="form-control">
 							<option value="">Select ...</option>
@@ -81,13 +66,26 @@
 				</div>
 
 				<div class="form-group row">
-					<label for="status" class="col-md-2 col-form-label"><i class="fa fa-times" aria-hidden="true"></i> Status</label>
+					<label for="worker" class="col-md-2 col-form-label">Worker</label>
+					<div class="col-md-4">
+						<select name="worker" class="form-control">
+							<option value="">Select ...</option>
+							<?php foreach($users as $user): ?>
+								<option value="<?php echo $user->uid ?>" <?php if($this->input->get('worker') == $user->uid) echo 'selected' ?>><?php echo $user->username ?></option>
+							<?php endforeach ?>
+						</select>
+					</div>
+				</div>
+
+				<div class="form-group row">
+					<label for="status" class="col-md-2 col-form-label">Status</label>
 					<div class="col-md-4">
 						<select name="status" class="form-control">
 							<option value="">Select ...</option>
 							<?php foreach($statuses as $status): ?>
 								<option value="<?php echo $status->sid ?>" <?php if($this->input->get('status') == $status->sid) echo 'selected' ?>><?php echo $status->label ?></option>
 							<?php endforeach ?>
+							<option value="0">Cancelled</option>
 						</select>
 					</div>
 				</div>

@@ -103,6 +103,22 @@ nav {
         padding: 30px 40px;
         box-shadow: 0 0 15px #EEE;
         margin-bottom: 40px;
+
+        .form-check-label {
+            line-height: 40px;
+        }
+
+        .form-check-input:only-child {
+            position: static;
+            margin-right: 5px;
+        }
+
+        .form-check {
+            position: relative;
+            display: block;
+            margin-bottom: .75rem;
+            margin: 20px 0;
+        }
     }
 
     .description {
@@ -114,6 +130,12 @@ nav {
             margin-bottom: 20px;
         }
     }
+
+
+}
+
+.advanced-search {
+    margin: 40px 0;
 }
 
 .btn {
