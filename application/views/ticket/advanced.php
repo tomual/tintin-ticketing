@@ -90,12 +90,12 @@
 					</div>
 				</div>
 
-				<input type="submit" class="btn btn-primary">
+				<input type="submit" value="Search" class="btn btn-primary">
 
 			</form>
 		</div>
 	</div>
-	<table class="table">
+	<table class="table table-striped">
 		<thead>
 			<tr>
 				<th>ID</th>
@@ -117,6 +117,7 @@
 			<?php endforeach ?>
 		</tbody>
 	</table>
+	<?php $this->load->view('ticket/pagination') ?>
 </div>
 
 <?php $this->load->view('footer') ?>

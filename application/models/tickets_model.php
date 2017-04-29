@@ -40,6 +40,7 @@ class Tickets_model extends CI_Model {
         $this->db->join('statuses', 'status=sid', 'left');
         $this->db->join('(select tid, created as modified from versions order by created desc limit 1) versions', 'tickets.tid=versions.tid', 'left');
         $this->db->order_by('tickets.created', 'desc');
+
         $query = $this->db->get('tickets');
         return $query->result();
     }

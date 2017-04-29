@@ -10,12 +10,16 @@ class Ticket extends CI_Controller {
         $this->load->model('statuses_model');
         $this->load->model('categories_model');
         $this->load->model('versions_model');
+
+
     }
 
     public function all()
     {
         $tickets = $this->tickets_model->get_tickets();
-        $this->load->view('ticket/all', compact('tickets'));
+        $pagination = array('total' => count($tickets), 'limit' => PER_PAGE);
+        $tickets = $this->paginate($tickets);
+        $this->load->view('ticket/all', compact('tickets', 'pagination'));
     }
 
     public function advanced()
@@ -74,8 +78,10 @@ class Ticket extends CI_Controller {
         }
 
         $tickets = $this->tickets_model->get_tickets();
+        $pagination = array('total' => count($tickets), 'limit' => PER_PAGE);
+        $tickets = $this->paginate($tickets);
         // echo $this->db->last_query();
-        $this->load->view('ticket/advanced', compact('tickets', 'users', 'statuses', 'categories'));
+        $this->load->view('ticket/advanced', compact('tickets', 'users', 'statuses', 'categories', 'pagination'));
     }
 
     public function view($tid)
@@ -224,5 +230,20 @@ class Ticket extends CI_Controller {
             $tickets = $this->tickets_model->get_by_category();
         }
         $this->load->view('report/category', compact('tickets', 'categories'));
+    }
+
+    public function paginate($results)
+    {
+        if($this->input->get('page'))
+        {
+            $page = $this->input->get('page');
+            $offset = ($page - 1) * PER_PAGE;
+            $length = PER_PAGE;
+            $pages = ceil(count($results) / $length);
+
+            return array_slice($results, $offset, $length);
+
+        }
+        return array_slice($results, 0, $length);
     }
 }

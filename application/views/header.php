@@ -17,7 +17,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 </head>
 <body>
 
-<nav>
+<nav class="header">
 <div class="container">
     <div class="row">
         <div class="col-sm-12">

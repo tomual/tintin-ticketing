@@ -22,14 +22,14 @@ h1 {
 a {
   color: #348899; }
 
-nav {
+nav.header {
   margin-bottom: 80px;
   background: #343642; }
-  nav a {
+  nav.header a {
     color: #FFF; }
-  nav a:hover {
+  nav.header a:hover {
     color: #F2EBC7; }
-  nav a.logo {
+  nav.header a.logo {
     background: #962D3E;
     color: #FFF;
     padding: .5em 1em;
@@ -37,14 +37,16 @@ nav {
     letter-spacing: 1px;
     word-spacing: 5px;
     margin-right: 10px; }
-  nav .nav-pills .nav-link {
+  nav.header .nav-pills .nav-link {
     padding: 15px 25px; }
-  nav .nav-pills .nav-item.open .nav-link, nav .nav-pills .nav-item.open .nav-link:focus, nav .nav-pills .nav-item.open .nav-link:hover, nav .nav-pills .nav-link.active, nav .nav-pills .nav-link.active:focus, nav .nav-pills .nav-link.active:hover {
+  nav.header .nav-pills .nav-item.open .nav-link, nav.header .nav-pills .nav-item.open .nav-link:focus, nav.header .nav-pills .nav-item.open .nav-link:hover, nav.header .nav-pills .nav-link.active, nav.header .nav-pills .nav-link.active:focus, nav.header .nav-pills .nav-link.active:hover {
     background-color: #348899; }
-  nav .dropdown-item {
+  nav.header .dropdown-item {
     padding: 10px 1.5rem; }
-  nav .dropdown-menu {
+  nav.header .dropdown-menu {
     border-radius: 0; }
+  nav.header .dropdown-menu a {
+    color: #343642; }
 
 .table-striped tbody tr:nth-of-type(odd) {
   background-color: rgba(52, 54, 66, 0.05); }

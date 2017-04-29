@@ -36,7 +36,7 @@ a {
     color: $blue;
 }
  
-nav {
+nav.header {
 
     margin-bottom: 80px;
     background: $black;
@@ -74,6 +74,10 @@ nav {
 
     .dropdown-menu {
         border-radius: 0;
+    }
+
+    .dropdown-menu a {
+        color: $black;
     }
 }
 

@@ -25,6 +25,8 @@
 			<?php endforeach ?>
 		</tbody>
 	</table>
+	
+	<?php $this->load->view('ticket/pagination') ?>
 </div>
 
 <?php $this->load->view('footer') ?>
