@@ -25,10 +25,12 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <li class="nav-item">
                     <a href="/" class="nav-link logo"><i class="fa fa-hand-o-right" aria-hidden="true"></i> Tintin</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/ticket/create">New ticket</a>
+                </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Tickets</a>
                     <div class="dropdown-menu">
-                        <a class="dropdown-item" href="/ticket/create">New ticket</a>
                         <a class="dropdown-item" href="/ticket/all">All tickets</a>
                         <a class="dropdown-item" href="/ticket/status">By Status</a>
                         <a class="dropdown-item" href="/ticket/user">By User</a>
@@ -47,14 +49,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <a class="dropdown-item" href="/settings/">System</a>
                     </div>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#">Disabled</a>
-                </li>
                     <?php if($this->session->has_userdata('username')): ?>
                     <li class="nav-item dropdown" style="float: right;">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $this->session->userdata('username') ?></a>
                         <div class="dropdown-menu user-nav">
-                            <a class="dropdown-item" href="/tickets/me">My Tickets</a>
+                            <a class="dropdown-item" href="/ticket/me">My Tickets</a>
                             <a class="dropdown-item" href="/user/edit">Account</a>
                             <a class="dropdown-item" href="/logout/">Log Out</a>
                         </div>

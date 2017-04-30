@@ -22,6 +22,18 @@ class Ticket extends CI_Controller {
         $this->load->view('ticket/all', compact('tickets', 'pagination'));
     }
 
+    public function me() 
+    {
+        $uid = $this->session->userdata('uid');
+
+        $this->db->where('worker', $uid);
+
+        $tickets = $this->tickets_model->get_tickets();
+        $pagination = array('total' => count($tickets), 'limit' => PER_PAGE);
+        $tickets = $this->paginate($tickets);
+        $this->load->view('ticket/me', compact('tickets', 'pagination'));
+    }
+
     public function advanced()
     {
         $author = '';
