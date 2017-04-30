@@ -21,6 +21,10 @@
             <td><?php echo $ticket->author ?></td>
         </tr>
         <tr>
+            <th>Worker</th>
+            <td><?php echo $ticket->worker ? $ticket->worker : '<i class="text-muted">-</i>' ?></td>
+        </tr>
+        <tr>
             <th>Category</th>
             <td><?php echo $ticket->category ?></td>
         </tr>
@@ -39,6 +43,8 @@
     <br />
     <div class="update">
         <h2>Update</h2>
+
+        <?php if($this->session->has_userdata('username')): ?>
         <form method="post">
             <input type="hidden" name="tid" value="<?php echo $ticket->tid ?>">
             <div class="form-check">
@@ -55,12 +61,25 @@
                     <?php endif ?>
                 <?php endif ?>
             </div>
+
+            <div class="form-group">
+                <label for="">Ticket Worker</label>
+                <select name="worker" class="form-control">
+                    <option value="">No one</option>
+                    <?php foreach($users as $user): ?>
+                        <option value="<?php echo $user->uid ?>" <?php if($ticket->uid == $user->uid) echo 'selected' ?>><?php echo $user->username ?></option>
+                    <?php endforeach ?>
+                </select>
+            </div>
             <div class="form-group">
                 <label for="">Comments</label>
                 <textarea class="form-control" id="comment" name="comment" rows="3"></textarea>
             </div>
             <button type="submit" class="btn btn-primary">Update</button>
         </form>
+        <?php else: ?>
+            <p>Please <a href="/login">log in</a> to make edits to tickets.</p>
+        <?php endif ?>
     </div>
     <div class="changes">
         <h2>Changes</h2>
@@ -70,7 +89,7 @@
                         <td>
                             <?php echo date('d/m/y h:mA', strtotime($version->created)) ?> by <?php echo $version->username ?><br />
                             <?php foreach(json_decode($version->difference) as $key=>$value): ?>
-                                <b><?php echo ucfirst($key) ?></b> <i class="text-muted">changed from</i> <?php echo $value->before?> <i class="text-muted">to</i> <?php echo $value->after ?><br />
+                                <b><?php echo ucfirst($key) ?></b> <i class="text-muted">changed from</i> <?php echo $value->before ? $value->before : "Nothing" ?> <i class="text-muted">to</i> <?php echo $value->after ? $value->after : "Nothing" ?><br />
                             <?php endforeach ?>
                             <br />
                             <?php if(!empty($version->comment)): ?>

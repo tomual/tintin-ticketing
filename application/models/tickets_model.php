@@ -7,6 +7,7 @@ class Tickets_model extends CI_Model {
     public $status;
     public $category;
     public $author;
+    public $worker;
 
     public function add_ticket($form)
     {
@@ -23,18 +24,20 @@ class Tickets_model extends CI_Model {
 
     public function get_ticket($tid)
     {
-        $this->db->select('tid, title, tickets.created, username as author, tickets.description, label as status, categories.name as category, sid, cid');
+        $this->db->select('tid, title, tickets.created, a.username as author, w.username as worker, w.uid as uid, tickets.description, label as status, categories.name as category, sid, cid');
         $this->db->where('tid', $tid);
-        $this->db->join('users', 'author=uid', 'left');
+        $this->db->join('users as a', 'author=a.uid', 'left');
+        $this->db->join('users as w', 'worker=w.uid', 'left');
         $this->db->join('statuses', 'status=sid', 'left');
         $this->db->join('categories', 'category=cid', 'left');
+
         $query = $this->db->get('tickets', 1);
         return $query->row();
     }
 
     public function get_tickets()
     {
-        $this->db->select('tickets.tid, tickets.title, tickets.status, tickets.category, statuses.label, username, tickets.created, sid, versions.modified');
+        $this->db->select('tickets.tid, tickets.title, tickets.status, tickets.category, statuses.label, worker, username, tickets.created, sid, versions.modified');
         $this->db->where('status != 0');
         $this->db->join('users', 'author=uid', 'left');
         $this->db->join('statuses', 'status=sid', 'left');

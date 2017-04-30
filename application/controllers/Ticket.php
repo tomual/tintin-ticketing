@@ -25,16 +25,21 @@ class Ticket extends CI_Controller {
     public function advanced()
     {
         $author = '';
+        $worker = '';
         $status = '';
         $category = '';
 
-        $users = $this->users_model->get_users();        
+        $users = $this->users_model->get_users();
         $statuses = $this->statuses_model->get_statuses();
         $categories = $this->categories_model->get_categories();
 
         if($author = $this->input->get('author'))
         {
             $this->db->where('author', $author);
+        }
+        if($worker = $this->input->get('worker'))
+        {
+            $this->db->where('worker', $worker);
         }
 
         if($status = $this->input->get('status'))
@@ -80,7 +85,6 @@ class Ticket extends CI_Controller {
         $tickets = $this->tickets_model->get_tickets();
         $pagination = array('total' => count($tickets), 'limit' => PER_PAGE);
         $tickets = $this->paginate($tickets);
-        // echo $this->db->last_query();
         $this->load->view('ticket/advanced', compact('tickets', 'users', 'statuses', 'categories', 'pagination'));
     }
 
@@ -91,6 +95,7 @@ class Ticket extends CI_Controller {
         $ticket = $this->tickets_model->get_ticket($tid);
         $versions = $this->versions_model->get_versions($tid);
         $next_status = $this->statuses_model->get_next($ticket->sid);
+        $users = $this->users_model->get_users();
 
         if($ticket->sid == 0)
         {
@@ -112,7 +117,7 @@ class Ticket extends CI_Controller {
 
             redirect("/ticket/view/$tid");
         }
-        $this->load->view('ticket/view', compact('ticket', 'versions', 'statuses', 'categories', 'next_status', 'last_status'));
+        $this->load->view('ticket/view', compact('ticket', 'versions', 'users', 'statuses', 'categories', 'next_status', 'last_status'));
     }
 
     public function edit($tid)
@@ -233,14 +238,13 @@ class Ticket extends CI_Controller {
     }
 
     public function paginate($results)
-    {
-        if($this->input->get('page'))
+{
+        $page = $this->input->get('page');
+        $offset = ($page - 1) * PER_PAGE;
+        $length = PER_PAGE;
+        $pages = ceil(count($results) / $length);
+        if($page)
         {
-            $page = $this->input->get('page');
-            $offset = ($page - 1) * PER_PAGE;
-            $length = PER_PAGE;
-            $pages = ceil(count($results) / $length);
-
             return array_slice($results, $offset, $length);
 
         }
