@@ -91,4 +91,13 @@ class Tickets_model extends CI_Model {
         $this->db->order_by('category', 'asc');
         return $this->get_tickets();
     }
+
+    public function group_by_status()
+    {
+        $this->db->select('status, label, COUNT(*) as count');
+        $this->db->group_by('status');
+        $this->db->join('statuses', 'status=sid');
+        $query = $this->db->get('tickets');
+        return $query->result();
+    }
 }

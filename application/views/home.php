@@ -3,12 +3,30 @@
 <div class="col-sm-12">
 	<h1>Tintin Ticketing System</h1>
 
-	<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-	tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-	quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-	consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-	cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-	proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+	<p>Welcome to Tintin, an open source ticketing system.</p>
+
+	<p>Use the navigation above to get started.</p>
+	<h2>Summary</h2>
+	<?php if(empty($summary)): ?>
+		<p>There are currently no tickets. Click "New Ticket" above to create a ticket.</p>
+	<?php else: ?>
+			<table class="summary table table-bordered">
+				<thead>
+					<tr>
+						<?php foreach($summary as $status): ?>
+							<td><?php echo $status->label ?></td>
+						<?php endforeach ?>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<?php foreach($summary as $status): ?>
+							<td><?php echo $status->count ?></td>
+						<?php endforeach ?>
+					</tr>
+				</tbody>
+			</table>
+	<?php endif ?>
 </div>
 
 <?php $this->load->view('footer') ?>

@@ -6,11 +6,13 @@ class Home extends CI_Controller {
     public function index()
     {
         $this->load->model('users_model');
+        $this->load->model('tickets_model');
 
         if(empty($this->users_model->get_users()))
         {
             redirect('user/create');
         }
-        $this->load->view('home');
+        $summary = $this->tickets_model->group_by_status();
+        $this->load->view('home', compact('summary'));
     }
 }
