@@ -17,6 +17,13 @@ class User extends CI_Controller {
     public function create()
     {
         $this->load->library('form_validation');
+
+        $first_user = empty($this->users_model->get_users());
+        if(!$first_user)
+        {
+            $this->roles_model->check_permission('user', 2);
+        }
+
         $roles = $this->roles_model->get_roles();
 
         if($_SERVER['REQUEST_METHOD'] == 'POST')
@@ -31,7 +38,15 @@ class User extends CI_Controller {
             {
                 $form = $_POST;
                 $this->users_model->add_user($form);
-                $this->all();
+
+                if($first_user)
+                {
+                    redirect('/');
+                }
+                else
+                {
+                    $this->all();
+                }
             }
             else
             {
