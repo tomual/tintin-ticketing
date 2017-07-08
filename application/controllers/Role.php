@@ -16,9 +16,12 @@ class Role extends CI_Controller {
         $this->roles_model->check_permission('role', 2);
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
-            $this->form_validation->set_rules('title', 'Ticket title', 'required');
-            $this->form_validation->set_rules('description', 'Ticket description', 'required');
-            $this->form_validation->set_rules('category', 'Ticket category', 'required');
+            $this->form_validation->set_rules('label', 'Role label', 'required');
+            $this->form_validation->set_rules('permission_ticket', 'Ticket permission', 'required');
+            $this->form_validation->set_rules('permission_category', 'Category permission', 'required');
+            $this->form_validation->set_rules('permission_status', 'Status permission', 'required');
+            $this->form_validation->set_rules('permission_user', 'User permission', 'required');
+            $this->form_validation->set_rules('permission_role', 'Role permission', 'required');
 
             if($this->form_validation->run() != FALSE)
             {

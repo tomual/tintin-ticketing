@@ -13,8 +13,8 @@
 <script>
 tinymce.init({
   selector: 'textarea#description',  // change this value according to your HTML
-  plugins: "link, image, codesample",
-  toolbar: 'undo redo | styleselect | bold italic underline | link image codesample',
+  plugins: "link, image, codesample, lists",
+  toolbar: 'undo redo | styleselect | bold italic underline | bullist numlist | link image codesample',
   statusbar: false,
   menubar: false,
   height : 250

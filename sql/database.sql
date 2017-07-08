@@ -37,7 +37,8 @@ CREATE TABLE IF NOT EXISTS `roles` (
 -- Dumping data for table tintin.roles: ~1 rows (approximately)
 /*!40000 ALTER TABLE `roles` DISABLE KEYS */;
 INSERT INTO `roles` (`rid`, `label`, `permission_ticket`, `permission_user`, `permission_category`, `permission_status`, `permission_role`) VALUES
-	(1, 'Administrator', 5, 3, 2, 3, 3);
+	(1, 'Administrator', 5, 3, 2, 3, 3),
+  (2, 'Standard User', 3, 1, 1, 1, 1);
 /*!40000 ALTER TABLE `roles` ENABLE KEYS */;
 
 -- Dumping structure for table tintin.settings
@@ -107,13 +108,6 @@ CREATE TABLE IF NOT EXISTS `users` (
   `removed` enum('Y','N') NOT NULL DEFAULT 'N',
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
-
--- Dumping data for table tintin.users: ~2 rows (approximately)
-/*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` (`uid`, `username`, `password`, `email`, `role`, `created`, `lastlogin`, `reset_token`, `reset_token_expire`, `removed`) VALUES
-	(7, 'tom', '$2y$10$i/EzBdkmsnhvNP0nCMJhbuN5idvNfhIxHP1NB3hliLRuNnvQLEY9.', 'tom@mail.com', 1, '2017-01-27 21:43:07', NULL, NULL, NULL, 'Y'),
-	(8, 'fin', '$2y$10$59CVgFVfst7iolQgST3ONeKBDWlnsT.r7CYG88Y.1Fy8qOsK7QmTK', 'codeafin@gmail.com', 1, '2017-03-27 21:44:08', NULL, NULL, NULL, 'Y');
-/*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 -- Dumping structure for table tintin.versions
 CREATE TABLE IF NOT EXISTS `versions` (

@@ -10,12 +10,13 @@
 	<?php endif ?>
 
 	<form method="post">
-	    <div class="form-group <?php if(form_error('title')) echo 'has-danger' ?>">
+	    <div class="form-group <?php if(form_error('label')) echo 'has-danger' ?>">
 	        <label for="">Label</label>
 	        <input type="text" class="form-control" id="label" name="label" placeholder="Role label">
+	    	<?php echo form_error('label') ?>
 	    </div>
 	    <legend>Permissions</legend>
-	    <div class="form-group <?php if(form_error('title')) echo 'has-danger' ?>">
+	    <div class="form-group <?php if(form_error('permission_ticket')) echo 'has-danger' ?>">
 	        <label for="">Ticket</label>
 	        <select class="form-control" name="permission_ticket">
 	        	<option value="5">All</option>
@@ -26,7 +27,7 @@
 	        </select>
 	    	<?php echo form_error('permission_ticket') ?>
 	    </div>
-	    <div class="form-group <?php if(form_error('title')) echo 'has-danger' ?>">
+	    <div class="form-group <?php if(form_error('permission_category')) echo 'has-danger' ?>">
 	        <label for="">Category</label>
 	        <select class="form-control" name="permission_category">
 	        	<option value="3">All</option>
@@ -35,7 +36,7 @@
 	        </select>
 	    	<?php echo form_error('permission_category') ?>
 	    </div>
-	    <div class="form-group <?php if(form_error('title')) echo 'has-danger' ?>">
+	    <div class="form-group <?php if(form_error('permission_status')) echo 'has-danger' ?>">
 	        <label for="">Status</label>
 	        <select class="form-control" name="permission_status">
 	        	<option value="3">All</option>
@@ -44,7 +45,7 @@
 	        </select>
 	    	<?php echo form_error('permission_status') ?>
 	    </div>
-	    <div class="form-group <?php if(form_error('title')) echo 'has-danger' ?>">
+	    <div class="form-group <?php if(form_error('permission_user')) echo 'has-danger' ?>">
 	        <label for="">Users</label>
 	        <select class="form-control" name="permission_user">
 	        	<option value="3">All</option>
@@ -53,7 +54,7 @@
 	        </select>
 	    	<?php echo form_error('permission_user') ?>
 	    </div>
-	    <div class="form-group <?php if(form_error('title')) echo 'has-danger' ?>">
+	    <div class="form-group <?php if(form_error('permission_role')) echo 'has-danger' ?>">
 	        <label for="">Roles</label>
 	        <select class="form-control" name="permission_role">
 	        	<option value="3">All</option>

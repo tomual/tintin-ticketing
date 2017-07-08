@@ -114,4 +114,8 @@ footer {
   display: none;
 }
 
+.changes p {
+  line-height: 1.5em;
+}
+
 /*# sourceMappingURL=style.css.map */
