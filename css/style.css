@@ -31,6 +31,7 @@ nav.header {
     color: #F2EBC7; }
   nav.header a.logo {
     background: #962D3E;
+    border-radius: 0;
     color: #FFF;
     padding: .5em 1em;
     font-weight: 600;

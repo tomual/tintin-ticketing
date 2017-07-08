@@ -32,7 +32,9 @@ class Status extends CI_Controller {
         }
 
         $count = count($this->statuses_model->get_statuses());
-        $this->load->view('status/create', compact('count'));
+
+        $title = 'New Status';
+        $this->load->view('status/create', compact('count', 'title'));
     }
 
     public function edit($cid)
@@ -57,7 +59,9 @@ class Status extends CI_Controller {
         }
         $status = $this->statuses_model->get_status($cid);
         $count = count($this->statuses_model->get_statuses());
-        $this->load->view('status/edit', compact('status', 'count'));
+
+        $title = 'Edit Status';
+        $this->load->view('status/edit', compact('status', 'count', 'title'));
     }
 
     public function remove($cid)
@@ -73,7 +77,9 @@ class Status extends CI_Controller {
     public function all()
     {
         $statuses = $this->statuses_model->get_statuses();
-        $this->load->view('status/all', compact('statuses'));
+
+        $title = 'Statuses';
+        $this->load->view('status/all', compact('statuses', 'title'));
     }
 
 }

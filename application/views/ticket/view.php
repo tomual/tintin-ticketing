@@ -67,7 +67,7 @@
                 <select name="worker" class="form-control">
                     <option value="">No one</option>
                     <?php foreach($users as $user): ?>
-                        <option value="<?php echo $user->uid ?>" <?php if($ticket->uid == $user->uid) echo 'selected' ?>><?php echo $user->username ?></option>
+                        <option value="<?php echo $user->uid ?>" <?php if($ticket->uid == $user->uid || (!$ticket->uid && $user->uid == $this->session->userdata('uid'))) echo 'selected' ?>><?php echo $user->username ?></option>
                     <?php endforeach ?>
                 </select>
             </div>

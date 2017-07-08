@@ -19,7 +19,9 @@ class Ticket extends CI_Controller {
         $tickets = $this->tickets_model->get_tickets();
         $pagination = array('total' => count($tickets), 'limit' => PER_PAGE);
         $tickets = $this->paginate($tickets);
-        $this->load->view('ticket/all', compact('tickets', 'pagination'));
+
+        $title = 'All Tickets';
+        $this->load->view('ticket/all', compact('tickets', 'pagination', 'title'));
     }
 
     public function me() 
@@ -31,7 +33,9 @@ class Ticket extends CI_Controller {
         $tickets = $this->tickets_model->get_tickets();
         $pagination = array('total' => count($tickets), 'limit' => PER_PAGE);
         $tickets = $this->paginate($tickets);
-        $this->load->view('ticket/me', compact('tickets', 'pagination'));
+
+        $title = 'My Tickets';
+        $this->load->view('ticket/me', compact('tickets', 'pagination', 'title'));
     }
 
     public function advanced()
@@ -97,7 +101,9 @@ class Ticket extends CI_Controller {
         $tickets = $this->tickets_model->get_tickets();
         $pagination = array('total' => count($tickets), 'limit' => PER_PAGE);
         $tickets = $this->paginate($tickets);
-        $this->load->view('ticket/advanced', compact('tickets', 'users', 'statuses', 'categories', 'pagination'));
+
+        $title = 'Advanced Search';
+        $this->load->view('ticket/advanced', compact('tickets', 'users', 'statuses', 'categories', 'pagination', 'title'));
     }
 
     public function view($tid)
@@ -129,7 +135,9 @@ class Ticket extends CI_Controller {
 
             redirect("/ticket/view/$tid");
         }
-        $this->load->view('ticket/view', compact('ticket', 'versions', 'users', 'statuses', 'categories', 'next_status', 'last_status'));
+
+        $title = $ticket->title;
+        $this->load->view('ticket/view', compact('ticket', 'versions', 'users', 'statuses', 'categories', 'next_status', 'last_status', 'title'));
     }
 
     public function edit($tid)
@@ -172,7 +180,9 @@ class Ticket extends CI_Controller {
                 $this->session->set_flashdata('error', 'There are errors in the ticket.');
             }
         }
-        $this->load->view('ticket/edit', compact('ticket', 'versions', 'statuses', 'categories'));
+
+        $title = 'Edit Ticket';
+        $this->load->view('ticket/edit', compact('ticket', 'versions', 'statuses', 'categories', 'title'));
     }
 
     public function create()
@@ -199,7 +209,9 @@ class Ticket extends CI_Controller {
                 $this->session->set_flashdata('error', 'There are errors in the ticket.');
             }
     	}
-        $this->load->view('ticket/create', compact('categories'));
+
+        $title = 'New Ticket';
+        $this->load->view('ticket/create', compact('categories', 'title'));
     }
 
     public function status()
@@ -215,7 +227,8 @@ class Ticket extends CI_Controller {
             $tickets = $this->tickets_model->get_by_status();
         }
 
-        $this->load->view('report/status', compact('tickets', 'statuses'));
+        $title = 'Tickets by Status';
+        $this->load->view('report/status', compact('tickets', 'statuses', 'title'));
     }
 
     public function user()
@@ -231,7 +244,9 @@ class Ticket extends CI_Controller {
         {
             $tickets = $this->tickets_model->get_by_user();
         }
-        $this->load->view('report/user', compact('tickets', 'users'));
+
+        $title = 'Tickets by User';
+        $this->load->view('report/user', compact('tickets', 'users', 'title'));
     }
 
     public function category()
@@ -246,11 +261,13 @@ class Ticket extends CI_Controller {
         {
             $tickets = $this->tickets_model->get_by_category();
         }
-        $this->load->view('report/category', compact('tickets', 'categories'));
+
+        $title = 'Tickets by Category';
+        $this->load->view('report/category', compact('tickets', 'categories', 'title'));
     }
 
     public function paginate($results)
-{
+    {
         $page = $this->input->get('page');
         $offset = ($page - 1) * PER_PAGE;
         $length = PER_PAGE;

@@ -32,7 +32,9 @@ class Role extends CI_Controller {
                 $this->session->set_flashdata('error', 'There are errors in the role.');
             }
         }
-        $this->load->view('role/create');
+
+        $title = 'New Role';
+        $this->load->view('role/create', compact('role', 'title'));
     }
 
     public function edit($cid)
@@ -46,7 +48,9 @@ class Role extends CI_Controller {
             redirect(site_url('role/all'));
         }
         $role = $this->roles_model->get_role($cid);
-        $this->load->view('role/edit', compact('role'));
+
+        $title = 'Edit Role';
+        $this->load->view('role/edit', compact('role', 'title'));
     }
 
     public function remove($cid)
@@ -62,7 +66,9 @@ class Role extends CI_Controller {
     public function all()
     {
         $roles = $this->roles_model->get_roles();
-        $this->load->view('role/all', compact('roles'));
+
+        $title = 'Roles';
+        $this->load->view('role/all', compact('roles', 'title'));
     }
 
 }

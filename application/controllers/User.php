@@ -11,7 +11,9 @@ class User extends CI_Controller {
     public function all()
     {
         $users = $this->users_model->get_users();
-        $this->load->view('user/all', compact('users'));
+
+        $title = 'Users';
+        $this->load->view('user/all', compact('users', 'title'));
     }
 
     public function create()
@@ -53,7 +55,9 @@ class User extends CI_Controller {
                 $this->session->set_flashdata('error', 'There are errors in the user.');
             }
         }
-        $this->load->view('user/create', compact('roles'));
+
+        $title = 'New User';
+        $this->load->view('user/create', compact('roles', 'title'));
     }
 
     public function login()
@@ -88,7 +92,9 @@ class User extends CI_Controller {
                 }
             }
         }
-        $this->load->view('user/login');
+
+        $title = 'Log In';
+        $this->load->view('user/login', compact('roles', 'title'));
     }
 
     public function logout()
@@ -120,7 +126,9 @@ class User extends CI_Controller {
         }
         $user = $this->users_model->get_user($uid);
         $roles = $this->roles_model->get_roles();
-        $this->load->view('user/edit', compact('user', 'roles'));
+
+        $title = 'Edit User';
+        $this->load->view('user/edit', compact('user', 'roles', 'title'));
     }
 
     public function forgot_password()
@@ -136,7 +144,9 @@ class User extends CI_Controller {
             $this->load->view('user/forgot_sent');
             return;
         }
-        $this->load->view('user/forgot');
+
+        $title = 'Forgot Password';
+        $this->load->view('user/forgot', compact('title'));
     }
 
     public function reset_password($token)
@@ -153,9 +163,13 @@ class User extends CI_Controller {
                 $this->users_model->set_user($data);
                 redirect('/login');
             }
-            $this->load->view('user/forgot_reset', array('email' => $user->email));
+
+            $title = 'Reset Password';
+            $this->load->view('user/forgot_reset', array('email' => $user->email, 'title' => $title));
             return;
         }
-        $this->load->view('user/forgot_expired');
+
+        $title = 'Token Expired';
+        $this->load->view('user/forgot_expired', compact('title'));
     }
 }

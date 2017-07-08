@@ -29,7 +29,9 @@ class Category extends CI_Controller {
                 $this->session->set_flashdata('error', 'There are errors in the category.');
             }
         }
-        $this->load->view('category/create');
+
+        $title = 'New Category';
+        $this->load->view('category/create', compact('title'));
     }
 
     public function edit($cid)
@@ -51,7 +53,9 @@ class Category extends CI_Controller {
             }
         }
         $category = $this->categories_model->get_category($cid);
-        $this->load->view('category/edit', compact('category'));
+
+        $title = 'Edit Category';
+        $this->load->view('category/edit', compact('category', 'title'));
     }
 
     public function remove($cid)
@@ -67,7 +71,9 @@ class Category extends CI_Controller {
     public function all()
     {
         $categories = $this->categories_model->get_categories();
-        $this->load->view('category/all', compact('categories'));
+
+        $title = 'Categories';
+        $this->load->view('category/all', compact('categories', 'title'));
     }
 
 }
