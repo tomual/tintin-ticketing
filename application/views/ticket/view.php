@@ -94,8 +94,6 @@
                             <br />
                             <?php if(!empty($version->comment)): ?>
                                 <?php echo $version->comment ?>
-                            <br />
-                            <br />
                             <?php endif ?>
                         </td>
                     </tr>

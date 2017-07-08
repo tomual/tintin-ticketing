@@ -77,7 +77,7 @@ nav.header {
     margin-bottom: .75rem;
     margin: 20px 0; }
 .ticket .description {
-  padding: 20px 50px; }
+   }
   .ticket .description h2 {
     font-size: 18px;
     font-weight: 600;
@@ -108,6 +108,10 @@ footer {
   width: auto;
   text-align: center;
   margin-top: 30px;
+}
+
+.mce-branding-powered-by {
+  display: none;
 }
 
 /*# sourceMappingURL=style.css.map */
