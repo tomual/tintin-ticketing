@@ -21,4 +21,4 @@ Website for creating and managing tickets. Written in PHP using the CodeIgniter 
 
 ![Ticket listing page](https://1.bp.blogspot.com/-lQxX_vItfSI/WWJcMUyoPzI/AAAAAAAABqY/AEHgJ1opcfM5mrnlcGssHFaDY3BlH-LcQCLcBGAs/s1600/ss%2B%25282017-07-09%2Bat%2B11.18.21%2529.png)
 
-![Edit ticket page](https://1.bp.blogspot.com/-k3N_1kteYxk/WWJcMakk89I/AAAAAAAABqg/ACKvjw0nbZMa2HZkT-CH69U6K6wJgP11QCLcBGAs/s1600/ss%2B%25282017-07-09%2Bat%2B11.19.24%2529.png)
+![Edit ticket page](https://1.bp.blogspot.com/-AA0vGZiEUoQ/WWJdiZBHlWI/AAAAAAAABqk/kzsuPHFg9o4nsmgn2tGlLKmAKtFsiPfzwCLcBGAs/s1600/ss%2B%25282017-07-09%2Bat%2B11.44.24%2529.png)
