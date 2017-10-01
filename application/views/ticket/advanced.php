@@ -44,8 +44,7 @@
 				<div class="form-group row">
 					<label for="category" class="col-md-2 col-form-label">Category</label>
 					<div class="col-md-4">
-						<select name="category" class="form-control">
-							<option value="">Select ...</option>
+						<select name="category[]" id="category" multiple="multiple" class="form-control">
 							<?php foreach($categories as $category): ?>
 								<option value="<?php echo $category->cid ?>" <?php if($this->input->get('category') == $category->cid) echo 'selected' ?>><?php echo $category->name ?></option>
 							<?php endforeach ?>
@@ -56,8 +55,7 @@
 				<div class="form-group row">
 					<label for="author" class="col-md-2 col-form-label">Author</label>
 					<div class="col-md-4">
-						<select name="author" class="form-control">
-							<option value="">Select ...</option>
+						<select name="author[]" id="author" multiple="multiple" class="form-control">
 							<?php foreach($users as $user): ?>
 								<option value="<?php echo $user->uid ?>" <?php if($this->input->get('author') == $user->uid) echo 'selected' ?>><?php echo $user->username ?></option>
 							<?php endforeach ?>
@@ -68,8 +66,7 @@
 				<div class="form-group row">
 					<label for="worker" class="col-md-2 col-form-label">Worker</label>
 					<div class="col-md-4">
-						<select name="worker" class="form-control">
-							<option value="">Select ...</option>
+						<select name="worker[]" id="worker" multiple="multiple" class="form-control">
 							<?php foreach($users as $user): ?>
 								<option value="<?php echo $user->uid ?>" <?php if($this->input->get('worker') == $user->uid) echo 'selected' ?>><?php echo $user->username ?></option>
 							<?php endforeach ?>
@@ -80,8 +77,7 @@
 				<div class="form-group row">
 					<label for="status" class="col-md-2 col-form-label">Status</label>
 					<div class="col-md-4">
-						<select name="status" class="form-control">
-							<option value="">Select ...</option>
+						<select name="status[]" id="status" multiple="multiple" class="form-control">
 							<?php foreach($statuses as $status): ?>
 								<option value="<?php echo $status->sid ?>" <?php if($this->input->get('status') == $status->sid) echo 'selected' ?>><?php echo $status->label ?></option>
 							<?php endforeach ?>

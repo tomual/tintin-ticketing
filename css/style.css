@@ -118,4 +118,29 @@ footer {
   line-height: 1.5em;
 }
 
-/*# sourceMappingURL=style.css.map */
+.select2-container--default .select2-selection--multiple {
+    background-color: white;
+    border: 1px solid #CCC;
+    border-radius: 0;
+    cursor: text;
+}
+
+.select2-container--default .select2-selection--multiple .select2-selection__choice {
+    background-color: #eceeef;
+    border: 1px solid #CCC;
+    border-radius: 0;
+}
+
+.select2-container--default.select2-container--focus .select2-selection--multiple {
+    border: 1px solid #CCC;
+    outline: 0;
+}
+
+select[multiple=multiple] {
+  height: 37px;
+}
+
+.select2-dropdown {
+    border: 1px solid #CCC;
+    border-radius: 0px;
+}

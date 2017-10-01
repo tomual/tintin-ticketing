@@ -51,21 +51,21 @@ class Ticket extends CI_Controller {
 
         if($author = $this->input->get('author'))
         {
-            $this->db->where('author', $author);
+            $this->db->where_in('author', $author);
         }
         if($worker = $this->input->get('worker'))
         {
-            $this->db->where('worker', $worker);
+            $this->db->where_in('worker', $worker);
         }
 
         if($status = $this->input->get('status'))
         {
-            $this->db->where('status', $status);
+            $this->db->where_in('status', $status);
         }
 
         if($category = $this->input->get('category'))
         {
-            $this->db->where('category', $category);
+            $this->db->where_in('category', $category);
         }
 
         if($created_from = $this->input->get('created_from'))
