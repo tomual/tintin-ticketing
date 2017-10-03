@@ -14,7 +14,7 @@
 	    </div>
 	    <div class="form-group">
 	        <label for="">Password</label>
-	        <a href="/user/password/<?php echo $user->uid ?>" class="btn btn-default">Change Password</a>
+	        <a href="<?php echo base_url() ?>user/password/<?php echo $user->uid ?>" class="btn btn-default">Change Password</a>
 	    </div>
 	    <div class="form-group">
 	        <label for="">Role</label>
@@ -26,7 +26,7 @@
 	    </div>
 	    <div class="form-group">
 		    <button type="submit" class="btn btn-primary">Edit</button>
-		    <a href="/user/all/" class="btn btn-default">Back</a>
+		    <a href="<?php echo base_url() ?>user/all/" class="btn btn-default">Back</a>
 	    </div>
 	</form>
 </div>

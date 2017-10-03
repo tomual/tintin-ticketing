@@ -31,7 +31,7 @@
 		<?php endif ?>
 	    <div class="form-group">
 		    <button type="submit" class="btn btn-primary">Edit</button>
-		    <a href="/user/all/" class="btn btn-default">Back</a>
+		    <a href="<?php echo base_url() ?>user/all/" class="btn btn-default">Back</a>
 	    </div>
 	</form>
 </div>

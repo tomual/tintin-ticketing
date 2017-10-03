@@ -21,7 +21,7 @@
 					<td>
 						<?php if($this->roles_model->has_permission('status', 2)): ?>
 							<form method="post" action="/status/remove/<?php echo $status->sid ?>">
-								<a href="/status/edit/<?php echo $status->sid ?>"><button type="button" class="btn btn-link"><i class="fa fa-pencil" aria-hidden="true"></i></button></a>
+								<a href="<?php echo base_url() ?>status/edit/<?php echo $status->sid ?>"><button type="button" class="btn btn-link"><i class="fa fa-pencil" aria-hidden="true"></i></button></a>
 								<button type="submit" class="btn btn-link" onclick="return confirm('Are you sure you want to delete the status?')"><i class="fa fa-times" aria-hidden="true"></i></button>
 							</form>
 						<?php endif ?>
@@ -31,7 +31,7 @@
 		</tbody>
 	</table>
 
-	<a href="/status/create/"><button class="btn btn-primary">New status</button></a>
+	<a href="<?php echo base_url() ?>status/create/"><button class="btn btn-primary">New status</button></a>
 </div>
 
 <?php $this->load->view('footer') ?>

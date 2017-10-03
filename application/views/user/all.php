@@ -20,7 +20,7 @@
 					<?php if($this->roles_model->has_permission('user', 2)): ?>
 					<td>
 						<form method="post" action="/user/remove/<?php echo $user->uid ?>">
-							<a href="/user/edit/<?php echo $user->uid ?>"><button type="button" class="btn btn-link"><i class="fa fa-pencil" aria-hidden="true"></i></button></a>
+							<a href="<?php echo base_url() ?>user/edit/<?php echo $user->uid ?>"><button type="button" class="btn btn-link"><i class="fa fa-pencil" aria-hidden="true"></i></button></a>
 							<button type="submit" class="btn btn-link"><i class="fa fa-times" aria-hidden="true"></i></button>
 						</form>
 					</td>
@@ -30,7 +30,7 @@
 		</tbody>
 	</table>
 
-	<a href="/user/create/"><button class="btn btn-primary">New user</button></a>
+	<a href="<?php echo base_url() ?>user/create/"><button class="btn btn-primary">New user</button></a>
 </div>
 
 <?php $this->load->view('footer') ?>

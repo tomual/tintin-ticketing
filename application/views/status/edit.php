@@ -31,7 +31,7 @@
 	    	<?php echo form_error('place') ?>
 	    </div>
 	    <button type="submit" class="btn btn-primary">Edit</button>
-	    <a href="/status/all/" class="btn btn-default">Back</a>
+	    <a href="<?php echo base_url() ?>status/all/" class="btn btn-default">Back</a>
 	</form>
 </div>
 

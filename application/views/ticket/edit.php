@@ -40,7 +40,7 @@
 	        <?php echo form_error('status') ?>
 	    </div>
 	    <button type="submit" class="btn btn-primary">Edit</button>
-	    <a href="/ticket/view/<?php echo $ticket->tid ?>" class="btn btn-default">Back</a>
+	    <a href="<?php echo base_url() ?>ticket/view/<?php echo $ticket->tid ?>" class="btn btn-default">Back</a>
 	</form>
 </div>
 

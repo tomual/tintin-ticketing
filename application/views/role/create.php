@@ -64,7 +64,7 @@
 	    	<?php echo form_error('permission_role') ?>
 	    </div>
 	    <button type="submit" class="btn btn-primary">Create</button>
-		<a href="/role/all/"><button type="button" class="btn btn-default">Back</button></a>
+		<a href="<?php echo base_url() ?>role/all/"><button type="button" class="btn btn-default">Back</button></a>
 	</form>
 </div>
 

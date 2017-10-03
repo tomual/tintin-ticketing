@@ -26,7 +26,7 @@
 	    	<?php echo form_error('place') ?>
 	    </div>
 	    <button type="submit" class="btn btn-primary">Create</button>
-		<a href="/status/all/"><button type="button" class="btn btn-default">Back</button></a>
+		<a href="<?php echo base_url() ?>status/all/"><button type="button" class="btn btn-default">Back</button></a>
 	</form>
 </div>
 

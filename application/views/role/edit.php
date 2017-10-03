@@ -52,7 +52,7 @@
 	        </select>
 	    </div>
 	    <button type="submit" class="btn btn-primary">Edit</button>
-	    <a href="/role/all/" class="btn btn-default">Back</a>
+	    <a href="<?php echo base_url() ?>role/all/" class="btn btn-default">Back</a>
 	</form>
 </div>
 

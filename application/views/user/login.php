@@ -24,7 +24,7 @@
 		    </div>
 
 		    <div class="form-group col-lg-4 offset-lg-4">
-		    	<a href="/forgotpassword">Forgot Password</a>
+		    	<a href="<?php echo base_url() ?>forgotpassword">Forgot Password</a>
 		    </div>
 		    <div class="form-group col-lg-4 offset-lg-4">
 		    	<button type="submit" class="btn btn-primary">Submit</button>

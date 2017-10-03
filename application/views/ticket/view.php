@@ -1,6 +1,6 @@
 <?php $this->load->view('header') ?>
 <div class="col-sm-12 ticket">
-    <h2>Ticket ID: <?php echo $ticket->tid ?></h2><a href="/ticket/edit/<?php echo $ticket->tid ?>" class="btn btn-default pull-right edit">Edit</a>
+    <h2>Ticket ID: <?php echo $ticket->tid ?></h2><a href="<?php echo base_url() ?>ticket/edit/<?php echo $ticket->tid ?>" class="btn btn-default pull-right edit">Edit</a>
     <h1><?php echo $ticket->title ?></h1>
 
     <table class="table">
@@ -78,7 +78,7 @@
             <button type="submit" class="btn btn-primary">Update</button>
         </form>
         <?php else: ?>
-            <p>Please <a href="/login">log in</a> to make edits to tickets.</p>
+            <p>Please <a href="<?php echo base_url() ?>login">log in</a> to make edits to tickets.</p>
         <?php endif ?>
     </div>
     <div class="changes">

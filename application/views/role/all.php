@@ -18,7 +18,7 @@
 					<?php if($this->roles_model->has_permission('role', 2)): ?>
 					<td>
 						<form method="post" action="/role/remove/<?php echo $role->rid ?>">
-							<a href="/role/edit/<?php echo $role->rid ?>"><button type="button" class="btn btn-link"><i class="fa fa-pencil" aria-hidden="true"></i></button></a>
+							<a href="<?php echo base_url() ?>role/edit/<?php echo $role->rid ?>"><button type="button" class="btn btn-link"><i class="fa fa-pencil" aria-hidden="true"></i></button></a>
 							<button type="submit" class="btn btn-link"><i class="fa fa-times" aria-hidden="true"></i></button>
 						</form>
 					</td>
@@ -28,7 +28,7 @@
 		</tbody>
 	</table>
 
-	<a href="/role/create/"><button class="btn btn-primary">New role</button></a>
+	<a href="<?php echo base_url() ?>role/create/"><button class="btn btn-primary">New role</button></a>
 </div>
 
 <?php $this->load->view('footer') ?>
