@@ -144,3 +144,17 @@ select[multiple=multiple] {
     border: 1px solid #CCC;
     border-radius: 0px;
 }
+
+.switch-toggle label, .switch-toggle > span {
+    line-height: 38px;
+    border: 1px solid #CCC;
+    border-right: 0px;
+}
+
+.switch-toggle {
+    border-right: 1px solid #CCC;
+}
+
+input:checked + label {
+  color: #FFF;
+}

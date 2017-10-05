@@ -22,7 +22,7 @@ tinymce.init({
 });
 tinymce.init({
   selector: 'textarea#comment',  // change this value according to your HTML
-  toolbar: false,
+  toolbar: 'undo redo | styleselect | bold italic underline | bullist numlist | link image codesample',
   statusbar: false,
   menubar: false,
   height : 50
@@ -73,16 +73,16 @@ tinymce.init({
 </script>
 
 <script type="text/javascript">
-$('#category').select2({
+$('.advanced-search #category').select2({
   placeholder: "Select ..."
 });
-$('#author').select2({
+$('.advanced-search #author').select2({
   placeholder: "Select ..."
 });
-$('#worker').select2({
+$('.advanced-search #worker').select2({
   placeholder: "Select ..."
 });
-$('#status').select2({
+$('.advanced-search #status').select2({
   placeholder: "Select ..."
 });
 </script>

@@ -48,18 +48,16 @@
         <form method="post">
             <input type="hidden" name="tid" value="<?php echo $ticket->tid ?>">
             <div class="form-check">
-                <label class="form-check-label"><input type="radio" class="form-check-input" name="status" value="<?php echo $ticket->sid ?>" checked> Leave as <?php echo $ticket->status ?></label><br />
+                <fieldset>
+                  <div class="switch-toggle alert alert-light">
+                        <?php foreach($statuses as $status): ?>
+                            <input id="<?php echo $status->sid ?>" name="status" value="<?php echo $status->sid ?>" type="radio"  <?php if($ticket->sid == $status->sid) echo 'checked' ?>>
+                            <label for="<?php echo $status->sid ?>"><?php echo $status->label ?></label>
+                        <?php endforeach ?>
+                    <a class="btn btn-primary"></a>
+                  </div>
+                </fieldset>
 
-                <?php if($ticket->sid != 0): ?>
-                    <?php if($next_status): ?>
-                        <label class="form-check-label"><input type="radio" class="form-check-input" name="status" value="<?php echo $next_status->sid ?>"> Move to <?php echo $next_status->label ?></label><br />
-                    <?php endif ?>
-                    <label class="form-check-label"><input type="radio" class="form-check-input" name="status" value="0"> Cancel ticket</label><br />
-                <?php else: ?>
-                    <?php if(isset($last_status)): ?>
-                        <label class="form-check-label"><input type="radio" class="form-check-input" name="status" value="<?php echo $last_status->sid ?>"> Move back to <?php echo $last_status->label ?></label><br />
-                    <?php endif ?>
-                <?php endif ?>
             </div>
 
             <div class="form-group">
