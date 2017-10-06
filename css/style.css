@@ -3,7 +3,7 @@ html {
   height: 100%; }
 
 body {
-  background: #FFFFFF;
+  background: #f5f6f7;
   font-family: "Lato", sans-serif;
   color: #343642;
   height: 100%;
@@ -23,7 +23,6 @@ a {
   color: #348899; }
 
 nav.header {
-  margin-bottom: 80px;
   background: #343642; }
   nav.header a {
     color: #FFF; }
@@ -61,10 +60,6 @@ nav.header {
 .ticket .btn.edit {
   margin-top: 45px; }
 .ticket .update, .ticket .changes {
-  padding: 30px 40px;
-  border: 1px solid #DDD;
-  padding: 30px 40px;
-  box-shadow: 0 0 15px #EEE;
   margin-bottom: 40px; }
   .ticket .update .form-check-label, .ticket .changes .form-check-label {
     line-height: 40px; }
@@ -157,4 +152,27 @@ select[multiple=multiple] {
 
 input:checked + label {
   color: #FFF;
+}
+
+@media (min-width: 1200px)
+{
+  .container {
+      width: 1000px;
+      max-width: 100%;
+  }
+}
+
+body > .container {
+  background: #FFF;
+  padding: 70px 70px;
+  min-height: 100%;
+}
+
+.header .col-sm-12 {
+  padding-right: 0;
+  padding-left: 0;
+}
+
+footer {
+  display: none;
 }
