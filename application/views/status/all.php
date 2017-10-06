@@ -6,7 +6,7 @@
 	<table class="table">
 		<thead>
 			<tr>
-				<th>Place</th>
+				<th></th>
 				<th>Label</th>
 				<th>Description</th>
 				<th></th>
@@ -14,13 +14,15 @@
 		</thead>
 		<tbody>
 			<?php foreach( $statuses as $status ): ?>
-				<tr>
-					<td><?php echo $status->place ?></td>
+				<tr id="<?php echo $status->sid ?>">
+					<td></td>
 					<td><?php echo $status->label ?></td>
 					<td><?php echo $status->description ?></td>
 					<td>
 						<?php if($this->roles_model->has_permission('status', 2)): ?>
 							<form method="post" action="/status/remove/<?php echo $status->sid ?>">
+								<button type="button" class="btn btn-link status-move up"><i class="fa fa-caret-up" aria-hidden="true"></i></button>
+								<button type="button" class="btn btn-link status-move down"><i class="fa fa-caret-down" aria-hidden="true"></i></button>
 								<a href="<?php echo base_url() ?>status/edit/<?php echo $status->sid ?>"><button type="button" class="btn btn-link"><i class="fa fa-pencil" aria-hidden="true"></i></button></a>
 								<button type="submit" class="btn btn-link" onclick="return confirm('Are you sure you want to delete the status?')"><i class="fa fa-times" aria-hidden="true"></i></button>
 							</form>

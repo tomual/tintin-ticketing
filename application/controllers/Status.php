@@ -82,4 +82,15 @@ class Status extends CI_Controller {
         $this->load->view('status/all', compact('statuses', 'title'));
     }
 
+    public function reorder()
+    {
+        $ordering = $this->input->post();
+
+        foreach ($ordering as $place) {
+            echo $place['place'];
+            echo $place['id'];
+            $this->statuses_model->set_place($place['id'], $place['place']);
+        }
+    }
+
 }

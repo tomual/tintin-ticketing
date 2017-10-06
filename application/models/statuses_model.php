@@ -41,7 +41,12 @@ class Statuses_model extends CI_Model {
         $this->label = $form['label'];
         $this->description = $form['description'];
         $this->place = $form['place'];
-        $this->db->update('statuses', $this, array('sid' => $_POST['sid']));
+        $this->db->update('statuses', $this, array('sid' => $this->input->post('sid')));
+    }
+
+    public function set_place($sid, $place)
+    {
+        $this->db->update('statuses', array('place' => $place), array('sid' => $sid));
     }
 
     public function remove_status($sid)

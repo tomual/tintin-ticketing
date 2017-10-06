@@ -70,21 +70,41 @@ tinymce.init({
     <?php if($this->input->get('modified_to')): ?>
     modified_to.setValue('<?php echo $this->input->get('modified_to') ?>');
     <?php endif ?>
-</script>
 
-<script type="text/javascript">
-$('.advanced-search #category').select2({
-  placeholder: "Select ..."
-});
-$('.advanced-search #author').select2({
-  placeholder: "Select ..."
-});
-$('.advanced-search #worker').select2({
-  placeholder: "Select ..."
-});
-$('.advanced-search #status').select2({
-  placeholder: "Select ..."
-});
+    // Advanced Search - Select2
+    $('.advanced-search #category').select2({
+        placeholder: "Select ..."
+    });
+    $('.advanced-search #author').select2({
+        placeholder: "Select ..."
+    });
+    $('.advanced-search #worker').select2({
+        placeholder: "Select ..."
+    });
+    $('.advanced-search #status').select2({
+        placeholder: "Select ..."
+    });
+
+    // Status page - Reordering statuses
+    $(".status-move").click(function(event) {
+        row = $(this).closest('tr');
+        if ($(this).is(".up")) {
+            row.insertBefore(row.prev());
+        } else {
+            row.insertAfter(row.next());
+        }
+        updateStatusOrder();
+    });
+
+    function updateStatusOrder() {
+        var order = new Object();
+        var rows = $('tbody tr');
+
+        $.each(rows, function( i, row ) {
+            order[i] = {place:i, id: $(row).attr('id')};
+        });
+        $.post( "<?php echo base_url() ?>status/reorder", order );
+    }
 </script>
 
 </body>
