@@ -100,4 +100,11 @@ class Tickets_model extends CI_Model {
         $query = $this->db->get('tickets');
         return $query->result();
     }
+
+    public function get_recently_updated()
+    {
+        $this->db->limit(5);
+        $this->db->order_by('modified', 'desc');
+        return $this->get_tickets();
+    }
 }
