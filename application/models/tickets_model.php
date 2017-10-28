@@ -48,9 +48,68 @@ class Tickets_model extends CI_Model {
         return $query->result();
     }
 
-    public function set_ticket($form)
+    public function set_ticket($tid, $form)
     {
+        $this->load->model('statuses_model');
         $data = array();
+        $before = $this->tickets_model->get_ticket($tid);
+        
+        // Check if need to go through multiple statuses
+        if($form['status'] != -1)
+        {
+            $statuses = $this->statuses_model->get_statuses();
+            $before_status_place = -1;
+            $after_status_place = -1;
+            $prerequisite_statuses = array();
+
+            foreach ($statuses as $key => $status) {
+                if($form['status'] == $status->sid)
+                {
+                    $after_status_place = $status->place;
+                    break;
+                }
+                if($before_status_place != -1)
+                {
+                    $prerequisite_statuses[] = $status->sid;
+                }
+                if($before->sid == $status->sid)
+                {
+                    $before_status_place = $status->place;
+                }
+            }
+            
+            
+            if($after_status_place - $before_status_place > 1)
+            {
+                foreach ($prerequisite_statuses as $sid)
+                {
+                    $this->db->where('tid', $tid);
+                    $this->db->update('tickets', array('status' => $sid));
+                    $after = $this->tickets_model->get_ticket($tid);
+                    $this->versions_model->add_version($tid, $form['comment'], $before, $after);
+                    $before = $after;
+                }
+            }
+        }
+
+        // Check if status change is invalid
+        if($before->sid != $form['status'])
+        {
+            $from_status = $this->statuses_model->get_status($before->sid);
+            $to_status = $this->statuses_model->get_status($form['status']);
+            // Can't change status if cancelled
+            if($from_status->sid == -1)
+            {
+                $form['status'] = -1;
+            }
+            // Can't go backwards in status
+            if(!$to_status || $to_status->place < $from_status->place)
+            {
+                $form['status'] = $from_status->sid;
+            }
+
+        }
+        
         foreach($form as $key=>$value)
         {
             if(property_exists('Tickets_model', $key))
@@ -60,6 +119,8 @@ class Tickets_model extends CI_Model {
         }
         $this->db->where('tid', $form['tid']);
         $this->db->update('tickets', $data);
+        $after = $this->tickets_model->get_ticket($tid);
+        $this->versions_model->add_version($tid, $form['comment'], $before, $after);
     }
 
     public function get_by_status($sid = NULL)

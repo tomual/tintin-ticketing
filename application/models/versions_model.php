@@ -28,7 +28,10 @@ class Versions_model extends CI_Model {
         }
 
         $this->difference = json_encode($difference);
-        $this->db->insert('versions', $this);
+        if($this->difference != '{}')
+        {
+            $this->db->insert('versions', $this);
+        }
     }
 
     public function get_version( $tid )
@@ -47,7 +50,7 @@ class Versions_model extends CI_Model {
         $this->db->select('versions.*, username');
         $this->db->join('users', 'user=uid', 'left');
         $this->db->where('tid', $tid);
-        $this->db->order_by('created', 'desc');
+        $this->db->order_by('vid', 'desc');
         $query = $this->db->get('versions');
         return $query->result();
     }

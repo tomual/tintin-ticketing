@@ -51,9 +51,11 @@
                 <fieldset>
                   <div class="switch-toggle alert alert-light">
                         <?php foreach($statuses as $status): ?>
-                            <input id="<?php echo $status->sid ?>" name="status" value="<?php echo $status->sid ?>" type="radio"  <?php if($ticket->sid == $status->sid) echo 'checked' ?>>
+                            <input id="<?php echo $status->sid ?>" name="status" value="<?php echo $status->sid ?>" type="radio" <?php if($ticket->sid == $status->sid) echo 'checked' ?> <?php if($ticket->sid > $status->sid || $ticket->sid == -1) echo 'disabled' ?>>
                             <label for="<?php echo $status->sid ?>"><?php echo $status->label ?></label>
                         <?php endforeach ?>
+                        <input id="-1" name="status" value="-1" type="radio" <?php if($ticket->sid == -1) echo 'checked' ?>>
+                        <label for="-1">Cancel</label>
                     <a class="btn btn-primary"></a>
                   </div>
                 </fieldset>

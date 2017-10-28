@@ -183,6 +183,15 @@ body > .container {
   padding-left: 0;
 }
 
+input[disabled] + label {
+  background: #EEE;
+  color: #666;
+}
+
+input:checked + label[for="-1"] {
+    background: #993434;
+}
+
 footer {
   display: none;
 }

@@ -50,6 +50,9 @@
 							<?php endforeach ?>
 						</select>
 					</div>
+					<div class="col-md-2">
+						<label class="col-form-label form-check-label"><input type="checkbox" name="not-category" class="form-check-input" value="Y"> Not</label>
+					</div>
 				</div>
 
 				<div class="form-group row">
@@ -60,6 +63,9 @@
 								<option value="<?php echo $user->uid ?>" <?php if($this->input->get('author') == $user->uid) echo 'selected' ?>><?php echo $user->username ?></option>
 							<?php endforeach ?>
 						</select>
+					</div>
+					<div class="col-md-2">
+						<label class="col-form-label form-check-label"><input type="checkbox" name="not-author" class="form-check-input" value="Y"> Not</label>
 					</div>
 				</div>
 
@@ -72,6 +78,9 @@
 							<?php endforeach ?>
 						</select>
 					</div>
+					<div class="col-md-2">
+						<label class="col-form-label form-check-label"><input type="checkbox" name="not-worker" class="form-check-input" value="Y"> Not</label>
+					</div>
 				</div>
 
 				<div class="form-group row">
@@ -81,8 +90,11 @@
 							<?php foreach($statuses as $status): ?>
 								<option value="<?php echo $status->sid ?>" <?php if($this->input->get('status') == $status->sid) echo 'selected' ?>><?php echo $status->label ?></option>
 							<?php endforeach ?>
-							<option value="0">Cancelled</option>
+							<option value="-1">Cancelled</option>
 						</select>
+					</div>
+					<div class="col-md-2">
+						<label class="col-form-label form-check-label"><input type="checkbox" name="not-status" class="form-check-input" value="Y"> Not</label>
 					</div>
 				</div>
 

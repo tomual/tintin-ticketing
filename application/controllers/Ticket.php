@@ -10,8 +10,6 @@ class Ticket extends CI_Controller {
         $this->load->model('statuses_model');
         $this->load->model('categories_model');
         $this->load->model('versions_model');
-
-
     }
 
     public function all()
@@ -51,21 +49,49 @@ class Ticket extends CI_Controller {
 
         if($author = $this->input->get('author'))
         {
-            $this->db->where_in('author', $author);
+            if( !$this->input->get('not-author') )
+            {
+                $this->db->where_in('author', $author);
+            }
+            else
+            {
+                $this->db->where_not_in('author', $author);
+            }
         }
         if($worker = $this->input->get('worker'))
         {
-            $this->db->where_in('worker', $worker);
+            if( !$this->input->get('not-worker') )
+            {
+                $this->db->where_in('worker', $worker);
+            }
+            else
+            {
+                $this->db->where_not_in('worker', $worker);
+            }
         }
 
         if($status = $this->input->get('status'))
         {
-            $this->db->where_in('status', $status);
+            if( !$this->input->get('not-status') )
+            {
+                $this->db->where_in('status', $status);
+            }
+            else
+            {
+                $this->db->where_not_in('status', $status);
+            }
         }
 
         if($category = $this->input->get('category'))
         {
-            $this->db->where_in('category', $category);
+            if( !$this->input->get('not-category') )
+            {
+                $this->db->where_in('category', $category);
+            }
+            else
+            {
+                $this->db->where_not_in('category', $category);
+            }
         }
 
         if($created_from = $this->input->get('created_from'))
@@ -124,14 +150,7 @@ class Ticket extends CI_Controller {
         {
             $this->roles_model->check_permission('ticket', 2);
             $form = $_POST;
-            echo "<pre>";
-            print_r($form);
-            echo "</pre>";
-            $before = $ticket;
-            $this->tickets_model->set_ticket($form);
-            $after = $this->tickets_model->get_ticket($tid);
-            $this->versions_model->add_version($tid, $form['comment'], $before, $after);
-            $ticket = $after;
+            $this->tickets_model->set_ticket($tid, $form);
 
             redirect("/ticket/view/$tid");
         }
