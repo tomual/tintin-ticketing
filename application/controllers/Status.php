@@ -37,7 +37,7 @@ class Status extends CI_Controller {
         $this->load->view('status/create', compact('count', 'title'));
     }
 
-    public function edit($cid)
+    public function edit($sid)
     {
         $this->roles_model->check_permission('status', 2);
         if($_SERVER['REQUEST_METHOD'] == 'POST')
@@ -54,22 +54,22 @@ class Status extends CI_Controller {
             }
             else
             {
-                $this->session->set_flashdata('error', 'There are errors in the ticket.');
+                $this->session->set_flashdata('error', 'There are errors in the status.');
             }
         }
-        $status = $this->statuses_model->get_status($cid);
+        $status = $this->statuses_model->get_status($sid);
         $count = count($this->statuses_model->get_statuses());
 
         $title = 'Edit Status';
         $this->load->view('status/edit', compact('status', 'count', 'title'));
     }
 
-    public function remove($cid)
+    public function remove($sid)
     {
         $this->roles_model->check_permission('status', 2);
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
-            $this->statuses_model->remove_status($cid);
+            $this->statuses_model->remove_status($sid);
         }
         redirect(site_url('status/all'));
     }

@@ -1,7 +1,13 @@
 <?php $this->load->view('header') ?>
 
 <div class="col-md-12">
-    <h1><?php echo $title ?></h1>
+    <h1>Edit Report</h1>
+
+	<?php if($this->session->flashdata('error')): ?>
+		<div class="alert alert-danger" role="alert">
+			<?php echo $this->session->flashdata('error') ?>
+		</div>
+	<?php endif ?>
 
     <div class="container advanced-search">
         <div class="form-group row">
@@ -143,27 +149,33 @@
                     </div>
                 </div>
 
-                <input type="submit" value="Search" class="btn btn-primary">
+                <input type="submit" value="Run Search" class="btn">
 
             </form>
         </div>
     </div>
-    <?php if(!empty($tickets) || !empty($this->input->get())): ?>
-        <div class="create-report">
-            <h2>Save Report</h2>
-            <form action="<?php echo base_url('report/add') ?>" method="post">
-                <div class="form-group">
-                    <label for="">Report Title</label>
-                    <input type="text" class="form-control" id="title" name="title" placeholder="Report Title" value="">
-                </div>
-                <div class="form-group">
-                    <label for="">Report Description</label>
-                    <input type="text" class="form-control" id="description" name="description" placeholder="Report Description" value="">
-                </div>
-                <input type="hidden" name="query" value="<?php echo htmlspecialchars(json_encode($this->input->get())) ?>">
-                <button type="submit" class="btn btn-primary">Save</button>
-            </form>
-        </div>
+
+	<form method="post">
+		<input type="hidden" name="rid" value="<?php echo $report->rid ?>">
+	    <div class="form-group <?php if(form_error('title')) echo 'has-danger' ?>">
+	        <label for="">Title</label>
+	        <input type="text" class="form-control" id="title" name="title" value="<?php echo $report->title ?>">
+	    	<?php echo form_error('title') ?>
+	    </div>
+	    <div class="form-group <?php if(form_error('description')) echo 'has-danger' ?>">
+	        <label for="">Description</label>
+	        <input type="text" class="form-control" id="description" name="description" value="<?php echo $report->description ?>">
+	    	<?php echo form_error('description') ?>
+	    </div>
+        <input type="hidden" name="query" value="<?php echo htmlspecialchars(json_encode($this->input->get())) ?>">
+	    <button type="submit" class="btn btn-primary">Update</button>
+	    <a href="<?php echo base_url() ?>report/manage/" class="btn btn-default">Back</a>
+	</form>
+    <br>
+
+    <?php if(!empty($tickets)): ?>
+        <h2>Report Results</h2>
+        <br>
         <table class="table table-striped">
             <thead>
                 <tr>

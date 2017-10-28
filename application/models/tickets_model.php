@@ -7,6 +7,8 @@ class Tickets_model extends CI_Model {
     public $status;
     public $category;
     public $author;
+    public $started;
+    public $completed;
     public $worker;
 
     public function add_ticket($form)
@@ -24,7 +26,7 @@ class Tickets_model extends CI_Model {
 
     public function get_ticket($tid)
     {
-        $this->db->select('tid, title, tickets.created, a.username as author, w.username as worker, w.uid as uid, tickets.description, label as status, categories.name as category, sid, cid');
+        $this->db->select('tid, title, tickets.created, a.username as author, w.username as worker, w.uid as uid, tickets.description, label as status, categories.name as category, sid, cid, started, completed');
         $this->db->where('tid', $tid);
         $this->db->join('users as a', 'author=a.uid', 'left');
         $this->db->join('users as w', 'worker=w.uid', 'left');
@@ -53,7 +55,7 @@ class Tickets_model extends CI_Model {
         $this->load->model('statuses_model');
         $data = array();
         $before = $this->tickets_model->get_ticket($tid);
-        
+
         // Check if need to go through multiple statuses
         if($form['status'] != -1)
         {
@@ -97,19 +99,34 @@ class Tickets_model extends CI_Model {
         {
             $from_status = $this->statuses_model->get_status($before->sid);
             $to_status = $this->statuses_model->get_status($form['status']);
+
             // Can't change status if cancelled
             if($from_status->sid == -1)
             {
                 $form['status'] = -1;
             }
             // Can't go backwards in status
-            if(!$to_status || $to_status->place < $from_status->place)
+            if(!$to_status || ( $to_status->sid != -1 && $to_status->place < $from_status->place ) )
             {
                 $form['status'] = $from_status->sid;
             }
 
         }
-        
+
+        // Check if ticket should be set to started
+        $start_status = $this->settings_model->get_setting('work_start_status');
+        if($form['status'] == $start_status)
+        {
+            $form['started'] = date("Y-m-d H:i:s");
+        }
+
+        // Check if ticket should be set to completed
+        $complete_status = $this->settings_model->get_setting('work_complete_status');
+        if($form['status'] == $complete_status)
+        {
+            $form['completed'] = date("Y-m-d H:i:s");
+        }
+
         foreach($form as $key=>$value)
         {
             if(property_exists('Tickets_model', $key))
@@ -117,6 +134,7 @@ class Tickets_model extends CI_Model {
                 $data[$key] = $value;
             }
         }
+
         $this->db->where('tid', $form['tid']);
         $this->db->update('tickets', $data);
         $after = $this->tickets_model->get_ticket($tid);
@@ -167,5 +185,105 @@ class Tickets_model extends CI_Model {
         $this->db->limit(5);
         $this->db->order_by('modified', 'desc');
         return $this->get_tickets();
+    }
+
+    public function search($form)
+    {
+
+        $exclude = !empty($form['exclude']) ? $form['exclude'] : array();
+        if(!empty($form['author']))
+        {
+            if( !in_array('author', $exclude ))
+            {
+                $this->db->where_in('author', $form['author']);
+            }
+            else
+            {
+                $this->db->where_not_in('author', $form['author']);
+            }
+            if(!empty($form['and-author']))
+            {
+                $this->db->where_in('author', $form['author_and']);
+            }
+        }
+        if(!empty($form['worker']))
+        {
+            if( !in_array('worker', $exclude ))
+            {
+                $this->db->where_in('worker', $form['worker']);
+            }
+            else
+            {
+                $this->db->where_not_in('worker', $form['worker']);
+            }
+            if(!empty($form['and-worker']))
+            {
+                $this->db->where_in('worker', $form['worker_and']);
+            }
+        }
+
+        if(!empty($form['status']))
+        {
+            if( !in_array('status', $exclude ))
+            {
+                $this->db->where_in('status', $form['status']);
+            }
+            else
+            {
+                $this->db->where_not_in('status', $form['status']);
+            }
+            if(!empty($form['and-status']))
+            {
+                $this->db->where_in('status', $form['status_and']);
+            }
+        }
+
+        if(!empty($form['category']))
+        {
+            if( !in_array('category', $exclude ))
+            {
+                $this->db->where_in('category', $form['category']);
+            }
+            else
+            {
+                $this->db->where_not_in('category', $form['category']);
+            }
+            if(!empty($form['and-category']))
+            {
+                $this->db->where_in('category', $form['category_and']);
+            }
+        }
+
+        if(!empty($form['created_from']))
+        {
+            $created_from = date('Y-m-d', strtotime($created_from));
+            if(!empty($form['created_to']))
+            {
+                $created_to = date('Y-m-d', strtotime($created_to));
+                $this->db->where("tickets.created BETWEEN '$created_from' AND '$created_to'");
+            }
+            else
+            {
+                $created_to = date('Y-m-d', strtotime($created_from . '+1 day'));
+                $this->db->where("created BETWEEN '$created_from' AND '$created_to'");
+            }
+        }
+
+        if(!empty($form['modified_from']))
+        {
+            $modified_from = date('Y-m-d', strtotime($modified_from));
+            if(!empty($form['modified_to']))
+            {
+                $modified_to = date('Y-m-d', strtotime($modified_to));
+                $this->db->where("modified BETWEEN '$modified_from' AND '$modified_to'");
+            }
+            else
+            {
+                $modified_to = date('Y-m-d', strtotime($modified_from . '+1 day'));
+                $this->db->where("modified BETWEEN '$modified_from' AND '$modified_to'");
+            }
+        }
+
+        return $this->tickets_model->get_tickets();
     }
 }

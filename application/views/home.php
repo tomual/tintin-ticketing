@@ -52,7 +52,7 @@
 					<td><a href="<?php echo base_url() ?>ticket/view/<?php echo $ticket->tid ?>"><?php echo $ticket->title ?></a></td>
 					<td><?php echo $ticket->label ?></td>
 					<td><?php echo $ticket->username ?></td>
-					<td><?php echo timespan(strtotime($ticket->modified), time()) . ' ago' ?></td>
+					<td><?php echo strtolower(timespan(strtotime($ticket->modified), time(), 1)) . ' ago' ?></td>
 				</tr>
 			<?php endforeach ?>
 		</tbody>

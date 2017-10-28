@@ -51,6 +51,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <a class="dropdown-item" href="<?php echo base_url() ?>settings/">System</a>
                     </div>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="<?php echo base_url() ?>" role="button" aria-haspopup="true" aria-expanded="false">Reports</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="<?php echo base_url() ?>report/create">New Report</a>
+                        <div class="dropdown-divider"></div>
+                        <?php foreach($this->reports->get_reports() as $report): ?>                            
+                            <a class="dropdown-item" href="<?php echo base_url() ?>report/run/<?php echo $report->rid ?>"><?php echo $report->title ?></a>
+                        <?php endforeach ?>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="<?php echo base_url() ?>report/manage">Manage Reports</a>
+                    </div>
+                </li>
                     <?php if($this->session->has_userdata('username')): ?>
                     <li class="nav-item dropdown" style="float: right;">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="<?php echo base_url() ?>" role="button" aria-haspopup="true" aria-expanded="false"><?php echo $this->session->userdata('username') ?></a>

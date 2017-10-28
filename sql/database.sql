@@ -83,16 +83,19 @@ INSERT INTO `statuses` (`sid`, `label`, `description`, `place`, `created`, `acti
 
 -- Dumping structure for table tintin.tickets
 CREATE TABLE IF NOT EXISTS `tickets` (
-  `tid` int(11) NOT NULL AUTO_INCREMENT,
-  `title` varchar(50) NOT NULL,
-  `description` text NOT NULL,
-  `status` int(11) NOT NULL DEFAULT '0',
-  `category` int(11) NOT NULL,
-  `worker` int(11) DEFAULT NULL,
-  `author` int(11) NOT NULL,
-  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `tid` INT(11) NOT NULL AUTO_INCREMENT,
+  `title` VARCHAR(50) NOT NULL,
+  `description` TEXT NOT NULL,
+  `status` INT(11) NOT NULL DEFAULT '0',
+  `category` INT(11) NOT NULL,
+  `worker` INT(11) NULL DEFAULT NULL,
+  `author` INT(11) NOT NULL,
+  `started` DATETIME NULL DEFAULT NULL,
+  `completed` DATETIME NULL DEFAULT NULL,
+  `created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`tid`)
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8;
+
 
 -- Dumping structure key table tintin.users
 CREATE TABLE IF NOT EXISTS `users` (

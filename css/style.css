@@ -19,6 +19,10 @@ h2  {
   margin-top: 30px;
 }
 
+.text-right {
+  text-align: right;
+}
+
 .dropdown-menu.user-nav {
   left: auto;
   right: 0; }
@@ -192,6 +196,18 @@ input:checked + label[for="-1"] {
     background: #993434;
 }
 
+.create-report h2 {
+  margin-bottom: 30px;
+}
+
+.create-report button {
+  margin-bottom: 60px;
+}
+
 footer {
   display: none;
+}
+
+.report-description {
+    margin-bottom: 30px;
 }

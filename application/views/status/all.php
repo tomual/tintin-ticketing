@@ -20,7 +20,7 @@
 					<td><?php echo $status->description ?></td>
 					<td>
 						<?php if($this->roles_model->has_permission('status', 2)): ?>
-							<form method="post" action="/status/remove/<?php echo $status->sid ?>">
+							<form method="post" action="<?php echo base_url() ?>/status/remove/<?php echo $status->sid ?>">
 								<button type="button" class="btn btn-link status-move up"><i class="fa fa-caret-up" aria-hidden="true"></i></button>
 								<button type="button" class="btn btn-link status-move down"><i class="fa fa-caret-down" aria-hidden="true"></i></button>
 								<a href="<?php echo base_url() ?>status/edit/<?php echo $status->sid ?>"><button type="button" class="btn btn-link"><i class="fa fa-pencil" aria-hidden="true"></i></button></a>

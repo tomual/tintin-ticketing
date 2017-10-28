@@ -24,8 +24,9 @@ class Settings extends CI_Controller {
     {
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
-            $this->form_validation->set_rules('start_status', 'Start Status', 'required');
-            $this->form_validation->set_rules('closed_status', 'Closed Status', 'required');
+            $this->form_validation->set_rules('start_status', 'Ticket Status on Creation', 'required');
+            $this->form_validation->set_rules('work_start_status', 'Ticket Start Status', 'required');
+            $this->form_validation->set_rules('work_complete_status', 'Ticket Complete Status', 'required');
 
             if($this->form_validation->run() != FALSE)
             {

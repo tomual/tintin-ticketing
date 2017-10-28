@@ -17,13 +17,10 @@ class Versions_model extends CI_Model {
         foreach ($before as $key => $value) {
             if($before->{$key} != $after->{$key})
             {
-                if($key != 'sid' && $key != 'cid')
-                {
-                    $difference->{$key} = array(
-                        'before' => $before->{$key},
-                        'after' => $after->{$key}
-                    );                    
-                }
+                $difference->{$key} = array(
+                    'before' => $before->{$key},
+                    'after' => $after->{$key}
+                );
             }
         }
 

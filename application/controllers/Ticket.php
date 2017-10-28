@@ -38,95 +38,31 @@ class Ticket extends CI_Controller {
 
     public function advanced()
     {
-        $author = '';
-        $worker = '';
-        $status = '';
-        $category = '';
-
         $users = $this->users_model->get_users();
         $statuses = $this->statuses_model->get_statuses();
         $categories = $this->categories_model->get_categories();
 
-        if($author = $this->input->get('author'))
+        if($this->input->get())
         {
-            if( !$this->input->get('not-author') )
-            {
-                $this->db->where_in('author', $author);
-            }
-            else
-            {
-                $this->db->where_not_in('author', $author);
-            }
+            $form = array(
+                'author' => $this->input->get('author'),
+                'worker' => $this->input->get('worker'),
+                'status' => $this->input->get('status'),
+                'category' => $this->input->get('category'),
+                'and-author' => $this->input->get('and-author'),
+                'and-worker' => $this->input->get('and-worker'),
+                'and-status' => $this->input->get('and-status'),
+                'and-category' => $this->input->get('and-category'),
+                'created_from' => $this->input->get('created_from'),
+                'createf_to' => $this->input->get('createf_to'),
+                'modified_from' => $this->input->get('modified_from'),
+                'modified_to' => $this->input->get('modified_to'),
+                'exclude' => $this->input->get('exclude')
+            );
+            $tickets = $this->tickets_model->search($form);
+            $pagination = array('total' => count($tickets), 'limit' => PER_PAGE);
+            $tickets = $this->paginate($tickets);
         }
-        if($worker = $this->input->get('worker'))
-        {
-            if( !$this->input->get('not-worker') )
-            {
-                $this->db->where_in('worker', $worker);
-            }
-            else
-            {
-                $this->db->where_not_in('worker', $worker);
-            }
-        }
-
-        if($status = $this->input->get('status'))
-        {
-            if( !$this->input->get('not-status') )
-            {
-                $this->db->where_in('status', $status);
-            }
-            else
-            {
-                $this->db->where_not_in('status', $status);
-            }
-        }
-
-        if($category = $this->input->get('category'))
-        {
-            if( !$this->input->get('not-category') )
-            {
-                $this->db->where_in('category', $category);
-            }
-            else
-            {
-                $this->db->where_not_in('category', $category);
-            }
-        }
-
-        if($created_from = $this->input->get('created_from'))
-        {
-            $created_from = date('Y-m-d', strtotime($created_from));
-            if($created_to = $this->input->get('created_to'))
-            {
-                $created_to = date('Y-m-d', strtotime($created_to));
-                $this->db->where("tickets.created BETWEEN '$created_from' AND '$created_to'");
-            }
-            else
-            {
-                $created_to = date('Y-m-d', strtotime($created_from . '+1 day'));
-                $this->db->where("created BETWEEN '$created_from' AND '$created_to'");
-            }
-        }
-
-        if($modified_from = $this->input->get('modified_from'))
-        {
-            $modified_from = date('Y-m-d', strtotime($modified_from));
-            if($modified_to = $this->input->get('modified_to'))
-            {
-                $modified_to = date('Y-m-d', strtotime($modified_to));
-                $this->db->where("modified BETWEEN '$modified_from' AND '$modified_to'");
-            }
-            else
-            {
-                $modified_to = date('Y-m-d', strtotime($modified_from . '+1 day'));
-                $this->db->where("modified BETWEEN '$modified_from' AND '$modified_to'");
-            }
-        }
-
-        $tickets = $this->tickets_model->get_tickets();
-        $pagination = array('total' => count($tickets), 'limit' => PER_PAGE);
-        $tickets = $this->paginate($tickets);
 
         $title = 'Advanced Search';
         $this->load->view('ticket/advanced', compact('tickets', 'users', 'statuses', 'categories', 'pagination', 'title'));
