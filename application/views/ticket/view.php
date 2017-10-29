@@ -1,6 +1,6 @@
 <?php $this->load->view('header') ?>
 <div class="col-sm-12 ticket">
-    <h2>Ticket ID: <?php echo $ticket->tid ?></h2>
+    <h2 class="ticket-id">Ticket ID: <?php echo $ticket->tid ?></h2>
 
     <a href="<?php echo base_url() ?>ticket/edit/<?php echo $ticket->tid ?>" class="btn btn-default pull-right edit">Edit</a>
 

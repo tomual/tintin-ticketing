@@ -24,11 +24,11 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <div class="row">
         <div class="col-sm-12">
             <ul class="nav nav-pills">
-                <li class="nav-item">
+                <li class="nav-item nav-logo-item">
                     <a href="<?php echo base_url() ?>" class="nav-link logo"><i class="fa fa-hand-o-right" aria-hidden="true"></i> Tintin</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="<?php echo base_url() ?>ticket/create">New ticket</a>
+                    <a class="nav-link btn btn-primary" href="<?php echo base_url() ?>ticket/create">New ticket</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="<?php echo base_url() ?>" role="button" aria-haspopup="true" aria-expanded="false">Tickets</a>
