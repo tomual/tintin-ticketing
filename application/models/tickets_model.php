@@ -117,7 +117,7 @@ class Tickets_model extends CI_Model {
                     $this->db->where('tid', $tid);
                     $this->db->update('tickets', $data);
                     $after = $this->tickets_model->get_ticket($tid);
-                    $this->versions_model->add_version($tid, $form['comment'], $before, $after);
+                    $this->versions_model->add_version($tid, $form['comment'], $before, $after, FALSE);
                     $before = $after;
                 }
             }
