@@ -9,7 +9,7 @@
 		</div>
 	<?php endif ?>
 
-	<form method="post">
+	<form method="post" enctype="multipart/form-data">
 	    <div class="form-group <?php if(form_error('title')) echo 'has-danger' ?>">
 	        <label for="">Ticket Title</label>
 	        <input type="text" class="form-control" id="title" name="title" placeholder="Ticket title" value="<?php echo set_value('title') ?>">
@@ -30,6 +30,13 @@
 	        </select>
 	        <?php echo form_error('category') ?>
 	    </div>
+
+	    <div class="form-group <?php if(form_error('attachments')) echo 'has-danger' ?>">
+	        <label for="attachments">Attachments</label>
+			<input name="attachments[]" id="attachments" type="file" class="form-control" multiple="" />
+	        <?php echo form_error('attachments') ?>
+		</div>
+
 	    <button type="submit" class="btn btn-primary">Submit</button>
 	</form>
 </div>

@@ -10,6 +10,7 @@ class Ticket extends CI_Controller {
         $this->load->model('statuses_model');
         $this->load->model('categories_model');
         $this->load->model('versions_model');
+        $this->load->model('attachments_model');
     }
 
     public function all()
@@ -76,6 +77,7 @@ class Ticket extends CI_Controller {
         $versions = $this->versions_model->get_versions($tid);
         $next_status = $this->statuses_model->get_next($ticket->sid);
         $users = $this->users_model->get_users();
+        $attachments = $this->attachments_model->get_attachments($tid);
 
         if($ticket->sid == 0)
         {
@@ -92,7 +94,7 @@ class Ticket extends CI_Controller {
         }
 
         $title = $ticket->title;
-        $this->load->view('ticket/view', compact('ticket', 'versions', 'users', 'statuses', 'categories', 'next_status', 'last_status', 'title'));
+        $this->load->view('ticket/view', compact('ticket', 'versions', 'users', 'statuses', 'categories', 'next_status', 'attachments', 'last_status', 'title'));
     }
 
     public function edit($tid)
@@ -103,6 +105,7 @@ class Ticket extends CI_Controller {
         $categories = $this->categories_model->get_categories();
         $ticket = $this->tickets_model->get_ticket($tid);
         $versions = $this->versions_model->get_versions($tid);
+        $attachments = $this->attachments_model->get_attachments($tid);
 
         if($ticket->author == $this->session->userdata('uid'))
         {
@@ -119,14 +122,31 @@ class Ticket extends CI_Controller {
             $this->form_validation->set_rules('description', 'Ticket description', 'required');
             $this->form_validation->set_rules('category', 'Ticket category', 'required');
 
+            if($_FILES && $_FILES['attachments']['name'][0])
+            {
+                $attachments = $this->upload_file();
+
+                if($attachments === FALSE)
+                {
+                    return;
+                }
+            }
+
             if($this->form_validation->run() != FALSE)
             {
                 $form = $_POST;
                 $before = $ticket;
-                $this->tickets_model->set_ticket($form);
-                $after = $this->tickets_model->get_ticket($tid);
-                $this->versions_model->add_version($tid, '', $before, $after);
-                $ticket = $after;
+                if(!empty($attachments))
+                {
+                    $form['attachments'] = $attachments;
+                }
+                $this->tickets_model->set_ticket($tid, $form);
+
+                if(!empty($attachments))
+                {
+                    $this->session->set_flashdata('attachments', $this->attachments_model->get_attachments($tid));
+                    redirect("/attachment/details/$tid");
+                }
 
                 redirect("/ticket/view/$tid");
             }
@@ -137,7 +157,7 @@ class Ticket extends CI_Controller {
         }
 
         $title = 'Edit Ticket';
-        $this->load->view('ticket/edit', compact('ticket', 'versions', 'statuses', 'categories', 'title'));
+        $this->load->view('ticket/edit', compact('ticket', 'versions', 'statuses', 'categories', 'attachments', 'title'));
     }
 
     public function create()
@@ -152,11 +172,33 @@ class Ticket extends CI_Controller {
             $this->form_validation->set_rules('description', 'Ticket description', 'required');
             $this->form_validation->set_rules('category', 'Ticket category', 'required');
 
+            if($_FILES && $_FILES['attachments']['name'][0])
+            {
+                $attachments = $this->upload_file();
+
+                if($attachments === FALSE)
+                {
+                    return;
+                }
+            }
+
             if($this->form_validation->run() != FALSE)
             {
         		$form = $_POST;
                 $form['author'] = $this->session->userdata('uid');
+                if(!empty($attachments))
+                {
+                    $form['attachments'] = $attachments;
+                }
+                
                 $tid = $this->tickets_model->add_ticket($form);
+
+                if(!empty($attachments))
+                {
+                    $this->session->set_flashdata('attachments', $attachments);
+                    redirect("/attachment/detail/$tid");
+                }
+
                 redirect("/ticket/view/$tid");
             }
             else
@@ -167,6 +209,51 @@ class Ticket extends CI_Controller {
 
         $title = 'New Ticket';
         $this->load->view('ticket/create', compact('categories', 'title'));
+    }
+
+    public function upload_file()
+    {
+        $attachments = array();
+
+        $this->load->library('upload');        
+
+        $files = $_FILES;
+        $files_count = count($_FILES['attachments']['name']);
+        for($i = 0; $i < $files_count; $i++)
+        {
+            $_FILES['attachments']['name']= $files['attachments']['name'][$i];
+            $_FILES['attachments']['type']= $files['attachments']['type'][$i];
+            $_FILES['attachments']['tmp_name']= $files['attachments']['tmp_name'][$i];
+            $_FILES['attachments']['error']= $files['attachments']['error'][$i];
+            $_FILES['attachments']['size']= $files['attachments']['size'][$i];    
+
+            $this->upload->initialize($this->set_upload_options());
+            if ( !$this->upload->do_upload('attachments'))
+            {
+                $this->session->set_flashdata('error', $this->upload->display_errors('', ''));
+                $this->load->view('ticket/create', compact('categories', 'title'));
+                return false;
+            }
+            else
+            {
+                $attachments[] = $this->upload->data();
+            }            
+        }
+
+        return $attachments;
+
+
+
+    }
+
+    private function set_upload_options()
+    {   
+        //upload an image options
+        $config = array();
+        $config['upload_path']          = './attachments/';
+        $config['allowed_types']        = 'gif|jpg|png|doc|docx|csv|xls|html';
+
+        return $config;
     }
 
     public function status()

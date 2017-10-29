@@ -14,24 +14,45 @@ class Tickets_model extends CI_Model {
     public function add_ticket($form)
     {
         $this->load->model('settings_model');
+        $this->load->model('attachments_model');
         $this->title = $form['title'];
         $this->description = $form['description'];
         $this->status = $this->settings_model->get_setting('start_status');
         $this->category = $form['category'];
-        $this->author = $form['author'];
+        $this->author = $form['author'];    
+
 
         $this->db->insert('tickets', $this);
-        return $this->db->insert_id();
+
+        $tid = $this->db->insert_id();
+
+        if($form['attachments'])
+        {
+            foreach ($form['attachments'] as $attachment) {
+                $data = array(
+                    'tid' => $tid,
+                    'filename' => $attachment['file_name'],
+                    'title' => null,
+                    'description' => null,
+                    'upload_by' => $this->session->userdata('uid')
+                );
+                $this->attachments_model->add_attachment($data);
+            }
+        }
+
+        return $tid;
     }
 
     public function get_ticket($tid)
     {
-        $this->db->select('tid, title, tickets.created, a.username as author, w.username as worker, w.uid as uid, tickets.description, label as status, categories.name as category, sid, cid, started, completed');
-        $this->db->where('tid', $tid);
+        $uid = $this->session->userdata('uid');
+        $this->db->select('tickets.tid, title, tickets.created, a.username as author, w.username as worker, w.uid as uid, tickets.description, label as status, categories.name as category, sid, cid, started, completed, nid as subscribed');
+        $this->db->where('tickets.tid', $tid);
         $this->db->join('users as a', 'author=a.uid', 'left');
         $this->db->join('users as w', 'worker=w.uid', 'left');
         $this->db->join('statuses', 'status=sid', 'left');
         $this->db->join('categories', 'category=cid', 'left');
+        $this->db->join('notifications', 'notifications.tid=tickets.tid AND notifications.uid=' . $uid, 'left');
 
         $query = $this->db->get('tickets', 1);
         return $query->row();
@@ -85,8 +106,16 @@ class Tickets_model extends CI_Model {
             {
                 foreach ($prerequisite_statuses as $sid)
                 {
+                    $data = array('status' => $sid);
+
+                    $start_status = $this->settings_model->get_setting('work_start_status');
+                    if($sid == $start_status)
+                    {
+                        $data['started'] = date("Y-m-d H:i:s");
+                    }
+
                     $this->db->where('tid', $tid);
-                    $this->db->update('tickets', array('status' => $sid));
+                    $this->db->update('tickets', $data);
                     $after = $this->tickets_model->get_ticket($tid);
                     $this->versions_model->add_version($tid, $form['comment'], $before, $after);
                     $before = $after;
@@ -115,7 +144,7 @@ class Tickets_model extends CI_Model {
 
         // Check if ticket should be set to started
         $start_status = $this->settings_model->get_setting('work_start_status');
-        if($form['status'] == $start_status)
+        if($before->sid != $form['status'] && $form['status'] == $start_status)
         {
             $form['started'] = date("Y-m-d H:i:s");
         }
@@ -139,6 +168,21 @@ class Tickets_model extends CI_Model {
         $this->db->update('tickets', $data);
         $after = $this->tickets_model->get_ticket($tid);
         $this->versions_model->add_version($tid, $form['comment'], $before, $after);
+
+        if($form['attachments'])
+        {
+            foreach ($form['attachments'] as $attachment) {
+                $data = array(
+                    'tid' => $tid,
+                    'title' => $attachment['orig_name'],
+                    'filename' => $attachment['file_name'],
+                    'title' => null,
+                    'description' => null,
+                    'upload_by' => $this->session->userdata('uid')
+                );
+                $this->attachments_model->add_attachment($data);
+            }
+        }
     }
 
     public function get_by_status($sid = NULL)

@@ -1,6 +1,19 @@
 <?php $this->load->view('header') ?>
 <div class="col-sm-12 ticket">
-    <h2>Ticket ID: <?php echo $ticket->tid ?></h2><a href="<?php echo base_url() ?>ticket/edit/<?php echo $ticket->tid ?>" class="btn btn-default pull-right edit">Edit</a>
+    <h2>Ticket ID: <?php echo $ticket->tid ?></h2>
+
+    <a href="<?php echo base_url() ?>ticket/edit/<?php echo $ticket->tid ?>" class="btn btn-default pull-right edit">Edit</a>
+
+    <?php if(!$ticket->subscribed): ?>
+        <form method="post" class="notifications-form" action="<?php echo base_url() ?>/notification/subscribe/<?php echo $ticket->tid ?>">
+            <button type="submit" class="btn btn-link pull-right edit"><i class="fa fa-bell-o" aria-hidden="true"></i></button>
+        </form>
+    <?php else: ?>
+        <form method="post" class="notifications-form" action="<?php echo base_url() ?>/notification/unsubscribe/<?php echo $ticket->tid ?>">
+            <button type="submit" class="btn btn-link pull-right edit"><i class="fa fa-bell-slash-o" aria-hidden="true"></i></button>
+        </form>
+    <?php endif ?>
+
     <h1><?php echo $ticket->title ?></h1>
 
     <table class="table">
@@ -41,6 +54,32 @@
         </tr>
     </table>
     <br />
+
+    <?php if(!empty($attachments)): ?>
+        <h2>Attachments</h2>
+        <div class="row attachments">
+            <?php foreach($attachments as $attachment): ?>
+                <?php if(!empty($attachment->title)): ?>
+                        <div class="col-md-3">
+                            <a href="<?php echo base_url("attachment/view/{$attachment->aid}") ?>">
+                                <?php if($attachment->is_image == 'Y'): ?>
+                                    <div class="attachment-preview" style="background-image:url('<?php echo base_url("/attachments/{$attachment->filename}") ?>')"></div>
+                                <?php else: ?>
+                                    <div class="attachment-preview"><i class="fa fa-file-o" aria-hidden="true"></i></div>
+                                <?php endif ?>
+                            </a>
+                        </div>
+                        <div class="col-md-3 attachment-info">
+                            <a href="<?php echo base_url("attachment/view/{$attachment->aid}") ?>">
+                                <div class="attachment-title"><?php echo $attachment->title ?></div>
+                                <div class="attachment-description"><?php echo $attachment->description ? $attachment->description : 'No description' ?></div>
+                            </a>
+                        </div>
+                <?php endif ?>
+            <?php endforeach ?>
+        </div>
+    <?php endif ?>
+
     <div class="update">
         <h2>Update</h2>
 
@@ -87,7 +126,7 @@
             <?php foreach($versions as $version): ?>
                     <tr>
                         <td>
-                            <?php echo date('d/m/y h:mA', strtotime($version->created)) ?> by <?php echo $version->username ?><br />
+                            <?php echo date('d/m/y h:iA', strtotime($version->created)) ?> by <?php echo $version->username ?><br />
                             <?php foreach(json_decode($version->difference) as $key=>$value): ?>
                                 <b><?php echo ucfirst($key) ?></b> <i class="text-muted">changed from</i> <?php echo $value->before ? $value->before : "Nothing" ?> <i class="text-muted">to</i> <?php echo $value->after ? $value->after : "Nothing" ?><br />
                             <?php endforeach ?>
