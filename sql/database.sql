@@ -1,9 +1,30 @@
+-- --------------------------------------------------------
+-- Host:                         127.0.0.1
+-- Server version:               5.7.14 - MySQL Community Server (GPL)
+-- Server OS:                    Win32
+-- HeidiSQL Version:             9.4.0.5125
+-- --------------------------------------------------------
 
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET NAMES utf8 */;
+/*!50503 SET NAMES utf8mb4 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 
--- Dumping database structure for tintin
-CREATE DATABASE IF NOT EXISTS `tintin` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `tintin`;
+-- Dumping structure for table tintin.attachments
+CREATE TABLE IF NOT EXISTS `attachments` (
+  `aid` int(11) NOT NULL AUTO_INCREMENT,
+  `tid` int(11) NOT NULL,
+  `filename` varchar(255) NOT NULL,
+  `title` text,
+  `description` text,
+  `upload_by` int(11) NOT NULL,
+  `is_image` enum('Y','N') NOT NULL DEFAULT 'N',
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`aid`)
+) ENGINE=MyISAM AUTO_INCREMENT=73 DEFAULT CHARSET=utf8;
 
+-- Data exporting was unselected.
 -- Dumping structure for table tintin.categories
 CREATE TABLE IF NOT EXISTS `categories` (
   `cid` int(11) NOT NULL AUTO_INCREMENT,
@@ -12,16 +33,40 @@ CREATE TABLE IF NOT EXISTS `categories` (
   PRIMARY KEY (`cid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
--- Dumping data for table tintin.categories: ~5 rows (approximately)
-/*!40000 ALTER TABLE `categories` DISABLE KEYS */;
-INSERT INTO `categories` (`cid`, `name`, `removed`) VALUES
-	(1, 'New Feature', 'N'),
-	(3, 'User Support', 'N'),
-	(4, 'Client Request', 'N'),
-	(19, 'Maintenance', 'N'),
-	(20, 'Test', 'Y');
-/*!40000 ALTER TABLE `categories` ENABLE KEYS */;
+-- Data exporting was unselected.
+-- Dumping structure for table tintin.ci_sessions
+CREATE TABLE IF NOT EXISTS `ci_sessions` (
+  `id` varchar(128) NOT NULL,
+  `ip_address` varchar(45) NOT NULL,
+  `timestamp` int(10) unsigned NOT NULL DEFAULT '0',
+  `data` blob NOT NULL,
+  PRIMARY KEY (`id`,`ip_address`),
+  KEY `ci_sessions_timestamp` (`timestamp`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
+-- Data exporting was unselected.
+-- Dumping structure for table tintin.notifications
+CREATE TABLE IF NOT EXISTS `notifications` (
+  `nid` int(11) NOT NULL AUTO_INCREMENT,
+  `uid` int(11) NOT NULL,
+  `tid` int(11) NOT NULL,
+  `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`nid`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+
+-- Data exporting was unselected.
+-- Dumping structure for table tintin.reports
+CREATE TABLE IF NOT EXISTS `reports` (
+  `rid` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(50) NOT NULL,
+  `description` text NOT NULL,
+  `query` text NOT NULL,
+  `report_by` int(11) NOT NULL,
+  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`rid`)
+) ENGINE=MyISAM AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+
+-- Data exporting was unselected.
 -- Dumping structure for table tintin.roles
 CREATE TABLE IF NOT EXISTS `roles` (
   `rid` int(11) NOT NULL AUTO_INCREMENT,
@@ -31,34 +76,25 @@ CREATE TABLE IF NOT EXISTS `roles` (
   `permission_category` int(11) NOT NULL DEFAULT '1',
   `permission_status` int(11) NOT NULL DEFAULT '1',
   `permission_role` int(11) NOT NULL DEFAULT '1',
+  `permission_report` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`rid`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COMMENT='User roles';
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='User roles';
 
--- Dumping data for table tintin.roles: ~1 rows (approximately)
-/*!40000 ALTER TABLE `roles` DISABLE KEYS */;
-INSERT INTO `roles` (`rid`, `label`, `permission_ticket`, `permission_user`, `permission_category`, `permission_status`, `permission_role`) VALUES
-	(1, 'Administrator', 5, 3, 2, 3, 3),
-  (2, 'Standard User', 3, 1, 1, 1, 1);
-/*!40000 ALTER TABLE `roles` ENABLE KEYS */;
-
+-- Data exporting was unselected.
 -- Dumping structure for table tintin.settings
 CREATE TABLE IF NOT EXISTS `settings` (
   `id` int(11) NOT NULL DEFAULT '1',
   `group_name` int(11) DEFAULT NULL,
   `owner` int(11) DEFAULT NULL,
   `start_status` int(11) DEFAULT NULL,
-  `closed_status` int(11) DEFAULT NULL,
+  `work_start_status` int(11) DEFAULT NULL,
+  `work_complete_status` int(11) DEFAULT NULL,
   `css` text,
   `register_open` enum('Y','N') DEFAULT NULL,
   KEY `id` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
--- Dumping data for table tintin.settings: ~1 rows (approximately)
-/*!40000 ALTER TABLE `settings` DISABLE KEYS */;
-INSERT INTO `settings` (`id`, `group_name`, `owner`, `start_status`, `closed_status`, `css`, `register_open`) VALUES
-	(1, NULL, NULL, 1, 5, '', NULL);
-/*!40000 ALTER TABLE `settings` ENABLE KEYS */;
-
+-- Data exporting was unselected.
 -- Dumping structure for table tintin.statuses
 CREATE TABLE IF NOT EXISTS `statuses` (
   `sid` int(11) NOT NULL AUTO_INCREMENT,
@@ -68,36 +104,26 @@ CREATE TABLE IF NOT EXISTS `statuses` (
   `created` datetime DEFAULT CURRENT_TIMESTAMP,
   `active` enum('Y','N') NOT NULL DEFAULT 'N',
   PRIMARY KEY (`sid`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
 
--- Dumping data for table tintin.statuses: ~8 rows (approximately)
-/*!40000 ALTER TABLE `statuses` DISABLE KEYS */;
-INSERT INTO `statuses` (`sid`, `label`, `description`, `place`, `created`, `active`) VALUES
-	(0, 'Cancelled', 'Cancelled tasks', 0, '2017-04-26 19:11:21', 'N'),
-	(1, 'Backlog', 'Tickets to do later', 1, '2017-01-23 18:45:09', 'Y'),
-	(2, 'Input', 'Tickets to work on next', 2, '2017-01-23 18:45:18', 'Y'),
-	(3, 'Working', 'Tickets currently being worked on', 3, '2017-01-23 18:45:33', 'Y'),
-	(4, 'Complete', 'Complete tasks', 4, '2017-01-23 18:45:48', 'Y'),
-	(5, 'Closed', 'Closed tasks', 5, '2017-01-23 18:45:58', 'Y');
-/*!40000 ALTER TABLE `statuses` ENABLE KEYS */;
-
+-- Data exporting was unselected.
 -- Dumping structure for table tintin.tickets
 CREATE TABLE IF NOT EXISTS `tickets` (
-  `tid` INT(11) NOT NULL AUTO_INCREMENT,
-  `title` VARCHAR(50) NOT NULL,
-  `description` TEXT NOT NULL,
-  `status` INT(11) NOT NULL DEFAULT '0',
-  `category` INT(11) NOT NULL,
-  `worker` INT(11) NULL DEFAULT NULL,
-  `author` INT(11) NOT NULL,
-  `started` DATETIME NULL DEFAULT NULL,
-  `completed` DATETIME NULL DEFAULT NULL,
-  `created` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `tid` int(11) NOT NULL AUTO_INCREMENT,
+  `title` varchar(50) NOT NULL,
+  `description` text NOT NULL,
+  `status` int(11) NOT NULL DEFAULT '0',
+  `category` int(11) NOT NULL,
+  `worker` int(11) DEFAULT NULL,
+  `author` int(11) NOT NULL,
+  `started` datetime DEFAULT NULL,
+  `completed` datetime DEFAULT NULL,
+  `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`tid`)
-) ENGINE=InnoDB AUTO_INCREMENT=68 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8;
 
-
--- Dumping structure key table tintin.users
+-- Data exporting was unselected.
+-- Dumping structure for table tintin.users
 CREATE TABLE IF NOT EXISTS `users` (
   `uid` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(50) NOT NULL,
@@ -110,8 +136,9 @@ CREATE TABLE IF NOT EXISTS `users` (
   `reset_token_expire` datetime DEFAULT NULL,
   `removed` enum('Y','N') NOT NULL DEFAULT 'N',
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 
+-- Data exporting was unselected.
 -- Dumping structure for table tintin.versions
 CREATE TABLE IF NOT EXISTS `versions` (
   `vid` int(11) NOT NULL AUTO_INCREMENT,
@@ -121,14 +148,25 @@ CREATE TABLE IF NOT EXISTS `versions` (
   `difference` text,
   `created` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`vid`)
-) ENGINE=InnoDB AUTO_INCREMENT=70 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=143 DEFAULT CHARSET=utf8;
 
--- Dumping structure for table tintin.ci_sessions
-CREATE TABLE IF NOT EXISTS `ci_sessions` (
-  `id` varchar(128) NOT NULL,
-  `ip_address` varchar(45) NOT NULL,
-  `timestamp` int(10) unsigned NOT NULL DEFAULT '0',
-  `data` blob NOT NULL,
-  PRIMARY KEY (`id`,`ip_address`),
-  KEY `ci_sessions_timestamp` (`timestamp`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+-- Data exporting was unselected.
+/*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
+/*!40014 SET FOREIGN_KEY_CHECKS=IF(@OLD_FOREIGN_KEY_CHECKS IS NULL, 1, @OLD_FOREIGN_KEY_CHECKS) */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+
+INSERT INTO `statuses` (`sid`, `label`, `description`, `place`, `created`, `active`) VALUES (-1, 'Cancel', 'Cancelled tasks', 0, '2017-04-26 19:11:21', 'N');
+INSERT INTO `statuses` (`sid`, `label`, `description`, `place`, `created`, `active`) VALUES (1, 'Backlog', 'Backlogged Stuff', 0, '2017-01-23 18:45:09', 'Y');
+INSERT INTO `statuses` (`sid`, `label`, `description`, `place`, `created`, `active`) VALUES (2, 'Input', 'Input Description', 1, '2017-01-23 18:45:18', 'Y');
+INSERT INTO `statuses` (`sid`, `label`, `description`, `place`, `created`, `active`) VALUES (3, 'Working', 'Stuff in working', 2, '2017-01-23 18:45:33', 'Y');
+INSERT INTO `statuses` (`sid`, `label`, `description`, `place`, `created`, `active`) VALUES (4, 'Complete', 'It\'s done', 3, '2017-01-23 18:45:48', 'Y');
+
+INSERT INTO `roles` (`rid`, `label`, `permission_ticket`, `permission_user`, `permission_category`, `permission_status`, `permission_role`, `permission_report`) VALUES (1, 'Administrator', 5, 3, 2, 3, 3, 3);
+INSERT INTO `roles` (`rid`, `label`, `permission_ticket`, `permission_user`, `permission_category`, `permission_status`, `permission_role`, `permission_report`) VALUES (2, 'Standard User', 3, 1, 1, 1, 1, 1);
+
+INSERT INTO `settings` (`id`, `group_name`, `owner`, `start_status`, `work_start_status`, `work_complete_status`, `css`, `register_open`) VALUES (1, NULL, NULL, 1, 3, 4, '', NULL);
+
+INSERT INTO `categories` (`name`, `removed`) VALUES ('New Feature', 'N');
+INSERT INTO `categories` (`name`, `removed`) VALUES ('User Support', 'N');
+INSERT INTO `categories` (`name`, `removed`) VALUES ('Client Request', 'N');
+INSERT INTO `categories` (`name`, `removed`) VALUES ('Maintenance', 'N');

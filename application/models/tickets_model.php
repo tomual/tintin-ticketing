@@ -46,13 +46,21 @@ class Tickets_model extends CI_Model {
     public function get_ticket($tid)
     {
         $uid = $this->session->userdata('uid');
-        $this->db->select('tickets.tid, title, tickets.created, a.username as author, w.username as worker, w.uid as uid, tickets.description, label as status, categories.name as category, sid, cid, started, completed, nid as subscribed');
+        $this->db->select('tickets.tid, tickets.title, tickets.created, tickets.description, tickets.description, tickets.started, tickets.completed');
+        $this->db->select('a.username as author');
+        $this->db->select('w.username as worker, w.uid as uid');
+        $this->db->select('s.label as status, s.sid');
+        $this->db->select('c.name as category, c.cid');
         $this->db->where('tickets.tid', $tid);
         $this->db->join('users as a', 'author=a.uid', 'left');
         $this->db->join('users as w', 'worker=w.uid', 'left');
-        $this->db->join('statuses', 'status=sid', 'left');
-        $this->db->join('categories', 'category=cid', 'left');
-        $this->db->join('notifications', 'notifications.tid=tickets.tid AND notifications.uid=' . $uid, 'left');
+        $this->db->join('statuses s', 'status=sid', 'left');
+        $this->db->join('categories c', 'category=cid', 'left');
+        if($uid)
+        {
+            $this->db->select('n.nid as subscribed');
+            $this->db->join('notifications n', 'notifications.tid=tickets.tid AND notifications.uid=' . $uid, 'left');
+        }
 
         $query = $this->db->get('tickets', 1);
         return $query->row();

@@ -4,7 +4,7 @@
 
     <a href="<?php echo base_url() ?>ticket/edit/<?php echo $ticket->tid ?>" class="btn btn-default pull-right edit">Edit</a>
 
-    <?php if(!$ticket->subscribed): ?>
+    <?php if(!isset($ticket->subscribed) || !$ticket->subscribed): ?>
         <form method="post" class="notifications-form" action="<?php echo base_url() ?>/notification/subscribe/<?php echo $ticket->tid ?>">
             <button type="submit" class="btn btn-link pull-right edit"><i class="fa fa-bell-o" aria-hidden="true"></i></button>
         </form>
@@ -53,7 +53,6 @@
             </td>
         </tr>
     </table>
-    <br />
 
     <?php if(!empty($attachments)): ?>
         <h2>Attachments</h2>

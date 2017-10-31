@@ -24,6 +24,7 @@ h1 {
 
 h2 {
     margin-top: 48px;
+    margin: 0 -10px;
     margin-bottom: 24px;
     background: rgba(220, 221, 216, 0.4);
     font-size: 1em;
@@ -89,8 +90,8 @@ a {
     border-radius: 2px;
 }
 
-nav.nav-logo-item {
-    margin-right: 12px;
+nav .nav-logo-item {
+    margin-right: 24px;
 }
 
 nav.header {
