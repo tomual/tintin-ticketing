@@ -59,7 +59,7 @@ class Tickets_model extends CI_Model {
         if($uid)
         {
             $this->db->select('n.nid as subscribed');
-            $this->db->join('notifications n', 'notifications.tid=tickets.tid AND notifications.uid=' . $uid, 'left');
+            $this->db->join('notifications n', 'n.tid=tickets.tid AND n.uid=' . $uid, 'left');
         }
 
         $query = $this->db->get('tickets', 1);
