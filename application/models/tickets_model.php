@@ -79,6 +79,39 @@ class Tickets_model extends CI_Model {
         return $query->result();
     }
 
+    public function get_kanban_tickets()
+    {        
+        $kanban_statuses = $this->settings_model->get_setting('kanban_statuses');
+
+        if(!$kanban_statuses)
+        {
+            return null;
+        }
+
+        $kanban_statuses = explode(',', $kanban_statuses);
+
+        $this->db->select('tickets.tid, tickets.title, tickets.status, tickets.category, statuses.label, worker, username, tickets.created, sid, versions.modified');
+        $this->db->where_in('tickets.status', $kanban_statuses);
+        $this->db->join('users', 'author=uid', 'left');
+        $this->db->join('statuses', 'status=sid', 'left');
+        $this->db->join('(select tid, created as modified from versions order by created desc limit 1) versions', 'tickets.tid=versions.tid', 'left');
+        $this->db->order_by('tickets.created', 'desc');
+
+        $query = $this->db->get('tickets');
+        $result = $query->result();
+
+        $kanban_tickets = array();
+        foreach ($kanban_statuses as $sid) {
+            $status = $this->statuses_model->get_status($sid);
+            $kanban_tickets[$status->label] = array();
+        }
+        foreach ($result as $ticket) {
+            $kanban_tickets[$ticket->label][] = $ticket;
+        }
+
+        return $kanban_tickets;
+    }
+
     public function set_ticket($tid, $form)
     {
         $this->load->model('statuses_model');

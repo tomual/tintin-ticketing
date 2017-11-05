@@ -334,4 +334,13 @@ class Ticket extends CI_Controller {
         }
         return array_slice($results, 0, $length);
     }
+
+    public function kanban()
+    {
+        $statuses = $this->statuses_model->get_statuses();
+        $kanban_tickets = $this->tickets_model->get_kanban_tickets();
+
+        $title = 'Kanban';
+        $this->load->view('ticket/kanban', compact('kanban_tickets', 'statuses', 'title'));
+    }
 }
