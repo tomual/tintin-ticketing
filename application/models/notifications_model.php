@@ -40,29 +40,47 @@ class Notifications_model extends CI_Model {
         $version = $this->versions_model->get_latest_version($tid);
 
         foreach ($subscibers as $subscriber) {
-            if($status)
+
+            if(count($this->versions_model->get_versions($tid)) == 1)
             {
+                $type = 'new';
+                $this->email->subject("[NEW] {$ticket->title}");
+
                 $this->email->from('noreply@localhost', 'Tintin Mailer');
                 $this->email->to($subscriber->email);
+                $this->email->message($this->load->view('email/ticket', compact('ticket', 'version', 'type'), TRUE));
+                $this->email->send();
 
-                $this->email->subject("[STATUS] {$ticket->status} - {$ticket->title}");
+            }
+            elseif($status && $comment)
+            {
+                $type = 'status_comment';
+                $this->email->subject("[STATUS & COMMENT] {$ticket->status} - {$ticket->title}");
 
-                $this->email->message($this->load->view('email/ticket', compact('ticket', 'version'), TRUE));
-
+                $this->email->from('noreply@localhost', 'Tintin Mailer');
+                $this->email->to($subscriber->email);
+                $this->email->message($this->load->view('email/ticket', compact('ticket', 'version', 'type'), TRUE));
                 $this->email->send();
             }
-
-            if($comment)
+            elseif($status)
             {
+                $type = 'status';
+                $this->email->subject("[STATUS] {$ticket->status} - {$ticket->title}");
+
                 $this->email->from('noreply@localhost', 'Tintin Mailer');
                 $this->email->to($subscriber->email);
-
-                $preview = substr($comment, 0, 50) . '...';
-
+                $this->email->message($this->load->view('email/ticket', compact('ticket', 'version', 'type'), TRUE));
+                $this->email->send();
+            }
+            elseif($comment)
+            {
+                $type = 'comment';
                 $this->email->subject("[COMMENT] \"{$preview}\" - {$ticket->title}");
 
-                $this->email->message($this->load->view('email/ticket', compact('ticket', 'version'), TRUE));
-
+                $this->email->from('noreply@localhost', 'Tintin Mailer');
+                $this->email->to($subscriber->email);
+                $preview = substr($comment, 0, 50) . '...';
+                $this->email->message($this->load->view('email/ticket', compact('ticket', 'version', 'type'), TRUE));
                 $this->email->send();
             }
         }

@@ -11,6 +11,7 @@ class Ticket extends CI_Controller {
         $this->load->model('categories_model');
         $this->load->model('versions_model');
         $this->load->model('attachments_model');
+        $this->load->model('notifications_model');
     }
 
     public function all()
@@ -193,6 +194,17 @@ class Ticket extends CI_Controller {
                 
                 $tid = $this->tickets_model->add_ticket($form);
 
+                // CC i.e. subscribe others to notifications
+                foreach ($this->input->post('cc') as $uid) {
+                    $this->notifications_model->subscribe($tid, $uid);
+                }                
+
+                $ticket = $this->tickets_model->get_ticket($tid);
+                $this->versions_model->add_version($tid, '<i>Ticket created</i>', $ticket, $ticket);
+
+                // Subscribe self to ticket
+                $this->notifications_model->subscribe($tid, $this->session->userdata('uid'));
+
                 if(!empty($attachments))
                 {
                     $this->session->set_flashdata('attachments', $attachments);
@@ -207,8 +219,9 @@ class Ticket extends CI_Controller {
             }
     	}
 
+        $users = $this->users_model->get_users();
         $title = 'New Ticket';
-        $this->load->view('ticket/create', compact('categories', 'title'));
+        $this->load->view('ticket/create', compact('categories', 'title', 'users'));
     }
 
     public function upload_file()
@@ -251,7 +264,7 @@ class Ticket extends CI_Controller {
         //upload an image options
         $config = array();
         $config['upload_path']          = './attachments/';
-        $config['allowed_types']        = 'gif|jpg|png|doc|docx|csv|xls|html';
+        $config['allowed_types']        = 'gif|jpg|png|doc|docx|csv|xls|html|pdf';
 
         return $config;
     }

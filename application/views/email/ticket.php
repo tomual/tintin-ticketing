@@ -1,3 +1,8 @@
+<?php if($type == 'new'): ?>A new ticket was created<?php endif ?>
+<?php if($type == 'status'): ?>This ticket had a change of status<?php endif ?>
+<?php if($type == 'comment'): ?>Someone has commented on this ticket<?php endif ?>
+<?php if($type == 'status_comment'): ?>This ticket changed status with a comment<?php endif ?>
+
 <div class="col-sm-12 ticket">
     <h2>Ticket ID: <?php echo $ticket->tid ?></h2>
 
@@ -60,3 +65,6 @@
     </div>
 
 </div>
+
+<p>You have received this email because you are subscribed to be notified of changes made to this ticket.</p>
+<?php anchor(base_url("notification/unsubscribe/{$ticket->tid}", 'Unsubscribe from this ticket') ) ?>

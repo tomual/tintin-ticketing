@@ -13,6 +13,7 @@ class Notification extends CI_Controller {
     {
         $uid = $this->session->userdata('uid');
         $this->notifications_model->subscribe($tid, $uid);
+        $this->session->set_flashdata('subscribed', TRUE);
         redirect("/ticket/view/$tid");
     }
 
@@ -20,6 +21,7 @@ class Notification extends CI_Controller {
     {
         $uid = $this->session->userdata('uid');
         $this->notifications_model->unsubscribe($tid, $uid);
+        $this->session->set_flashdata('unsubscribed', TRUE);
         redirect("/ticket/view/$tid");
     }
 

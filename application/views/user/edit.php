@@ -24,7 +24,7 @@
 	        <label for="">Role</label>
 	        <select class="form-control" name="role">
 	        	<?php foreach($roles as $role): ?>
-	        		<option value="<?php echo $role->rid ?>" <?php echo $role->rid = $user->role ? "selected" : ""?> ><?php echo $role->label ?></option>
+	        		<option value="<?php echo $role->rid ?>" <?php echo $role->rid == $user->role ? "selected" : ""?> ><?php echo $role->label ?></option>
 	        	<?php endforeach ?>
 	        </select>
 	    </div>

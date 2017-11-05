@@ -26,7 +26,7 @@ class Tickets_model extends CI_Model {
 
         $tid = $this->db->insert_id();
 
-        if($form['attachments'])
+        if(isset($form['attachments']))
         {
             foreach ($form['attachments'] as $attachment) {
                 $data = array(
