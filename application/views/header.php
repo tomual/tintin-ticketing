@@ -55,7 +55,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="<?php echo base_url() ?>" role="button" aria-haspopup="true" aria-expanded="false">Reports</a>
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="<?php echo base_url() ?>report/create">New Report</a>
-                        <div class="dropdown-divider"></div>
+                        <?php if($this->reports->get_reports()): ?>
+                            <div class="dropdown-divider"></div>
+                        <?php endif ?>
                         <?php foreach($this->reports->get_reports() as $report): ?>                            
                             <a class="dropdown-item" href="<?php echo base_url() ?>report/run/<?php echo $report->rid ?>"><?php echo $report->title ?></a>
                         <?php endforeach ?>

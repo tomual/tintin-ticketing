@@ -41,6 +41,17 @@
             <?php echo form_error('work_complete_status') ?>
         </div>
 
+        <div class="form-group <?php if(form_error('next_up_statuses')) echo 'has-danger' ?>">
+            <label for="next_up_statuses">Home Page "Next Up ..." Statuses</label>
+            <select name="next_up_statuses[]" id="next_up_statuses" multiple="multiple" class="form-control">
+                <?php foreach($statuses as $status): ?>
+                    <option value="<?php echo $status->sid ?>" <?php if(in_array($status->sid, $next_up_statuses)) echo 'selected' ?>><?php echo $status->label ?></option>
+                <?php endforeach ?>
+            </select>
+            <small class="form-text text-muted">Statuses to mean the ticket is to be worked on</small>
+            <?php echo form_error('next_up_statuses') ?>
+        </div>
+
         <button type="submit" class="btn btn-primary">Update</button>
     </form>
 </div>

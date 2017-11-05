@@ -1,15 +1,26 @@
 <?php $this->load->view('header') ?>
+
+<?php if($this->session->flashdata('subscribed')): ?>
+<div class="alert alert-success" role="alert">
+    You have subscribed to this ticket. You will receive emails about changes.
+</div>
+<?php elseif($this->session->flashdata('unsubscribed')): ?>
+<div class="alert alert-success" role="alert">
+    You have unsubscribed from this ticket.
+</div>
+<?php endif ?>
+
 <div class="col-sm-12 ticket">
     <h2 class="ticket-id">Ticket ID: <?php echo $ticket->tid ?></h2>
 
     <a href="<?php echo base_url() ?>ticket/edit/<?php echo $ticket->tid ?>" class="btn btn-default pull-right edit">Edit</a>
 
     <?php if(!isset($ticket->subscribed) || !$ticket->subscribed): ?>
-        <form method="post" class="notifications-form" action="<?php echo base_url() ?>/notification/subscribe/<?php echo $ticket->tid ?>">
+        <form method="post" class="notifications-form" action="<?php echo base_url() ?>notification/subscribe/<?php echo $ticket->tid ?>">
             <button type="submit" class="btn btn-link pull-right edit"><i class="fa fa-bell-o" aria-hidden="true"></i></button>
         </form>
     <?php else: ?>
-        <form method="post" class="notifications-form" action="<?php echo base_url() ?>/notification/unsubscribe/<?php echo $ticket->tid ?>">
+        <form method="post" class="notifications-form" action="<?php echo base_url() ?>notification/unsubscribe/<?php echo $ticket->tid ?>">
             <button type="submit" class="btn btn-link pull-right edit"><i class="fa fa-bell-slash-o" aria-hidden="true"></i></button>
         </form>
     <?php endif ?>
@@ -115,6 +126,7 @@
             </div>
             <button type="submit" class="btn btn-primary">Update</button>
         </form>
+        <br>
         <?php else: ?>
             <p>Please <a href="<?php echo base_url() ?>login">log in</a> to make edits to tickets.</p>
         <?php endif ?>

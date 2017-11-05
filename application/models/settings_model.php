@@ -32,6 +32,7 @@ class Settings_model extends CI_Model {
         $this->start_status = $form['start_status'];
         $this->work_start_status = $form['work_start_status'];
         $this->work_complete_status = $form['work_complete_status'];
+        $this->next_up_statuses = $form['next_up_statuses'] ? implode(',', $form['next_up_statuses']) : null;
         $this->css = $form['css'];
         $this->register_open = $form['register_open'];
 

@@ -10,16 +10,19 @@
 	<?php endif ?>
 
 	<form method="post" enctype="multipart/form-data">
+
 	    <div class="form-group <?php if(form_error('title')) echo 'has-danger' ?>">
 	        <label for="">Ticket Title</label>
 	        <input type="text" class="form-control" id="title" name="title" placeholder="Ticket title" value="<?php echo set_value('title') ?>">
 	        <?php echo form_error('title') ?>
 	    </div>
+
 	    <div class="form-group <?php if(form_error('description')) echo 'has-danger' ?>">
 	        <label for="">Ticket Description</label>
 	        <textarea class="form-control" id="description" name="description" rows="3"><?php echo set_value('description') ?></textarea>
 		    <?php echo form_error('description') ?>
 	    </div>
+
 	    <div class="form-group <?php if(form_error('category')) echo 'has-danger' ?>">
 	        <label for="category">Category</label>
 	        <select class="form-control" id="category" name="category">
@@ -29,6 +32,18 @@
 	        <?php endforeach ?>
 	        </select>
 	        <?php echo form_error('category') ?>
+	    </div>
+
+	    <div class="form-group <?php if(form_error('cc')) echo 'has-danger' ?>">
+	        <label for="">CC</label>
+            <select name="cc[]" id="cc" multiple="multiple" class="form-control">
+                <?php foreach($users as $user): ?>
+                	<?php if($user->uid != $this->session->userdata('uid')): ?>
+	                    <option value="<?php echo $user->uid ?>"><?php echo $user->username ?></option>
+	                <?php endif ?>
+                <?php endforeach ?>
+            </select>
+	        <?php echo form_error('cc') ?>
 	    </div>
 
 	    <div class="form-group <?php if(form_error('attachments')) echo 'has-danger' ?>">

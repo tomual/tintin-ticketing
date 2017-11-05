@@ -2,7 +2,9 @@
 
 <div class="col-sm-12 content">
 	<h1><?php echo $title ?></h1>
+
 	<p class="report-description"><?php echo $description ?></p>
+	<br>
 
 	<table class="table table-striped">
 		<thead>

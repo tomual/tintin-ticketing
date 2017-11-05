@@ -146,24 +146,28 @@
                 <input type="submit" value="Search" class="btn btn-primary">
 
             </form>
+            <br>
         </div>
     </div>
     <?php if(!empty($tickets) || !empty($this->input->get())): ?>
-        <div class="create-report">
-            <h2>Save Report</h2>
-            <form action="<?php echo base_url('report/add') ?>" method="post">
-                <div class="form-group">
-                    <label for="">Report Title</label>
-                    <input type="text" class="form-control" id="title" name="title" placeholder="Report Title" value="">
-                </div>
-                <div class="form-group">
-                    <label for="">Report Description</label>
-                    <input type="text" class="form-control" id="description" name="description" placeholder="Report Description" value="">
-                </div>
-                <input type="hidden" name="query" value="<?php echo htmlspecialchars(json_encode($this->input->get())) ?>">
-                <button type="submit" class="btn btn-primary">Save</button>
-            </form>
-        </div>
+        <?php if($this->router->fetch_class() == 'report'): ?>
+            <div class="create-report">
+                <h2>Save Report</h2>
+                <form action="<?php echo base_url('report/add') ?>" method="post">
+                    <div class="form-group">
+                        <label for="">Report Title</label>
+                        <input type="text" class="form-control" id="title" name="title" placeholder="Report Title" value="">
+                    </div>
+                    <div class="form-group">
+                        <label for="">Report Description</label>
+                        <input type="text" class="form-control" id="description" name="description" placeholder="Report Description" value="">
+                    </div>
+                    <input type="hidden" name="query" value="<?php echo htmlspecialchars(json_encode($this->input->get())) ?>">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+                <br>
+            </div>
+        <?php endif ?>
         <table class="table table-striped">
             <thead>
                 <tr>

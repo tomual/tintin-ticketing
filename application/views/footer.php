@@ -88,6 +88,12 @@ tinymce.init({
         placeholder: "Select ...",
         width: '100%'
     })
+    $('#cc').select2({
+        placeholder: "Select ...",
+    });
+    $('#next_up_statuses').select2({
+        placeholder: "Select ...",
+    });
 
     // Status page - Reordering statuses
     $(".status-move").click(function(event) {

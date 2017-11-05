@@ -48,6 +48,14 @@ class Versions_model extends CI_Model {
         return $query->first_row();
     }
 
+    public function get_latest_versions($limit)
+    {
+        $this->db->select('tid, created');
+        $this->db->order_by('created', 'desc');
+        $query = $this->db->get('versions', $limit);
+        return $query->result();
+    }
+
     public function get_versions($tid)
     {
         $this->db->select('versions.*, username');

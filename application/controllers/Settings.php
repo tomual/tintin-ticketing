@@ -15,9 +15,10 @@ class Settings extends CI_Controller {
     {
         $statuses = $this->statuses_model->get_statuses();
         $settings = $this->settings_model->get_settings();
+        $next_up_statuses = array_filter(explode(',', $this->settings_model->get_setting('next_up_statuses')));
 
         $title = 'System Settings';
-        $this->load->view('settings', compact('settings', 'statuses', 'title'));
+        $this->load->view('settings', compact('settings', 'statuses', 'title', 'next_up_statuses'));
     }
 
     public function edit()
