@@ -53,6 +53,10 @@
             <td><?php echo $ticket->category ?></td>
         </tr>
         <tr>
+            <th>Project</th>
+            <td><?php echo $ticket->project ? $ticket->project : '<i class="text-muted">-</i>' ?></td>
+        </tr>
+        <tr>
             <th>Status</th>
             <td><?php echo $ticket->status ?></td>
         </tr>

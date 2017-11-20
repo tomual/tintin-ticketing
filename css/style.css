@@ -114,6 +114,10 @@ nav.header {
     border-radius: 2px;
 }
 
+.mce-body {
+    font-stretch: 36px;
+}
+
 /*TICKET*/
 
 h2.ticket-id {
@@ -220,6 +224,14 @@ select[multiple=multiple] {
     opacity: 0.4;
     margin-left: 80px;
     margin-top: 65px;
+}
+
+.ticket .attachment-preview i.fa.fa-file-o {
+    font-size: 48px;
+    display: block;
+    margin: 0;
+    text-align: center;
+    padding-top: 48px;
 }
 
 .ticket .attachment-preview {

@@ -9,6 +9,7 @@ class Report extends CI_Controller {
         $this->load->model('tickets_model');
         $this->load->model('statuses_model');
         $this->load->model('categories_model');
+        $this->load->model('projects_model');
         $this->load->model('versions_model');
         $this->load->model('reports_model');
         $this->load->library('form_validation');
@@ -54,7 +55,7 @@ class Report extends CI_Controller {
 
         $users = $this->users_model->get_users();
         $statuses = $this->statuses_model->get_statuses();
-        $categories = $this->categories_model->get_categories();
+        $projects = $this->projects_model->get_projects();
 
         if($_SERVER['REQUEST_METHOD'] == 'POST')
         {
@@ -86,10 +87,12 @@ class Report extends CI_Controller {
                 'worker' => $this->input->get('worker'),
                 'status' => $this->input->get('status'),
                 'category' => $this->input->get('category'),
+                'project' => $this->input->get('project'),
                 'and-author' => $this->input->get('and-author'),
                 'and-worker' => $this->input->get('and-worker'),
                 'and-status' => $this->input->get('and-status'),
                 'and-category' => $this->input->get('and-category'),
+                'and-project' => $this->input->get('and-project'),
                 'created_from' => $this->input->get('created_from'),
                 'createf_to' => $this->input->get('createf_to'),
                 'modified_from' => $this->input->get('modified_from'),
@@ -105,7 +108,7 @@ class Report extends CI_Controller {
         $count = count($this->reports_model->get_reports());
 
         $title = 'Edit Report';
-        $this->load->view('report/edit', compact('report', 'count', 'tickets', 'pagination', 'title', 'users', 'statuses', 'categories' ));
+        $this->load->view('report/edit', compact('report', 'count', 'tickets', 'pagination', 'title', 'users', 'statuses', 'categories', 'projects' ));
     }
 
     public function remove($rid)
@@ -123,6 +126,7 @@ class Report extends CI_Controller {
         $users = $this->users_model->get_users();
         $statuses = $this->statuses_model->get_statuses();
         $categories = $this->categories_model->get_categories();
+        $projects = $this->projects_model->get_projects();
 
         if($this->input->get())
         {
@@ -131,10 +135,12 @@ class Report extends CI_Controller {
                 'worker' => $this->input->get('worker'),
                 'status' => $this->input->get('status'),
                 'category' => $this->input->get('category'),
+                'project' => $this->input->get('project'),
                 'and-author' => $this->input->get('and-author'),
                 'and-worker' => $this->input->get('and-worker'),
                 'and-status' => $this->input->get('and-status'),
                 'and-category' => $this->input->get('and-category'),
+                'and-project' => $this->input->get('and-project'),
                 'created_from' => $this->input->get('created_from'),
                 'createf_to' => $this->input->get('createf_to'),
                 'modified_from' => $this->input->get('modified_from'),
@@ -147,7 +153,7 @@ class Report extends CI_Controller {
         }
 
         $title = 'Custom Report';
-        $this->load->view('ticket/advanced', compact('tickets', 'users', 'statuses', 'categories', 'pagination', 'title'));
+        $this->load->view('ticket/advanced', compact('tickets', 'users', 'statuses', 'categories', 'projects', 'pagination', 'title'));
 
     }
 

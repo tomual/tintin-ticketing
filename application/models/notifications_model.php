@@ -74,12 +74,12 @@ class Notifications_model extends CI_Model {
             }
             elseif($comment)
             {
+                $preview = substr($comment, 0, 50) . '...';
                 $type = 'comment';
                 $this->email->subject("[COMMENT] \"{$preview}\" - {$ticket->title}");
 
                 $this->email->from('noreply@localhost', 'Tintin Mailer');
                 $this->email->to($subscriber->email);
-                $preview = substr($comment, 0, 50) . '...';
                 $this->email->message($this->load->view('email/ticket', compact('ticket', 'version', 'type'), TRUE));
                 $this->email->send();
             }

@@ -6,6 +6,7 @@ class Tickets_model extends CI_Model {
     public $description;
     public $status;
     public $category;
+    public $project;
     public $author;
     public $started;
     public $completed;
@@ -19,6 +20,7 @@ class Tickets_model extends CI_Model {
         $this->description = $form['description'];
         $this->status = $this->settings_model->get_setting('start_status');
         $this->category = $form['category'];
+        $this->project = $form['project'];
         $this->author = $form['author'];    
 
 
@@ -51,11 +53,13 @@ class Tickets_model extends CI_Model {
         $this->db->select('w.username as worker, w.uid as uid');
         $this->db->select('s.label as status, s.sid');
         $this->db->select('c.name as category, c.cid');
+        $this->db->select('p.name as project, p.pid');
         $this->db->where('tickets.tid', $tid);
         $this->db->join('users as a', 'author=a.uid', 'left');
         $this->db->join('users as w', 'worker=w.uid', 'left');
         $this->db->join('statuses s', 'status=sid', 'left');
         $this->db->join('categories c', 'category=cid', 'left');
+        $this->db->join('projects p', 'project=pid', 'left');
         if($uid)
         {
             $this->db->select('n.nid as subscribed');
@@ -117,6 +121,8 @@ class Tickets_model extends CI_Model {
         $this->load->model('statuses_model');
         $data = array();
         $before = $this->tickets_model->get_ticket($tid);
+
+        $form['comment'] = !empty($form['comment']) ? $form['comment'] : null;
 
         // Check if need to go through multiple statuses
         if($form['status'] != -1)
@@ -213,6 +219,10 @@ class Tickets_model extends CI_Model {
         if($form['attachments'])
         {
             foreach ($form['attachments'] as $attachment) {
+                if(!empty($attachment->aid))
+                {
+                    continue;
+                }
                 $data = array(
                     'tid' => $tid,
                     'title' => $attachment['orig_name'],
@@ -253,6 +263,16 @@ class Tickets_model extends CI_Model {
             $this->db->where('category', $cid);
         }
         $this->db->order_by('category', 'asc');
+        return $this->get_tickets();
+    }
+
+    public function get_by_project($pid = NULL)
+    {
+        if($pid)
+        {
+            $this->db->where('project', $pid);
+        }
+        $this->db->order_by('project', 'asc');
         return $this->get_tickets();
     }
 
@@ -336,6 +356,22 @@ class Tickets_model extends CI_Model {
             if(!empty($form['and-category']))
             {
                 $this->db->where_in('category', $form['category_and']);
+            }
+        }
+
+        if(!empty($form['project']))
+        {
+            if( !in_array('project', $exclude ))
+            {
+                $this->db->where_in('project', $form['project']);
+            }
+            else
+            {
+                $this->db->where_not_in('project', $form['project']);
+            }
+            if(!empty($form['and-project']))
+            {
+                $this->db->where_in('project', $form['project_and']);
             }
         }
 

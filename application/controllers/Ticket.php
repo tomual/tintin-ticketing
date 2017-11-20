@@ -9,6 +9,7 @@ class Ticket extends CI_Controller {
         $this->load->model('tickets_model');
         $this->load->model('statuses_model');
         $this->load->model('categories_model');
+        $this->load->model('projects_model');
         $this->load->model('versions_model');
         $this->load->model('attachments_model');
         $this->load->model('notifications_model');
@@ -43,6 +44,7 @@ class Ticket extends CI_Controller {
         $users = $this->users_model->get_users();
         $statuses = $this->statuses_model->get_statuses();
         $categories = $this->categories_model->get_categories();
+        $projects = $this->projects_model->get_projects();
 
         if($this->input->get())
         {
@@ -51,10 +53,12 @@ class Ticket extends CI_Controller {
                 'worker' => $this->input->get('worker'),
                 'status' => $this->input->get('status'),
                 'category' => $this->input->get('category'),
+                'project' => $this->input->get('project'),
                 'and-author' => $this->input->get('and-author'),
                 'and-worker' => $this->input->get('and-worker'),
                 'and-status' => $this->input->get('and-status'),
                 'and-category' => $this->input->get('and-category'),
+                'and-project' => $this->input->get('and-project'),
                 'created_from' => $this->input->get('created_from'),
                 'createf_to' => $this->input->get('createf_to'),
                 'modified_from' => $this->input->get('modified_from'),
@@ -67,13 +71,14 @@ class Ticket extends CI_Controller {
         }
 
         $title = 'Advanced Search';
-        $this->load->view('ticket/advanced', compact('tickets', 'users', 'statuses', 'categories', 'pagination', 'title'));
+        $this->load->view('ticket/advanced', compact('tickets', 'users', 'statuses', 'categories', 'projects', 'pagination', 'title'));
     }
 
     public function view($tid)
     {
         $statuses = $this->statuses_model->get_statuses();
         $categories = $this->categories_model->get_categories();
+        $projects = $this->projects_model->get_projects();
         $ticket = $this->tickets_model->get_ticket($tid);
         $versions = $this->versions_model->get_versions($tid);
         $next_status = $this->statuses_model->get_next($ticket->sid);
@@ -95,7 +100,7 @@ class Ticket extends CI_Controller {
         }
 
         $title = $ticket->title;
-        $this->load->view('ticket/view', compact('ticket', 'versions', 'users', 'statuses', 'categories', 'next_status', 'attachments', 'last_status', 'title'));
+        $this->load->view('ticket/view', compact('ticket', 'versions', 'users', 'statuses', 'categories', 'projects', 'next_status', 'attachments', 'last_status', 'title'));
     }
 
     public function edit($tid)
@@ -104,6 +109,7 @@ class Ticket extends CI_Controller {
 
         $statuses = $this->statuses_model->get_statuses();
         $categories = $this->categories_model->get_categories();
+        $projects = $this->projects_model->get_projects();
         $ticket = $this->tickets_model->get_ticket($tid);
         $versions = $this->versions_model->get_versions($tid);
         $attachments = $this->attachments_model->get_attachments($tid);
@@ -158,7 +164,7 @@ class Ticket extends CI_Controller {
         }
 
         $title = 'Edit Ticket';
-        $this->load->view('ticket/edit', compact('ticket', 'versions', 'statuses', 'categories', 'attachments', 'title'));
+        $this->load->view('ticket/edit', compact('ticket', 'versions', 'statuses', 'categories', 'projects', 'attachments', 'title'));
     }
 
     public function create()
@@ -167,6 +173,7 @@ class Ticket extends CI_Controller {
 
         $this->roles_model->check_permission('ticket', 3);
         $categories = $this->categories_model->get_categories();
+        $projects = $this->projects_model->get_projects();
     	if($_SERVER['REQUEST_METHOD'] == 'POST')
     	{
             $this->form_validation->set_rules('title', 'Ticket title', 'required');
@@ -221,7 +228,7 @@ class Ticket extends CI_Controller {
 
         $users = $this->users_model->get_users();
         $title = 'New Ticket';
-        $this->load->view('ticket/create', compact('categories', 'title', 'users'));
+        $this->load->view('ticket/create', compact('categories', 'projects', 'title', 'users'));
     }
 
     public function upload_file()
@@ -319,6 +326,23 @@ class Ticket extends CI_Controller {
 
         $title = 'Tickets by Category';
         $this->load->view('report/category', compact('tickets', 'categories', 'title'));
+    }
+
+    public function project()
+    {
+        $projects = $this->projects_model->get_projects();
+        if($this->input->get('project'))
+        {
+            $project = $this->input->get('project');
+            $tickets = $this->tickets_model->get_by_project($project);
+        }
+        else
+        {
+            $tickets = $this->tickets_model->get_by_project();
+        }
+
+        $title = 'Tickets by Project';
+        $this->load->view('report/project', compact('tickets', 'projects', 'title'));
     }
 
     public function paginate($results)

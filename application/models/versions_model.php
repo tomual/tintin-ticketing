@@ -50,7 +50,9 @@ class Versions_model extends CI_Model {
 
     public function get_latest_versions($limit)
     {
-        $this->db->select('tid, created');
+        $this->db->select('tid');
+        $this->db->select_max('created');
+        $this->db->group_by('tid');
         $this->db->order_by('created', 'desc');
         $query = $this->db->get('versions', $limit);
         return $query->result();

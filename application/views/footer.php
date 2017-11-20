@@ -18,7 +18,8 @@ tinymce.init({
   toolbar: 'undo redo | styleselect | bold italic underline | bullist numlist | link image codesample',
   statusbar: false,
   menubar: false,
-  height : 250
+  height : 250,
+  content_css : '<?php echo base_url('css/tinymce.css') ?>'
 });
 tinymce.init({
   selector: 'textarea#comment',  // change this value according to your HTML
@@ -26,7 +27,8 @@ tinymce.init({
   toolbar: 'undo redo | styleselect | bold italic underline | bullist numlist | link image codesample',
   statusbar: false,
   menubar: false,
-  height : 50
+  height : 50,
+  content_css : '<?php echo base_url('css/tinymce.css') ?>'
 });
 </script>
 <script type="text/javascript">
@@ -64,6 +66,13 @@ tinymce.init({
         placeholder: "Select ...",
     });
     $('.advanced-search #and-category').select2({
+        placeholder: "Select ...",
+        width: '100%'
+    })
+    $('.advanced-search #project').select2({
+        placeholder: "Select ...",
+    });
+    $('.advanced-search #and-project').select2({
         placeholder: "Select ...",
         width: '100%'
     })
@@ -208,7 +217,7 @@ tinymce.init({
             }
         }
 
-        select_labels = ['category', 'author', 'worker', 'status'];
+        select_labels = ['category', 'project', 'author', 'worker', 'status'];
 
         select_labels.forEach(function(select_label) {
             select_value = getQueryStringKey(select_label + '[]');

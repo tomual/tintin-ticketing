@@ -56,11 +56,36 @@
                 </div>
 
                 <div class="form-group row" id="category-and-select" style="display:none">
-                    <label for="="and-category" class="col-md-2 col-form-label text-right">and ...</label>
+                    <label for="and-category" class="col-md-2 col-form-label text-right">and ...</label>
                     <div class="col-md-4">
                         <select name="and-category[]" id="and-category" multiple="multiple" class="form-control">
                             <?php foreach($categories as $category): ?>
                                 <option value="<?php echo $category->cid ?>" <?php if($this->input->get('category') == $category->cid) echo 'selected' ?>><?php echo $category->name ?></option>
+                            <?php endforeach ?>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label for="category" class="col-md-2 col-form-label">Project</label>
+                    <div class="col-md-4">
+                        <select name="project[]" id="project" multiple="multiple" class="form-control">
+                            <?php foreach($projects as $project): ?>
+                                <option value="<?php echo $project->pid ?>" <?php if($this->input->get('project') == $project->pid) echo 'selected' ?>><?php echo $project->name ?></option>
+                            <?php endforeach ?>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label class="col-form-label form-check-label"><input type="checkbox" name="exclude[]" class="form-check-input" value="project"> Not</label>
+                    </div>
+                </div>
+
+                <div class="form-group row" id="project-and-select" style="display:none">
+                    <label for="and-project" class="col-md-2 col-form-label text-right">and ...</label>
+                    <div class="col-md-4">
+                        <select name="and-project[]" id="and-project" multiple="multiple" class="form-control">
+                            <?php foreach($projects as $project): ?>
+                                <option value="<?php echo $project->pid ?>" <?php if($this->input->get('project') == $project->pid) echo 'selected' ?>><?php echo $project->name ?></option>
                             <?php endforeach ?>
                         </select>
                     </div>

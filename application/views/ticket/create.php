@@ -34,6 +34,17 @@
 	        <?php echo form_error('category') ?>
 	    </div>
 
+	    <div class="form-group <?php if(form_error('project')) echo 'has-danger' ?>">
+	        <label for="project">Project</label>
+	        <select class="form-control" id="project" name="project">
+	        	<option value="">Select Project ...</option>
+	        <?php foreach($projects as $project): ?>
+	            <option value="<?php echo $project->pid ?>" <?php echo set_select('project', $project->pid) ?>><?php echo $project->name ?></option>
+	        <?php endforeach ?>
+	        </select>
+	        <?php echo form_error('project') ?>
+	    </div>
+
 	    <div class="form-group <?php if(form_error('cc')) echo 'has-danger' ?>">
 	        <label for="">CC</label>
             <select name="cc[]" id="cc" multiple="multiple" class="form-control">

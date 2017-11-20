@@ -30,6 +30,16 @@
             </select>
             <?php echo form_error('category') ?>
         </div>
+        <div class="form-group <?php if(form_error('project')) echo 'has-danger' ?>">
+            <label for="project">Project</label>
+            <select class="form-control" id="project" name="project">
+                <option>None</option>
+                <?php foreach($projects as $project): ?>
+                    <option value="<?php echo $project->pid ?>" <?php if($ticket->pid == $project->pid) echo 'selected' ?>><?php echo $project->name ?></option>
+                <?php endforeach ?>
+            </select>
+            <?php echo form_error('project') ?>
+        </div>
         <div class="form-group <?php if(form_error('status')) echo 'has-danger' ?>">
             <label for="status">Status</label>
             <select class="form-control" id="status" name="status">

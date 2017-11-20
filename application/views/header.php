@@ -37,6 +37,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <a class="dropdown-item" href="<?php echo base_url() ?>ticket/status">By Status</a>
                         <a class="dropdown-item" href="<?php echo base_url() ?>ticket/user">By User</a>
                         <a class="dropdown-item" href="<?php echo base_url() ?>ticket/category">By Category</a>
+                        <a class="dropdown-item" href="<?php echo base_url() ?>ticket/project">By Project</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="<?php echo base_url() ?>ticket/advanced">Advanced Search</a>
                     </div>
@@ -46,6 +47,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                     <div class="dropdown-menu">
                         <a class="dropdown-item" href="<?php echo base_url() ?>status/all">Statuses</a>
                         <a class="dropdown-item" href="<?php echo base_url() ?>category/all">Categories</a>
+                        <a class="dropdown-item" href="<?php echo base_url() ?>project/all">Projects</a>
                         <a class="dropdown-item" href="<?php echo base_url() ?>user/all">Users</a>
                         <a class="dropdown-item" href="<?php echo base_url() ?>role/all">Roles</a>
                         <a class="dropdown-item" href="<?php echo base_url() ?>settings/">System</a>
