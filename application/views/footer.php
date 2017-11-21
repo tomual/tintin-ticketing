@@ -5,13 +5,28 @@
 </footer>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha384-3ceskX3iaEnIogmQchP8opvBy3Mi7Ce34nWjpBIwVTHfGYWQS9jwHDVRnpKKHJg7" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.3.7/js/tether.min.js" integrity="sha384-XTs3FgkjiBgo8qjEjBk0tGmf3wPrWtA6coPfQDfFEY8AnYJwjalXCiosYRBIBZX8" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.5/js/bootstrap.min.js" integrity="sha384-BLiI7JTZm+JWlgKa0M0kGRpJbF2J8q+qreVrKBC47e3K6BW78kGLrCkeRX6I9RoK" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.4/js/select2.min.js"></script>
 <script src="<?php echo base_url() ?>/js/bootstrap-datepicker.js"></script>
 <script src="<?php echo base_url() ?>/js/tinymce/tinymce.min.js"></script>
+<script src="<?php echo base_url() ?>/js/dragula.js"></script>
 
 <script>
+dragula([document.getElementById('backlog'), document.getElementById('nah')]);
+$( function() {
+    $( "#sortable" ).sortable({
+        revert: true
+    });
+    $( "#draggable" ).draggable({
+        connectToSortable: "#sortable",
+        helper: "clone",
+        revert: "invalid"
+    });
+    $( "ul, li" ).disableSelection();
+} );
+
 tinymce.init({
   selector: 'textarea#description',  // change this value according to your HTML
   plugins: "link, image, codesample, lists",

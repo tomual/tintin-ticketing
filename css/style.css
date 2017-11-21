@@ -295,7 +295,6 @@ select[multiple=multiple] {
     background-position: center;    
 }
 
-
 /*KANBAN*/
 
 .kanban-board {
@@ -313,6 +312,7 @@ select[multiple=multiple] {
 }
 
 .kanban-ticket {
+    background: #FFF;
     border: 1px solid #eceeef;
     font-size: 12px;
     padding: 10px 15px;
@@ -356,6 +356,7 @@ select[multiple=multiple] {
     letter-spacing: 1px;
     margin: -10px -15px;
     margin-bottom: 10px;
+    cursor: move;
 }
 
 /*RESPONSIVE*/

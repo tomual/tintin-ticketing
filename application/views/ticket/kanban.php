@@ -6,9 +6,8 @@
 
 	<div class="kanban-board">
 		<?php foreach($kanban_tickets as $status => $tickets): ?>
-			<div class="kanban-column" style="width: <?php echo 100 / count($kanban_tickets) - 1 ?>%">
+			<div class="kanban-column" style="width: <?php echo 100 / count($kanban_tickets) - 1 ?>%" id="<?php echo $status == 'Backlog' ? 'backlog' : 'nah' ?>">
 				<div class="status-header"><?php echo $status ?></div>
-
 				<?php foreach( $tickets as $ticket ): ?>
 					<div class="kanban-ticket">
 						<div class="id"><?php echo $ticket->tid ?></div>

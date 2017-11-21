@@ -12,6 +12,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     <link rel="stylesheet" href="<?php echo base_url() ?>css/datepicker.css">
     <link rel="stylesheet" href="<?php echo base_url() ?>css/toggle-switch.css">
     <link rel="stylesheet" href="<?php echo base_url() ?>css/style.css">
+    <link rel="stylesheet" href="<?php echo base_url() ?>css/dragula.css">
     <style type="text/css">
         <?php echo $this->css ?>
     </style>
