@@ -367,4 +367,29 @@ class Ticket extends CI_Controller {
         $title = 'Kanban';
         $this->load->view('ticket/kanban', compact('kanban_tickets', 'statuses', 'title'));
     }
+
+    public function set_status()
+    {
+        $this->load->library('form_validation');
+
+        if($_SERVER['REQUEST_METHOD'] == 'POST')
+        {
+            $this->form_validation->set_rules('tid', 'Ticket ID', 'required');
+            $this->form_validation->set_rules('status', 'Ticket status', 'required');
+
+            if($this->form_validation->run() != FALSE)
+            {
+                $tid = $this->input->post('tid');
+                $status = $this->input->post('status');
+                $status = $this->statuses_model->get_status_by_label($status);
+                $data = array('status' => $status->sid);
+                $this->tickets_model->set_ticket($tid, $data);
+                echo json_encode(array('success' => 'Ticket status changed successfully.'));
+            }
+            else
+            {
+                echo json_encode(array('error' => 'Missing Ticket ID or target status.'));
+            }
+        }
+    }
 }

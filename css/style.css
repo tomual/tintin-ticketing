@@ -300,15 +300,20 @@ select[multiple=multiple] {
 .kanban-board {
     left: 0;
     right: 0;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .kanban-board > div {
     box-sizing: border-box;
+    margin-left: 5px;
 }
 
 .kanban-column {
     display: inline-block;
     vertical-align: top;
+    display: flex;
+    flex-direction: column;
 }
 
 .kanban-ticket {

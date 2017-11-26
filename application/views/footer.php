@@ -13,39 +13,66 @@
 <script src="<?php echo base_url() ?>/js/tinymce/tinymce.min.js"></script>
 <script src="<?php echo base_url() ?>/js/dragula.js"></script>
 
-<script>
-dragula([document.getElementById('backlog'), document.getElementById('nah')]);
-$( function() {
-    $( "#sortable" ).sortable({
-        revert: true
-    });
-    $( "#draggable" ).draggable({
-        connectToSortable: "#sortable",
-        helper: "clone",
-        revert: "invalid"
-    });
-    $( "ul, li" ).disableSelection();
-} );
+<?php if($this->router->fetch_method() === 'kanban'): ?>
+<script>    
+    var statuses = <?php echo json_encode($kanban_tickets, true) ?>;
 
-tinymce.init({
-  selector: 'textarea#description',  // change this value according to your HTML
-  plugins: "link, image, codesample, lists",
-  toolbar: 'undo redo | styleselect | bold italic underline | bullist numlist | link image codesample',
-  statusbar: false,
-  menubar: false,
-  height : 250,
-  content_css : '<?php echo base_url('css/tinymce.css') ?>'
-});
-tinymce.init({
-  selector: 'textarea#comment',  // change this value according to your HTML
-  plugins: "link, image, codesample, lists",
-  toolbar: 'undo redo | styleselect | bold italic underline | bullist numlist | link image codesample',
-  statusbar: false,
-  menubar: false,
-  height : 50,
-  content_css : '<?php echo base_url('css/tinymce.css') ?>'
-});
+    var elements = document.getElementById('kanban-board').getElementsByClassName('kanban-column');
+    var status_columns = [];
+    for (var i = elements.length - 1; i >= 0; i--) {
+        status_columns.push(elements[i]);
+    }
+
+    var drake = dragula(status_columns);
+    drake.on('drop', function(element, target, source, sibling) {
+        var status = $(target).attr('id');
+        var tid = $(element).data('id');
+        var data = {
+            tid: tid,
+            status: status
+        };
+        var url = window.location.href.replace('kanban', 'set_status');
+        $.post(url, data)
+        .done(function(response) {
+            console.log(response);
+        });
+    });
+
+    $(function() {
+        $("#sortable").sortable({
+            revert: true
+        });
+        $("#draggable").draggable({
+            connectToSortable: "#sortable",
+            helper: "clone",
+            revert: "invalid"
+        });
+        $("ul, li").disableSelection();
+    });
 </script>
+<?php endif ?>
+
+<script>
+    tinymce.init({
+      selector: 'textarea#description',  // change this value according to your HTML
+      plugins: "link, image, codesample, lists",
+      toolbar: 'undo redo | styleselect | bold italic underline | bullist numlist | link image codesample',
+      statusbar: false,
+      menubar: false,
+      height : 250,
+      content_css : '<?php echo base_url('css/tinymce.css') ?>'
+    });
+    tinymce.init({
+      selector: 'textarea#comment',  // change this value according to your HTML
+      plugins: "link, image, codesample, lists",
+      toolbar: 'undo redo | styleselect | bold italic underline | bullist numlist | link image codesample',
+      statusbar: false,
+      menubar: false,
+      height : 50,
+      content_css : '<?php echo base_url('css/tinymce.css') ?>'
+    });
+</script>
+
 <script type="text/javascript">
     var nowTemp = new Date();
     var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
@@ -134,10 +161,10 @@ tinymce.init({
         var order = new Object();
         var rows = $('tbody tr');
 
-        $.each(rows, function( i, row ) {
+        $.each(rows, function(i, row) {
             order[i] = {place:i, id: $(row).attr('id')};
         });
-        $.post( "<?php echo base_url() ?>status/reorder", order );
+        $.post("<?php echo base_url() ?>status/reorder", order);
     }
 
     $('input[name="exclude[]"]').on('change', function() {
@@ -222,7 +249,7 @@ tinymce.init({
             {
                 for(i in not)
                 {
-                    console.log( 'input[type=checkbox][value=' + not[i] + ']' );
+                    console.log('input[type=checkbox][value=' + not[i] + ']');
                     $('input[type=checkbox][value=' + not[i] + ']').click();
                 }                
             }

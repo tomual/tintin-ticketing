@@ -4,12 +4,12 @@
 <div class="col-sm-12 content">
 	<h1>Kanban Board</h1>
 
-	<div class="kanban-board">
+	<div class="kanban-board" id="kanban-board">
 		<?php foreach($kanban_tickets as $status => $tickets): ?>
-			<div class="kanban-column" style="width: <?php echo 100 / count($kanban_tickets) - 1 ?>%" id="<?php echo $status == 'Backlog' ? 'backlog' : 'nah' ?>">
+			<div class="kanban-column" style="width: <?php echo 100 / count($kanban_tickets) - 1 ?>%" id="<?php echo $status ?>">
 				<div class="status-header"><?php echo $status ?></div>
 				<?php foreach( $tickets as $ticket ): ?>
-					<div class="kanban-ticket">
+					<div class="kanban-ticket" data-id="<?php echo $ticket->tid ?>">
 						<div class="id"><?php echo $ticket->tid ?></div>
 						<div class="title"><a href="<?php echo base_url() ?>ticket/view/<?php echo $ticket->tid ?>"><?php echo $ticket->title ?></a></div>
 						<div class="author"><?php echo $ticket->username ?></div>

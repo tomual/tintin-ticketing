@@ -170,24 +170,24 @@ class Tickets_model extends CI_Model {
             }
         }
 
+        $from_status = $this->statuses_model->get_status($before->sid);
+        $to_status = $this->statuses_model->get_status($form['status']);
+
         // Check if status change is invalid
         if($before->sid != $form['status'])
         {
-            $from_status = $this->statuses_model->get_status($before->sid);
-            $to_status = $this->statuses_model->get_status($form['status']);
-
             // Can't change status if cancelled
             if($from_status->sid == -1)
             {
                 $form['status'] = -1;
             }
-            // Can't go backwards in status
-            if(!$to_status || ( $to_status->sid != -1 && $to_status->place < $from_status->place ) )
-            {
-                $form['status'] = $from_status->sid;
-            }
-
         }
+
+        // Check if start date or complete date need to be unset due to status going backwards
+        // if($to_status || ( $to_status->sid != -1 && $to_status->place < $from_status->place ) )
+        // {
+        //     $form['status'] = $from_status->sid;
+        // }
 
         // Check if ticket should be set to started
         $start_status = $this->settings_model->get_setting('work_start_status');
@@ -203,6 +203,8 @@ class Tickets_model extends CI_Model {
             $form['completed'] = date("Y-m-d H:i:s");
         }
 
+
+
         foreach($form as $key=>$value)
         {
             if(property_exists('Tickets_model', $key))
@@ -211,12 +213,12 @@ class Tickets_model extends CI_Model {
             }
         }
 
-        $this->db->where('tid', $form['tid']);
+        $this->db->where('tid', $tid);
         $this->db->update('tickets', $data);
         $after = $this->tickets_model->get_ticket($tid);
         $this->versions_model->add_version($tid, $form['comment'], $before, $after);
 
-        if($form['attachments'])
+        if(!empty($form['attachments']))
         {
             foreach ($form['attachments'] as $attachment) {
                 if(!empty($attachment->aid))

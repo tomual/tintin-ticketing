@@ -34,6 +34,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="<?php echo base_url() ?>" role="button" aria-haspopup="true" aria-expanded="false">Tickets</a>
                     <div class="dropdown-menu">
+                        <a class="dropdown-item" href="<?php echo base_url() ?>ticket/kanban">Kanban</a>
+                        <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="<?php echo base_url() ?>ticket/all">All tickets</a>
                         <a class="dropdown-item" href="<?php echo base_url() ?>ticket/status">By Status</a>
                         <a class="dropdown-item" href="<?php echo base_url() ?>ticket/user">By User</a>
