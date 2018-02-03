@@ -1,8 +1,8 @@
 -- --------------------------------------------------------
 -- Host:                         127.0.0.1
--- Server version:               5.7.14 - MySQL Community Server (GPL)
--- Server OS:                    Win32
--- HeidiSQL Version:             9.4.0.5125
+-- Server version:               5.7.19 - MySQL Community Server (GPL)
+-- Server OS:                    Win64
+-- HeidiSQL Version:             9.5.0.5196
 -- --------------------------------------------------------
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `categories` (
   `name` varchar(50) NOT NULL,
   `removed` enum('Y','N') NOT NULL DEFAULT 'N',
   PRIMARY KEY (`cid`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8;
 
 -- Data exporting was unselected.
 -- Dumping structure for table tintin.ci_sessions
@@ -52,7 +52,16 @@ CREATE TABLE IF NOT EXISTS `notifications` (
   `tid` int(11) NOT NULL,
   `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`nid`)
-) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=MyISAM AUTO_INCREMENT=13 DEFAULT CHARSET=utf8;
+
+-- Data exporting was unselected.
+-- Dumping structure for table tintin.projects
+CREATE TABLE IF NOT EXISTS `projects` (
+  `pid` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(50) NOT NULL DEFAULT '0',
+  `removed` enum('Y','N') NOT NULL DEFAULT 'N',
+  PRIMARY KEY (`pid`)
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 -- Data exporting was unselected.
 -- Dumping structure for table tintin.reports
@@ -77,6 +86,7 @@ CREATE TABLE IF NOT EXISTS `roles` (
   `permission_status` int(11) NOT NULL DEFAULT '1',
   `permission_role` int(11) NOT NULL DEFAULT '1',
   `permission_report` int(11) NOT NULL DEFAULT '1',
+  `permission_project` int(11) NOT NULL DEFAULT '1',
   PRIMARY KEY (`rid`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COMMENT='User roles';
 
@@ -89,6 +99,8 @@ CREATE TABLE IF NOT EXISTS `settings` (
   `start_status` int(11) DEFAULT NULL,
   `work_start_status` int(11) DEFAULT NULL,
   `work_complete_status` int(11) DEFAULT NULL,
+  `next_up_statuses` varchar(50) DEFAULT NULL,
+  `kanban_statuses` varchar(50) DEFAULT NULL,
   `css` text,
   `register_open` enum('Y','N') DEFAULT NULL,
   KEY `id` (`id`)
@@ -114,13 +126,14 @@ CREATE TABLE IF NOT EXISTS `tickets` (
   `description` text NOT NULL,
   `status` int(11) NOT NULL DEFAULT '0',
   `category` int(11) NOT NULL,
+  `project` int(11) NOT NULL,
   `worker` int(11) DEFAULT NULL,
   `author` int(11) NOT NULL,
   `started` datetime DEFAULT NULL,
   `completed` datetime DEFAULT NULL,
   `created` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`tid`)
-) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=utf8;
 
 -- Data exporting was unselected.
 -- Dumping structure for table tintin.users
@@ -136,7 +149,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `reset_token_expire` datetime DEFAULT NULL,
   `removed` enum('Y','N') NOT NULL DEFAULT 'N',
   PRIMARY KEY (`uid`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 
 -- Data exporting was unselected.
 -- Dumping structure for table tintin.versions
@@ -148,7 +161,7 @@ CREATE TABLE IF NOT EXISTS `versions` (
   `difference` text,
   `created` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`vid`)
-) ENGINE=InnoDB AUTO_INCREMENT=143 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=155 DEFAULT CHARSET=utf8;
 
 -- Data exporting was unselected.
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
@@ -156,15 +169,15 @@ CREATE TABLE IF NOT EXISTS `versions` (
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 
 INSERT INTO `statuses` (`sid`, `label`, `description`, `place`, `created`, `active`) VALUES (-1, 'Cancel', 'Cancelled tasks', 0, '2017-04-26 19:11:21', 'N');
-INSERT INTO `statuses` (`sid`, `label`, `description`, `place`, `created`, `active`) VALUES (1, 'Backlog', 'Backlogged Stuff', 0, '2017-01-23 18:45:09', 'Y');
-INSERT INTO `statuses` (`sid`, `label`, `description`, `place`, `created`, `active`) VALUES (2, 'Input', 'Input Description', 1, '2017-01-23 18:45:18', 'Y');
-INSERT INTO `statuses` (`sid`, `label`, `description`, `place`, `created`, `active`) VALUES (3, 'Working', 'Stuff in working', 2, '2017-01-23 18:45:33', 'Y');
-INSERT INTO `statuses` (`sid`, `label`, `description`, `place`, `created`, `active`) VALUES (4, 'Complete', 'It\'s done', 3, '2017-01-23 18:45:48', 'Y');
+INSERT INTO `statuses` (`sid`, `label`, `description`, `place`, `created`, `active`) VALUES (1, 'Backlog', 'Tickets to work on in the future', 0, '2017-01-23 18:45:09', 'Y');
+INSERT INTO `statuses` (`sid`, `label`, `description`, `place`, `created`, `active`) VALUES (2, 'Input', 'Tickets to be worked on soon', 1, '2017-01-23 18:45:18', 'Y');
+INSERT INTO `statuses` (`sid`, `label`, `description`, `place`, `created`, `active`) VALUES (3, 'Working', 'Tickets being worked on', 2, '2017-01-23 18:45:33', 'Y');
+INSERT INTO `statuses` (`sid`, `label`, `description`, `place`, `created`, `active`) VALUES (4, 'Complete', 'Complete Tickets', 3, '2017-01-23 18:45:48', 'Y');
 
 INSERT INTO `roles` (`rid`, `label`, `permission_ticket`, `permission_user`, `permission_category`, `permission_status`, `permission_role`, `permission_report`) VALUES (1, 'Administrator', 5, 3, 2, 3, 3, 3);
 INSERT INTO `roles` (`rid`, `label`, `permission_ticket`, `permission_user`, `permission_category`, `permission_status`, `permission_role`, `permission_report`) VALUES (2, 'Standard User', 3, 1, 1, 1, 1, 1);
 
-INSERT INTO `settings` (`id`, `group_name`, `owner`, `start_status`, `work_start_status`, `work_complete_status`, `css`, `register_open`) VALUES (1, NULL, NULL, 1, 3, 4, '', NULL);
+INSERT INTO `settings` (`id`, `group_name`, `owner`, `start_status`, `work_start_status`, `work_complete_status`, `next_up_statuses`, `kanban_statuses`, `css`, `register_open`) VALUES (1, NULL, NULL, 1, 3, 4, NULL, '1,2,3,4', '', NULL);
 
 INSERT INTO `categories` (`name`, `removed`) VALUES ('New Feature', 'N');
 INSERT INTO `categories` (`name`, `removed`) VALUES ('User Support', 'N');
