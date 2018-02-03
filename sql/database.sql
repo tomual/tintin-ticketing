@@ -177,7 +177,7 @@ INSERT INTO `statuses` (`sid`, `label`, `description`, `place`, `created`, `acti
 INSERT INTO `roles` (`rid`, `label`, `permission_ticket`, `permission_user`, `permission_category`, `permission_status`, `permission_role`, `permission_report`) VALUES (1, 'Administrator', 5, 3, 2, 3, 3, 3);
 INSERT INTO `roles` (`rid`, `label`, `permission_ticket`, `permission_user`, `permission_category`, `permission_status`, `permission_role`, `permission_report`) VALUES (2, 'Standard User', 3, 1, 1, 1, 1, 1);
 
-INSERT INTO `settings` (`id`, `group_name`, `owner`, `start_status`, `work_start_status`, `work_complete_status`, `next_up_statuses`, `kanban_statuses`, `css`, `register_open`) VALUES (1, NULL, NULL, 1, 3, 4, NULL, '1,2,3,4', '', NULL);
+INSERT INTO `settings` (`id`, `group_name`, `owner`, `start_status`, `work_start_status`, `work_complete_status`, `next_up_statuses`, `kanban_statuses`, `css`, `register_open`) VALUES (1, NULL, NULL, 1, 3, 4, '1,2', '1,2,3,4', '', NULL);
 
 INSERT INTO `categories` (`name`, `removed`) VALUES ('New Feature', 'N');
 INSERT INTO `categories` (`name`, `removed`) VALUES ('User Support', 'N');

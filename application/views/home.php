@@ -77,7 +77,7 @@
 			<tbody>
 				<?php if(!count($next_up)): ?>
 					<tr>
-						<td>There are no recently changed tickets.</td>
+						<td>There are no tickets to be worked on.</td>
 					</tr>
 				<?php endif ?>
 				<?php foreach( $next_up as $ticket ): ?>

@@ -43,6 +43,18 @@ class User extends CI_Controller {
 
                 if($first_user)
                 {
+                    $username = $this->input->post('username');
+                    $password = $this->input->post('password');
+                    $login = $this->users_model->login($username, $password);
+                    $data = array(
+                        'uid'       => $login->uid,
+                        'username'  => $login->username,
+                        'email'     => $login->email,
+                        'role'     => $login->role,
+                        'authenticated' => TRUE
+                    );
+
+                    $this->session->set_userdata($data);
                     redirect('/');
                 }
                 else
